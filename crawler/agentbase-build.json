@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "generator": "agentbase-domain-site",
+  "generatorVersion": 1,
+  "hub": "github.com/khoaha1904/AgentBase-Hub#main",
+  "commit": "59059443f71c358cbeebf84e6a12796f3d54aabe",
+  "domain": "domains/crawler",
+  "projectionVersion": 1,
+  "counts": {
+    "nodes": 7,
+    "edges": 6,
+    "flows": 0,
+    "questions": 1
+  },
+  "files": [
+    {
+      "path": "assets/app.css",
+      "sha256": "789adfe01630565f42edd0e9fb4d2f785f4015f64c620dba064f6b495c50406a"
+    },
+    {
+      "path": "assets/app.js",
+      "sha256": "b07b6f66e05d0e2a0fa1dc56bcf1b098588a663c41801c6a323e1e95d911fc55"
+    },
+    {
+      "path": "assets/three.core.min.js",
+      "sha256": "c5f69a04c70de8c95152040c286a3c8a0489603b019dfd61b34c451e3371c4fd"
+    },
+    {
+      "path": "assets/three.module.min.js",
+      "sha256": "e3ec4d5d223c0119f754150a3d9deef16139074ea17b073e93bbce315ad16eda"
+    },
+    {
+      "path": "data/domain.json",
+      "sha256": "7a6d2916e7d63ebe1491383a9cf1e863bd94e7fda3160c2973c7a71d3e671424"
+    },
+    {
+      "path": "index.html",
+      "sha256": "58855559c1cf62d8e8180bcc93e23a7549c04e9178e0c69ed54999fc5f439eb9"
+    }
+  ]
+}

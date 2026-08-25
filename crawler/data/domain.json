@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "hub": "github.com/khoaha1904/AgentBase-Hub#main",
+  "commit": "59059443f71c358cbeebf84e6a12796f3d54aabe",
+  "domain": {
+    "id": "domains/crawler",
+    "path": "domains/crawler.md",
+    "title": "Crawler"
+  },
+  "nodes": [
+    {
+      "id": "components/api-sourcing",
+      "path": "components/api-sourcing.md",
+      "type": "Function",
+      "title": "Api_Sourcing",
+      "description": "Find the independently deployed function that sources Best Buy API pages into the landing zone.",
+      "domainIds": [],
+      "parentIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "sources": [
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/api_sourcing/src/main.py#L29-L58",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
+      ],
+      "membership": "boundary",
+      "expandable": false
+    },
+    {
+      "id": "components/apiscript",
+      "path": "components/apiscript.md",
+      "type": "Component",
+      "title": "ApiScript",
+      "description": "Find the deployed ETL workload that transforms landing data into trusted Parquet data.",
+      "domainIds": [],
+      "parentIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "sources": [
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/README.md#L23-L28",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/glue_job.tf#L33-L56"
+      ],
+      "membership": "boundary",
+      "expandable": false
+    },
+    {
+      "id": "components/athena-query-execution",
+      "path": "components/athena-query-execution.md",
+      "type": "Function",
+      "title": "Athena_query_execution",
+      "description": "Find the deployed function that executes the reporting SQL queries in Athena.",
+      "domainIds": [],
+      "parentIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "sources": [
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/athena_query_execution/src/main.py#L46-L66",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
+      ],
+      "membership": "boundary",
+      "expandable": false
+    },
+    {
+      "id": "components/comprehend-analysis",
+      "path": "components/comprehend-analysis.md",
+      "type": "Function",
+      "title": "Comprehend_analysis",
+      "description": "Find the deployed function that queries Athena, extracts entities with Comprehend, and writes analytics output.",
+      "domainIds": [],
+      "parentIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "sources": [
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/comprehend_analysis/src/main.py#L107-L133",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
+      ],
+      "membership": "boundary",
+      "expandable": false
+    },
+    {
+      "id": "components/glue-crawler-initiation",
+      "path": "components/glue-crawler-initiation.md",
+      "type": "Function",
+      "title": "Glue_crawler_initiation",
+      "description": "Find the deployed function that starts and polls AWS Glue crawlers.",
+      "domainIds": [],
+      "parentIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "sources": [
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/glue_crawler_initiation/README.md#L1-L3",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/glue_crawler_initiation/src/main.py#L50-L66",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
+      ],
+      "membership": "boundary",
+      "expandable": false
+    },
+    {
+      "id": "domains/crawler",
+      "path": "domains/crawler.md",
+      "type": "Domain",
+      "title": "Crawler",
+      "description": "Crawler business domain",
+      "domainIds": [
+        "domains/crawler"
+      ],
+      "parentIds": [],
+      "systemIds": [],
+      "repositoryIds": [],
+      "sources": [
+        "agentbase://owner-guidance/domains/crawler",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/README.md#L11-L13"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/serverless-data-pipelines-demo",
+      "path": "repositories/serverless-data-pipelines-demo.md",
+      "type": "Repository",
+      "title": "serverless-data-pipelines-demo",
+      "description": "Find the source repository that deploys the serverless AWS data pipeline.",
+      "domainIds": [
+        "domains/crawler"
+      ],
+      "parentIds": [
+        "domains/crawler"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/serverless-data-pipelines-demo"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/crawler",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/.github/workflows/terraform.yml#L8-L44",
+        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/README.md#L11-L13"
+      ],
+      "membership": "primary",
+      "expandable": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0563f93b2ab7eecea20ef4bb",
+      "predicate": "part-of",
+      "declaredSource": "repositories/serverless-data-pipelines-demo",
+      "declaredTarget": "domains/crawler",
+      "displaySource": "repositories/serverless-data-pipelines-demo",
+      "displayTarget": "domains/crawler",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-65bdc4a94d68b6b24edc4cbd",
+      "predicate": "implemented-in",
+      "declaredSource": "components/athena-query-execution",
+      "declaredTarget": "repositories/serverless-data-pipelines-demo",
+      "displaySource": "components/athena-query-execution",
+      "displayTarget": "repositories/serverless-data-pipelines-demo",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "sem-athena-handler"
+      ]
+    },
+    {
+      "id": "edge-7ac3e28ae6cc5d48d0e8ac07",
+      "predicate": "implemented-in",
+      "declaredSource": "components/glue-crawler-initiation",
+      "declaredTarget": "repositories/serverless-data-pipelines-demo",
+      "displaySource": "components/glue-crawler-initiation",
+      "displayTarget": "repositories/serverless-data-pipelines-demo",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "sem-crawler-handler"
+      ]
+    },
+    {
+      "id": "edge-8d4d5ebed8d5ee905e674aa5",
+      "predicate": "implemented-in",
+      "declaredSource": "components/comprehend-analysis",
+      "declaredTarget": "repositories/serverless-data-pipelines-demo",
+      "displaySource": "components/comprehend-analysis",
+      "displayTarget": "repositories/serverless-data-pipelines-demo",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "sem-comprehend-handler"
+      ]
+    },
+    {
+      "id": "edge-c2f23a10424985944512a60a",
+      "predicate": "implemented-in",
+      "declaredSource": "components/api-sourcing",
+      "declaredTarget": "repositories/serverless-data-pipelines-demo",
+      "displaySource": "components/api-sourcing",
+      "displayTarget": "repositories/serverless-data-pipelines-demo",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "sem-api-handler"
+      ]
+    },
+    {
+      "id": "edge-dacf0fb53319dcc6fa686c4e",
+      "predicate": "implemented-in",
+      "declaredSource": "components/apiscript",
+      "declaredTarget": "repositories/serverless-data-pipelines-demo",
+      "displaySource": "components/apiscript",
+      "displayTarget": "repositories/serverless-data-pipelines-demo",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "tf-glue-job"
+      ]
+    }
+  ],
+  "flows": [],
+  "questions": [
+    {
+      "id": "question-fdef536388c97e1c411d44ca",
+      "subject": "repositories/serverless-data-pipelines-demo",
+      "state": "open",
+      "kind": "maintainer-decision",
+      "property": "operational-ownership"
+    }
+  ],
+  "omissions": []
+}

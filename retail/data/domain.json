@@ -1,0 +1,1180 @@
+{
+  "schemaVersion": 1,
+  "hub": "github.com/khoaha1904/AgentBase-Hub#main",
+  "commit": "59059443f71c358cbeebf84e6a12796f3d54aabe",
+  "domain": {
+    "id": "domains/retail",
+    "path": "domains/retail.md",
+    "title": "Retail"
+  },
+  "nodes": [
+    {
+      "id": "domains/retail",
+      "path": "domains/retail.md",
+      "type": "Domain",
+      "title": "Retail",
+      "description": "Retail business domain",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [],
+      "systemIds": [],
+      "repositoryIds": [],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-carts-d00c4112cbde/README.md#L4-L11"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "flows/add-cart-item",
+      "path": "flows/add-cart-item.md",
+      "type": "Flow",
+      "title": "Add item to cart",
+      "description": "Look up a catalogue item and add it to the current cart",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "systems/store-front-end"
+      ],
+      "systemIds": [
+        "systems/store-front-end"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-front-end"
+      ],
+      "sources": [
+        "repository://repository-sock-shop-front-end-c643fc59c661/api/cart/index.js#L64-L95"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "flows/place-order",
+      "path": "flows/place-order.md",
+      "type": "Flow",
+      "title": "Place order",
+      "description": "Resolve customer details and submit an order",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "systems/store-front-end"
+      ],
+      "systemIds": [
+        "systems/store-front-end"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-front-end"
+      ],
+      "sources": [
+        "repository://repository-sock-shop-front-end-c643fc59c661/api/orders/index.js#L48-L134"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "interfaces/catalogue-api",
+      "path": "interfaces/catalogue-api.md",
+      "type": "Interface",
+      "title": "Catalogue-api",
+      "description": "catalogue API",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "repositories/sock-shop-catalogue",
+        "systems/catalogue-service"
+      ],
+      "systemIds": [
+        "systems/catalogue-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-catalogue"
+      ],
+      "sources": [
+        "repository://repository-sock-shop-catalogue-664d0075a7f3/api-spec/catalogue.json#L1-L226"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "interfaces/orders-api",
+      "path": "interfaces/orders-api.md",
+      "type": "Interface",
+      "title": "Orders-api",
+      "description": "orders API",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "repositories/sock-shop-orders",
+        "systems/ordering-service"
+      ],
+      "systemIds": [
+        "systems/ordering-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-orders"
+      ],
+      "sources": [
+        "repository://repository-sock-shop-orders-8ee16ae9b319/api-spec/orders.json#L1-L360"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "interfaces/payment-api",
+      "path": "interfaces/payment-api.md",
+      "type": "Interface",
+      "title": "Payment-api",
+      "description": "payment API",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "repositories/sock-shop-payment",
+        "systems/payment-service"
+      ],
+      "systemIds": [
+        "systems/payment-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-payment"
+      ],
+      "sources": [
+        "repository://repository-sock-shop-payment-7c018b1a3da8/api-spec/payment.json#L1-L102"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "interfaces/shopping-cart-api",
+      "path": "interfaces/shopping-cart-api.md",
+      "type": "Interface",
+      "title": "Shopping-cart-api",
+      "description": "HTTP cart operations contract",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "repositories/sock-shop-carts",
+        "systems/shopping-cart-service"
+      ],
+      "systemIds": [
+        "systems/shopping-cart-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-carts"
+      ],
+      "sources": [
+        "repository://repository-sock-shop-carts-d00c4112cbde/api-spec/carts.json#L1-L161"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "interfaces/user-api",
+      "path": "interfaces/user-api.md",
+      "type": "Interface",
+      "title": "User-api",
+      "description": "user API",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "repositories/sock-shop-user",
+        "systems/user-account-service"
+      ],
+      "systemIds": [
+        "systems/user-account-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-user"
+      ],
+      "sources": [
+        "repository://repository-sock-shop-user-5059c49dc2e4/apispec/user.json#L1-L755"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-carts",
+      "path": "repositories/sock-shop-carts.md",
+      "type": "Repository",
+      "title": "sock-shop-carts",
+      "description": "Source identity and service purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-carts"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-carts-d00c4112cbde/README.md#L4-L11"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-catalogue",
+      "path": "repositories/sock-shop-catalogue.md",
+      "type": "Repository",
+      "title": "sock-shop-catalogue",
+      "description": "Source identity and catalogue-service purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-catalogue"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-catalogue-664d0075a7f3/README.md#L7-L28"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-front-end",
+      "path": "repositories/sock-shop-front-end.md",
+      "type": "Repository",
+      "title": "sock-shop-front-end",
+      "description": "Source identity and store-front-end purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-front-end"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-front-end-c643fc59c661/README.md#L6-L28"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-orders",
+      "path": "repositories/sock-shop-orders.md",
+      "type": "Repository",
+      "title": "sock-shop-orders",
+      "description": "Source identity and ordering-service purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-orders"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-orders-8ee16ae9b319/README.md#L4-L25"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-payment",
+      "path": "repositories/sock-shop-payment.md",
+      "type": "Repository",
+      "title": "sock-shop-payment",
+      "description": "Source identity and payment-service purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-payment"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-payment-7c018b1a3da8/README.md#L1-L30"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-queue-master",
+      "path": "repositories/sock-shop-queue-master.md",
+      "type": "Repository",
+      "title": "sock-shop-queue-master",
+      "description": "Source identity and shipping-queue-worker purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-queue-master"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-queue-master-48504fc13061/README.md#L5-L27"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-shipping",
+      "path": "repositories/sock-shop-shipping.md",
+      "type": "Repository",
+      "title": "sock-shop-shipping",
+      "description": "Source identity and shipping-service purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-shipping"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-shipping-330776ea390b/README.md#L4-L28"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/sock-shop-user",
+      "path": "repositories/sock-shop-user.md",
+      "type": "Repository",
+      "title": "sock-shop-user",
+      "description": "Source identity and user-account-service purpose",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/sock-shop-user"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-user-5059c49dc2e4/README.md#L1-L28"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/catalogue-service",
+      "path": "systems/catalogue-service.md",
+      "type": "System",
+      "title": "Catalogue-service",
+      "description": "catalogue service",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-catalogue"
+      ],
+      "systemIds": [
+        "systems/catalogue-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-catalogue"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-catalogue-664d0075a7f3/README.md#L7-L8"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/ordering-service",
+      "path": "systems/ordering-service.md",
+      "type": "System",
+      "title": "Ordering-service",
+      "description": "ordering service",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-orders"
+      ],
+      "systemIds": [
+        "systems/ordering-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-orders"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-orders-8ee16ae9b319/README.md#L4-L5"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/payment-service",
+      "path": "systems/payment-service.md",
+      "type": "System",
+      "title": "Payment-service",
+      "description": "payment service",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-payment"
+      ],
+      "systemIds": [
+        "systems/payment-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-payment"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-payment-7c018b1a3da8/README.md#L1-L8"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/shipping-queue-worker",
+      "path": "systems/shipping-queue-worker.md",
+      "type": "System",
+      "title": "Shipping-queue-worker",
+      "description": "shipping queue worker",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-queue-master"
+      ],
+      "systemIds": [
+        "systems/shipping-queue-worker"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-queue-master"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-queue-master-48504fc13061/README.md#L5-L10"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/shipping-service",
+      "path": "systems/shipping-service.md",
+      "type": "System",
+      "title": "Shipping-service",
+      "description": "shipping service",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-shipping"
+      ],
+      "systemIds": [
+        "systems/shipping-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-shipping"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-shipping-330776ea390b/README.md#L4-L6"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/shopping-cart-service",
+      "path": "systems/shopping-cart-service.md",
+      "type": "System",
+      "title": "Shopping-cart-service",
+      "description": "Provides per-user shopping carts",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-carts"
+      ],
+      "systemIds": [
+        "systems/shopping-cart-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-carts"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-carts-d00c4112cbde/README.md#L4-L5"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/store-front-end",
+      "path": "systems/store-front-end.md",
+      "type": "System",
+      "title": "Store-front-end",
+      "description": "store front end",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-front-end"
+      ],
+      "systemIds": [
+        "systems/store-front-end"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-front-end"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-front-end-c643fc59c661/README.md#L6-L8",
+        "repository://repository-sock-shop-front-end-c643fc59c661/api/cart/index.js#L64-L95",
+        "repository://repository-sock-shop-front-end-c643fc59c661/api/orders/index.js#L48-L134"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "systems/user-account-service",
+      "path": "systems/user-account-service.md",
+      "type": "System",
+      "title": "User-account-service",
+      "description": "user account service",
+      "domainIds": [
+        "domains/retail"
+      ],
+      "parentIds": [
+        "domains/retail",
+        "repositories/sock-shop-user"
+      ],
+      "systemIds": [
+        "systems/user-account-service"
+      ],
+      "repositoryIds": [
+        "repositories/sock-shop-user"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/retail",
+        "repository://repository-sock-shop-user-5059c49dc2e4/README.md#L1-L8"
+      ],
+      "membership": "primary",
+      "expandable": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0087798e6fb53146b9c544ee",
+      "predicate": "part-of",
+      "declaredSource": "interfaces/shopping-cart-api",
+      "declaredTarget": "systems/shopping-cart-service",
+      "displaySource": "interfaces/shopping-cart-api",
+      "displayTarget": "systems/shopping-cart-service",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "interface-contract"
+      ]
+    },
+    {
+      "id": "edge-05b30f257466521956efaff8",
+      "predicate": "part-of",
+      "declaredSource": "interfaces/catalogue-api",
+      "declaredTarget": "systems/catalogue-service",
+      "displaySource": "interfaces/catalogue-api",
+      "displayTarget": "systems/catalogue-service",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-1c5c6fb64d0cf3b5a6ccc012",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/payment-service",
+      "declaredTarget": "repositories/sock-shop-payment",
+      "displaySource": "systems/payment-service",
+      "displayTarget": "repositories/sock-shop-payment",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-1fd7a8527f6367dff5fb5a7e",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-queue-master",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-queue-master",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-24822049f5d7f8973071684a",
+      "predicate": "consumes",
+      "declaredSource": "systems/store-front-end",
+      "declaredTarget": "interfaces/catalogue-api",
+      "displaySource": "systems/store-front-end",
+      "displayTarget": "interfaces/catalogue-api",
+      "directed": true,
+      "displayClass": "runtime",
+      "evidence": [
+        "cart-handler"
+      ]
+    },
+    {
+      "id": "edge-3119688199f9c5bad98ba662",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/store-front-end",
+      "declaredTarget": "repositories/sock-shop-front-end",
+      "displaySource": "systems/store-front-end",
+      "displayTarget": "repositories/sock-shop-front-end",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-362ab3001719ed4441cf2a0a",
+      "predicate": "part-of",
+      "declaredSource": "systems/payment-service",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/payment-service",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-390f75c22bf4d1e26e02a67b",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/user-account-service",
+      "declaredTarget": "repositories/sock-shop-user",
+      "displaySource": "systems/user-account-service",
+      "displayTarget": "repositories/sock-shop-user",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-429964b1e8d810099d6e2575",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-carts",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-carts",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-4af35cc89f3ca5fe2c252fdc",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-catalogue",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-catalogue",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-564d1bd0b838addafd96be5d",
+      "predicate": "part-of",
+      "declaredSource": "systems/user-account-service",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/user-account-service",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-57b84c3c8c034895b59359b8",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-shipping",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-shipping",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-5b4bcd82c061598dfde22fb5",
+      "predicate": "part-of",
+      "declaredSource": "systems/shipping-queue-worker",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/shipping-queue-worker",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-5d8bc3ae0d76a559e0149b44",
+      "predicate": "consumes",
+      "declaredSource": "systems/store-front-end",
+      "declaredTarget": "interfaces/user-api",
+      "displaySource": "systems/store-front-end",
+      "displayTarget": "interfaces/user-api",
+      "directed": true,
+      "displayClass": "runtime",
+      "evidence": [
+        "order-handler"
+      ]
+    },
+    {
+      "id": "edge-5e10bc991b906421add42827",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-orders",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-orders",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-5f0a210f59a7b882dd6e2dbf",
+      "predicate": "part-of",
+      "declaredSource": "systems/ordering-service",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/ordering-service",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-5f8bdf60626ab5713fc2c495",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/shipping-queue-worker",
+      "declaredTarget": "repositories/sock-shop-queue-master",
+      "displaySource": "systems/shipping-queue-worker",
+      "displayTarget": "repositories/sock-shop-queue-master",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-68b02dac62d7f6f6615d6ed0",
+      "predicate": "part-of",
+      "declaredSource": "interfaces/user-api",
+      "declaredTarget": "systems/user-account-service",
+      "displaySource": "interfaces/user-api",
+      "displayTarget": "systems/user-account-service",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-6a50a3e56df9bbc8ac47c962",
+      "predicate": "consumes",
+      "declaredSource": "systems/store-front-end",
+      "declaredTarget": "interfaces/orders-api",
+      "displaySource": "systems/store-front-end",
+      "displayTarget": "interfaces/orders-api",
+      "directed": true,
+      "displayClass": "runtime",
+      "evidence": [
+        "order-handler"
+      ]
+    },
+    {
+      "id": "edge-6b591d7fa67f356cf9e3ee90",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-front-end",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-front-end",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-6ee56db1227fcc3351b3ec12",
+      "predicate": "implemented-in",
+      "declaredSource": "interfaces/payment-api",
+      "declaredTarget": "repositories/sock-shop-payment",
+      "displaySource": "interfaces/payment-api",
+      "displayTarget": "repositories/sock-shop-payment",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-72fd8b0e172e3e0250e10abd",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/ordering-service",
+      "declaredTarget": "repositories/sock-shop-orders",
+      "displaySource": "systems/ordering-service",
+      "displayTarget": "repositories/sock-shop-orders",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-78a9f8de55281d27e0fde75b",
+      "predicate": "part-of",
+      "declaredSource": "flows/place-order",
+      "declaredTarget": "systems/store-front-end",
+      "displaySource": "flows/place-order",
+      "displayTarget": "systems/store-front-end",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "order-handler"
+      ]
+    },
+    {
+      "id": "edge-801c4e89f3f821ec3456cacb",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/catalogue-service",
+      "declaredTarget": "repositories/sock-shop-catalogue",
+      "displaySource": "systems/catalogue-service",
+      "displayTarget": "repositories/sock-shop-catalogue",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-8a9cd2aa75a237f3475fa6e7",
+      "predicate": "part-of",
+      "declaredSource": "systems/shipping-service",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/shipping-service",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-8d3a767d54cbd750df3bf3b2",
+      "predicate": "part-of",
+      "declaredSource": "systems/catalogue-service",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/catalogue-service",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-8ec57265f5dc403a7404be95",
+      "predicate": "implemented-in",
+      "declaredSource": "interfaces/catalogue-api",
+      "declaredTarget": "repositories/sock-shop-catalogue",
+      "displaySource": "interfaces/catalogue-api",
+      "displayTarget": "repositories/sock-shop-catalogue",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-98d03df8f7e07994fbdbf3d6",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/shopping-cart-service",
+      "declaredTarget": "repositories/sock-shop-carts",
+      "displaySource": "systems/shopping-cart-service",
+      "displayTarget": "repositories/sock-shop-carts",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-9a4264febf1082d7a09f28d5",
+      "predicate": "part-of",
+      "declaredSource": "flows/add-cart-item",
+      "declaredTarget": "systems/store-front-end",
+      "displaySource": "flows/add-cart-item",
+      "displayTarget": "systems/store-front-end",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "cart-handler"
+      ]
+    },
+    {
+      "id": "edge-9ac68915a915541dae952628",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-payment",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-payment",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-a37566a1a645e0b3a8d76aad",
+      "predicate": "part-of",
+      "declaredSource": "interfaces/payment-api",
+      "declaredTarget": "systems/payment-service",
+      "displaySource": "interfaces/payment-api",
+      "displayTarget": "systems/payment-service",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-a5055c4731b5d22b3ec60099",
+      "predicate": "implemented-in",
+      "declaredSource": "interfaces/shopping-cart-api",
+      "declaredTarget": "repositories/sock-shop-carts",
+      "displaySource": "interfaces/shopping-cart-api",
+      "displayTarget": "repositories/sock-shop-carts",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "interface-contract"
+      ]
+    },
+    {
+      "id": "edge-a8736aba5f8619fb045e319e",
+      "predicate": "part-of",
+      "declaredSource": "systems/store-front-end",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/store-front-end",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-b356368cd35e6a0c2904d4c8",
+      "predicate": "implemented-in",
+      "declaredSource": "interfaces/user-api",
+      "declaredTarget": "repositories/sock-shop-user",
+      "displaySource": "interfaces/user-api",
+      "displayTarget": "repositories/sock-shop-user",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-b7a6dff000d09216c4ddbcb0",
+      "predicate": "consumes",
+      "declaredSource": "systems/store-front-end",
+      "declaredTarget": "interfaces/shopping-cart-api",
+      "displaySource": "systems/store-front-end",
+      "displayTarget": "interfaces/shopping-cart-api",
+      "directed": true,
+      "displayClass": "runtime",
+      "evidence": [
+        "cart-handler"
+      ]
+    },
+    {
+      "id": "edge-d600d96c3f0d02211536ea12",
+      "predicate": "part-of",
+      "declaredSource": "systems/shopping-cart-service",
+      "declaredTarget": "domains/retail",
+      "displaySource": "systems/shopping-cart-service",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-de5095e41139a457c92e1c60",
+      "predicate": "part-of",
+      "declaredSource": "interfaces/orders-api",
+      "declaredTarget": "systems/ordering-service",
+      "displaySource": "interfaces/orders-api",
+      "displayTarget": "systems/ordering-service",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-e38e350fbd9d097ca97066cf",
+      "predicate": "implemented-in",
+      "declaredSource": "systems/shipping-service",
+      "declaredTarget": "repositories/sock-shop-shipping",
+      "displaySource": "systems/shipping-service",
+      "displayTarget": "repositories/sock-shop-shipping",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "system-docs"
+      ]
+    },
+    {
+      "id": "edge-f0898f120d5a89e07c3467f0",
+      "predicate": "implemented-in",
+      "declaredSource": "interfaces/orders-api",
+      "declaredTarget": "repositories/sock-shop-orders",
+      "displaySource": "interfaces/orders-api",
+      "displayTarget": "repositories/sock-shop-orders",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "edge-fad3e4e1f1d22c3b99a76b03",
+      "predicate": "part-of",
+      "declaredSource": "repositories/sock-shop-user",
+      "declaredTarget": "domains/retail",
+      "displaySource": "repositories/sock-shop-user",
+      "displayTarget": "domains/retail",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    }
+  ],
+  "flows": [
+    {
+      "id": "flows/add-cart-item",
+      "steps": [
+        {
+          "order": 1,
+          "source": "systems/store-front-end",
+          "action": "invokes",
+          "target": "interfaces/catalogue-api",
+          "mode": "synchronous",
+          "evidence": [
+            "cart-handler"
+          ]
+        },
+        {
+          "order": 2,
+          "source": "systems/store-front-end",
+          "action": "invokes",
+          "target": "interfaces/shopping-cart-api",
+          "mode": "synchronous",
+          "evidence": [
+            "cart-handler"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flows/place-order",
+      "steps": [
+        {
+          "order": 1,
+          "source": "systems/store-front-end",
+          "action": "invokes",
+          "target": "interfaces/user-api",
+          "mode": "synchronous",
+          "evidence": [
+            "order-handler"
+          ]
+        },
+        {
+          "order": 2,
+          "source": "systems/store-front-end",
+          "action": "invokes",
+          "target": "interfaces/orders-api",
+          "mode": "synchronous",
+          "evidence": [
+            "order-handler"
+          ]
+        }
+      ]
+    }
+  ],
+  "questions": [],
+  "omissions": [
+    {
+      "code": "question-subject-outside-projection",
+      "subject": "repositories/serverless-data-pipelines-demo",
+      "detail": "question-fdef536388c97e1c411d44ca targets a concept outside this projection"
+    }
+  ]
+}

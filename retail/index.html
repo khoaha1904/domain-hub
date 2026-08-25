@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
+  <title>AgentBase Domain Map</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">AgentBase · Published knowledge</p>
+        <h1 id="domain-title">Domain map</h1>
+      </div>
+      <div class="snapshot" id="snapshot"></div>
+    </header>
+    <section class="workspace">
+      <aside class="controls" aria-label="Graph controls">
+        <label class="search-label" for="search">Find knowledge</label>
+        <input id="search" type="search" placeholder="System, repository, component…" autocomplete="off">
+        <div class="control-grid">
+          <label>Type<select id="type-filter"><option value="all">All types</option></select></label>
+          <label>Repository<select id="repository-filter"><option value="all">All repositories</option></select></label>
+          <label>Membership<select id="membership-filter"><option value="all">All</option><option value="primary">Primary</option><option value="boundary">Boundary</option></select></label>
+        </div>
+        <p class="section-label">Focus</p>
+        <div class="button-row">
+          <button id="focus-one" type="button">1 hop</button>
+          <button id="focus-two" type="button">2 hops</button>
+          <button id="reset" type="button">Reset</button>
+        </div>
+        <p class="hint">Drag to orbit · scroll to zoom · select a node to reveal nearby concepts.</p>
+        <div id="stats" class="stats"></div>
+        <div class="legend">
+          <span><i class="dot domain"></i>Domain</span>
+          <span><i class="dot system"></i>System</span>
+          <span><i class="dot repository"></i>Repository</span>
+          <span><i class="dot concept"></i>Concept</span>
+          <span><i class="dot boundary"></i>External boundary</span>
+        </div>
+      </aside>
+      <section class="stage" aria-label="Interactive 3D Domain graph">
+        <div id="canvas-host"></div>
+        <div id="labels" aria-hidden="true"></div>
+        <div id="fallback" class="fallback" hidden>
+          <h2>3D view unavailable</h2>
+          <p>This browser or device does not provide WebGL. The Published snapshot remains available in <code>data/domain.json</code>.</p>
+        </div>
+      </section>
+      <aside class="details" aria-live="polite">
+        <p class="section-label">Selection</p>
+        <h2 id="detail-title">Choose a node</h2>
+        <p id="detail-type" class="detail-type">Published concept details appear here.</p>
+        <p id="detail-description" class="detail-description"></p>
+        <div id="detail-meta"></div>
+      </aside>
+    </section>
+  </main>
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>
