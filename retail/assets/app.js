@@ -1,28 +1,11 @@
-import * as THREE from "./three.module.min.js";
-
-const host = document.querySelector("#canvas-host");
-const labelHost = document.querySelector("#labels");
+const graphHost = document.querySelector("#graph");
 const fallback = document.querySelector("#fallback");
 const typeFilter = document.querySelector("#type-filter");
 const repositoryFilter = document.querySelector("#repository-filter");
 const membershipFilter = document.querySelector("#membership-filter");
+const flowToggle = document.querySelector("#flow-toggle");
 const search = document.querySelector("#search");
 const highLevelTypes = new Set(["Domain", "System", "Repository"]);
-
-function hash(value) {
-  let result = 2166136261;
-  for (const character of value) result = Math.imul(result ^ character.charCodeAt(0), 16777619);
-  return result >>> 0;
-}
-
-function color(node) {
-  if (node.membership === "boundary") return 0x6d7480;
-  if (node.type === "Domain") return 0xff7448;
-  if (node.type === "System") return 0x65a9ff;
-  if (node.type === "Repository") return 0xb798ff;
-  if (node.type === "Flow") return 0xffc76b;
-  return 0x6ad6a0;
-}
 
 function addTextBlock(parent, title, values) {
   if (!values.length) return;
@@ -30,27 +13,26 @@ function addTextBlock(parent, title, values) {
   block.className = "meta-block";
   const heading = document.createElement("h3");
   heading.textContent = title;
-  block.append(heading);
   const list = document.createElement("ul");
   for (const value of values) {
     const item = document.createElement("li");
     item.textContent = value;
     list.append(item);
   }
-  block.append(list);
+  block.append(heading, list);
   parent.append(block);
 }
 
 function showFallback(error) {
-  host.hidden = true;
-  labelHost.hidden = true;
+  graphHost.hidden = true;
   fallback.hidden = false;
   const detail = document.createElement("p");
-  detail.textContent = error instanceof Error ? error.message : "The static graph could not start.";
+  detail.textContent = error instanceof Error ? error.message : "The static map could not start.";
   fallback.append(detail);
 }
 
 async function start() {
+  if (typeof globalThis.cytoscape !== "function") throw new Error("The local 2D renderer is unavailable.");
   const response = await fetch("data/domain.json");
   if (!response.ok) throw new Error("Published Domain snapshot could not be loaded.");
   const projection = await response.json();
@@ -60,12 +42,15 @@ async function start() {
     predicate: step.action,
     displaySource: step.source,
     displayTarget: step.target,
-    displayClass: "runtime",
+    displayClass: "flow-step",
     directed: true,
     flow: flow.id,
   })));
   const allEdges = [...projection.edges, ...flowEdges];
   const adjacency = new Map(projection.nodes.map((node) => [node.id, new Set(node.parentIds)]));
+  for (const node of projection.nodes) {
+    for (const parent of node.parentIds) adjacency.get(parent)?.add(node.id);
+  }
   for (const edge of allEdges) {
     adjacency.get(edge.displaySource)?.add(edge.displayTarget);
     adjacency.get(edge.displayTarget)?.add(edge.displaySource);
@@ -80,48 +65,78 @@ async function start() {
   document.querySelector("#domain-title").textContent = projection.domain.title;
   document.querySelector("#snapshot").textContent = `${projection.hub} · ${projection.commit.slice(0, 12)}`;
   for (const type of [...new Set(projection.nodes.map((node) => node.type))].sort()) {
-    const option = document.createElement("option"); option.value = type; option.textContent = type; typeFilter.append(option);
+    const option = document.createElement("option");
+    option.value = type;
+    option.textContent = type;
+    typeFilter.append(option);
   }
-  for (const repository of projection.nodes.filter((node) => node.type === "Repository").sort((left, right) => left.title.localeCompare(right.title))) {
-    const option = document.createElement("option"); option.value = repository.id; option.textContent = repository.title; repositoryFilter.append(option);
+  for (const repository of projection.nodes.filter((node) => node.type === "Repository")
+    .sort((left, right) => left.title.localeCompare(right.title))) {
+    const option = document.createElement("option");
+    option.value = repository.id;
+    option.textContent = repository.title;
+    repositoryFilter.append(option);
   }
+  flowToggle.disabled = projection.flows.length === 0;
 
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x090d15, .012);
-  const camera = new THREE.PerspectiveCamera(48, 1, .1, 400);
-  camera.position.set(0, 8, 58);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.setClearColor(0x090d15, 0);
-  host.append(renderer.domElement);
-  scene.add(new THREE.AmbientLight(0xdbe8ff, 1.7));
-  const key = new THREE.DirectionalLight(0xffffff, 2.8); key.position.set(18, 25, 24); scene.add(key);
-  const rim = new THREE.PointLight(0x658cff, 55, 90); rim.position.set(-24, -8, 20); scene.add(rim);
-  const graph = new THREE.Group(); scene.add(graph);
-  const nodeObjects = new Map(), positions = new Map(), labels = new Map();
+  const elements = [
+    ...projection.nodes.map((node) => ({
+      data: { id: node.id, label: node.title, type: node.type, membership: node.membership,
+        questionCount: (questionsBySubject.get(node.id) ?? []).length },
+      classes: `${node.membership}${questionsBySubject.has(node.id) ? " question" : ""}`,
+    })),
+    ...allEdges.map((edge, index) => ({
+      data: { id: `edge-${index}-${edge.id}`, source: edge.displaySource, target: edge.displayTarget,
+        label: edge.predicate, displayClass: edge.displayClass, directed: edge.directed },
+      classes: `${edge.displayClass}${edge.directed ? " directed" : ""}`,
+    })),
+  ];
 
-  function positionFor(node, trail = new Set()) {
-    const known = positions.get(node.id); if (known) return known;
-    if (trail.has(node.id)) return new THREE.Vector3();
-    const seed = hash(node.id), angle = ((seed % 3600) / 3600) * Math.PI * 2;
-    let result;
-    if (node.type === "Domain") result = new THREE.Vector3(0, 0, 0);
-    else if (node.type === "System") result = new THREE.Vector3(Math.cos(angle) * 15, 7 + ((seed >> 5) % 5), Math.sin(angle) * 15);
-    else if (node.type === "Repository") result = new THREE.Vector3(Math.cos(angle) * 22, -7 - ((seed >> 5) % 5), Math.sin(angle) * 22);
-    else {
-      const parent = node.parentIds.map((id) => nodeById.get(id)).find(Boolean);
-      const base = parent ? positionFor(parent, new Set(trail).add(node.id)) : new THREE.Vector3();
-      const radius = 6 + ((seed >> 8) % 6);
-      result = base.clone().add(new THREE.Vector3(Math.cos(angle) * radius, ((seed >> 16) % 9) - 4, Math.sin(angle) * radius));
-    }
-    positions.set(node.id, result); return result;
-  }
-  projection.nodes.forEach((node) => positionFor(node));
+  const cy = globalThis.cytoscape({
+    container: graphHost,
+    elements,
+    minZoom: .25,
+    maxZoom: 2.5,
+    wheelSensitivity: .22,
+    boxSelectionEnabled: false,
+    style: [
+      { selector: "node", style: {
+        "background-color": "#55c995", "border-color": "#b9f3d7", "border-width": 1,
+        color: "#f7f9fc", label: "data(label)", "font-family": "Inter, system-ui, sans-serif",
+        "font-size": 11, "font-weight": 600, height: "label", padding: 10, shape: "round-rectangle",
+        "text-halign": "center", "text-max-width": 130, "text-outline-color": "#111827",
+        "text-outline-opacity": .72, "text-outline-width": 2, "text-valign": "center",
+        "text-wrap": "wrap", width: "label",
+      } },
+      { selector: 'node[type = "Domain"]', style: { "background-color": "#ff7657", "border-color": "#ffd0c4", "font-size": 14, padding: 16 } },
+      { selector: 'node[type = "System"]', style: { "background-color": "#337ec8", "border-color": "#8bc5ff", padding: 13 } },
+      { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "border-color": "#c8b1ff" } },
+      { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "border-color": "#f4cf86" } },
+      { selector: "node.boundary", style: { "background-opacity": .3, "border-style": "dashed", "border-width": 2, color: "#c0c8d4" } },
+      { selector: "node.question", style: { "border-color": "#ff7657", "border-width": 4 } },
+      { selector: "edge", style: { "curve-style": "bezier", "line-color": "#465367", opacity: .62, width: 1.2 } },
+      { selector: "edge.structural", style: { "line-style": "dashed", opacity: .38 } },
+      { selector: "edge.runtime", style: { color: "#9bcaff", label: "data(label)", "font-size": 8,
+        "line-color": "#58a6ff", "target-arrow-color": "#58a6ff", "target-arrow-shape": "triangle",
+        "text-background-color": "#09101a", "text-background-opacity": .85, "text-background-padding": 2,
+        "text-rotation": "autorotate", width: 2 } },
+      { selector: "edge.flow-step", style: { color: "#f8d895", label: "data(label)", "font-size": 8,
+        "line-color": "#f4be5b", "line-style": "dashed", "target-arrow-color": "#f4be5b",
+        "target-arrow-shape": "triangle", "text-background-color": "#09101a", "text-background-opacity": .85,
+        "text-background-padding": 2, "text-rotation": "autorotate", width: 2 } },
+      { selector: ".hidden", style: { display: "none" } },
+      { selector: ".faded", style: { opacity: .1, "text-opacity": .08 } },
+      { selector: "node:selected", style: { "border-color": "#ffffff", "border-width": 4, "overlay-color": "#58a6ff", "overlay-opacity": .12, "overlay-padding": 8 } },
+    ],
+  });
 
-  let visible = new Set(projection.nodes.filter((node) => highLevelTypes.has(node.type) || node.membership === "boundary").map((node) => node.id));
-  let focused, selected;
+  const initialVisible = () => new Set(projection.nodes
+    .filter((node) => highLevelTypes.has(node.type) || node.membership === "boundary")
+    .map((node) => node.id));
+  let visible = initialVisible();
+  let selected;
 
-  function filteredIds() {
+  function shownNodeIds() {
     return new Set([...visible].filter((id) => {
       const node = nodeById.get(id);
       return node && (typeFilter.value === "all" || node.type === typeFilter.value)
@@ -130,116 +145,119 @@ async function start() {
     }));
   }
 
-  function clearGraph() {
-    for (const child of [...graph.children]) {
-      graph.remove(child);
-      child.geometry?.dispose();
-      if (Array.isArray(child.material)) child.material.forEach((item) => item.dispose()); else child.material?.dispose();
-    }
-    labelHost.replaceChildren(); nodeObjects.clear(); labels.clear();
+  function applyHighlight() {
+    cy.elements().removeClass("faded");
+    if (!selected) return;
+    const node = cy.$id(selected);
+    if (!node.length || node.hasClass("hidden")) return;
+    cy.elements().not(".hidden").addClass("faded");
+    node.closedNeighborhood().removeClass("faded");
   }
 
-  function rebuild() {
-    clearGraph();
-    const shown = filteredIds();
-    const shownEdges = allEdges.filter((edge) => shown.has(edge.displaySource) && shown.has(edge.displayTarget));
-    for (const edge of shownEdges) {
-      const source = positions.get(edge.displaySource), target = positions.get(edge.displayTarget);
-      if (!source || !target) continue;
-      const material = new THREE.LineBasicMaterial({ color: edge.displayClass === "structural" ? 0x586273 : 0x65a9ff,
-        transparent: true, opacity: edge.displayClass === "structural" ? .35 : .7 });
-      graph.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([source, target]), material));
-      if (edge.directed) {
-        const direction = target.clone().sub(source), length = direction.length();
-        const cone = new THREE.Mesh(new THREE.ConeGeometry(.22, .65, 8), new THREE.MeshBasicMaterial({ color: 0x65a9ff }));
-        cone.position.copy(source).add(direction.clone().normalize().multiplyScalar(Math.max(0, length - 1.25)));
-        cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
-        graph.add(cone);
-      }
+  function applyVisibility({ fit = true } = {}) {
+    const shown = shownNodeIds();
+    cy.nodes().forEach((node) => node.toggleClass("hidden", !shown.has(node.id())));
+    cy.edges().forEach((edge) => {
+      const flowHidden = edge.hasClass("flow-step") && !flowToggle.checked;
+      edge.toggleClass("hidden", flowHidden || !shown.has(edge.source().id()) || !shown.has(edge.target().id()));
+    });
+    const displayed = cy.elements().not(".hidden");
+    if (displayed.nodes().length) {
+      displayed.layout({
+        name: "concentric",
+        animate: false,
+        avoidOverlap: false,
+        equidistant: true,
+        minNodeSpacing: 16,
+        spacingFactor: .78,
+        startAngle: -Math.PI / 2,
+        concentric(node) {
+          const type = node.data("type");
+          if (type === "Domain") return 4;
+          if (type === "System") return 3;
+          if (type === "Repository") return 2;
+          if (type === "Flow") return 1;
+          return 0;
+        },
+        levelWidth: () => 1,
+        sort: (left, right) => left.id().localeCompare(right.id()),
+      }).run();
+      if (fit) cy.fit(displayed, 52);
     }
-    for (const node of projection.nodes.filter((item) => shown.has(item.id))) {
-      const radius = node.type === "Domain" ? 1.15 : highLevelTypes.has(node.type) ? .82 : .58;
-      const material = new THREE.MeshStandardMaterial({ color: color(node), roughness: .38, metalness: .18,
-        transparent: node.membership === "boundary", opacity: node.membership === "boundary" ? .7 : 1 });
-      const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 20, 14), material);
-      mesh.position.copy(positions.get(node.id)); mesh.userData.id = node.id; graph.add(mesh); nodeObjects.set(node.id, mesh);
-      const label = document.createElement("span");
-      label.className = `node-label ${node.membership}${questionsBySubject.has(node.id) ? " question" : ""}`;
-      label.textContent = node.title; labelHost.append(label); labels.set(node.id, label);
-    }
-    document.querySelector("#stats").textContent = `${shown.size} shown / ${projection.nodes.length} nodes\n${shownEdges.length} shown / ${allEdges.length} links\n${projection.questions.length} active questions`;
+    applyHighlight();
+    document.querySelector("#stats").textContent = `${displayed.nodes().length} shown / ${projection.nodes.length} nodes\n${displayed.edges().length} shown / ${allEdges.length} links\n${projection.questions.length} active questions`;
   }
 
   function showDetails(id) {
-    const node = nodeById.get(id); if (!node) return;
+    const node = nodeById.get(id);
+    if (!node) return;
     selected = id;
+    visible.add(id);
+    if (node.expandable) for (const related of adjacency.get(id) ?? []) visible.add(related);
     document.querySelector("#detail-title").textContent = node.title;
     document.querySelector("#detail-type").textContent = `${node.type} · ${node.membership}`;
     document.querySelector("#detail-description").textContent = node.description || "No Published description.";
-    const meta = document.querySelector("#detail-meta"); meta.replaceChildren();
+    const meta = document.querySelector("#detail-meta");
+    meta.replaceChildren();
     addTextBlock(meta, "Identity", [node.id, node.path]);
     addTextBlock(meta, "Published sources", node.sources);
     addTextBlock(meta, "Active questions", (questionsBySubject.get(id) ?? []).map((item) => `${item.state}: ${item.property}`));
     addTextBlock(meta, "Direct relations", allEdges.filter((edge) => edge.displaySource === id || edge.displayTarget === id)
       .map((edge) => `${edge.displaySource} — ${edge.predicate} → ${edge.displayTarget}`));
-    if (node.expandable) for (const related of adjacency.get(id) ?? []) visible.add(related);
-    rebuild();
+    cy.nodes().unselect();
+    cy.$id(id).select();
+    applyVisibility();
+  }
+
+  function clearDetails() {
+    document.querySelector("#detail-title").textContent = "Choose a node";
+    document.querySelector("#detail-type").textContent = "Published concept details appear here.";
+    document.querySelector("#detail-description").textContent = "";
+    document.querySelector("#detail-meta").replaceChildren();
   }
 
   function focus(hops) {
     if (!selected) return;
-    const found = new Set([selected]), frontier = new Set([selected]);
+    const found = new Set([selected]);
+    let frontier = new Set([selected]);
     for (let depth = 0; depth < hops; depth += 1) {
       const next = new Set();
-      for (const id of frontier) for (const related of adjacency.get(id) ?? []) if (!found.has(related)) { found.add(related); next.add(related); }
-      frontier.clear(); for (const id of next) frontier.add(id);
+      for (const id of frontier) for (const related of adjacency.get(id) ?? []) {
+        if (!found.has(related)) { found.add(related); next.add(related); }
+      }
+      frontier = next;
     }
-    focused = found; visible = new Set(found); rebuild();
+    visible = found;
+    applyVisibility();
   }
 
+  cy.on("tap", "node", (event) => showDetails(event.target.id()));
   search.addEventListener("input", () => {
-    const query = search.value.trim().toLowerCase(); if (!query) return;
+    const query = search.value.trim().toLowerCase();
+    if (!query) return;
     const match = projection.nodes.find((node) => `${node.title} ${node.id} ${node.description}`.toLowerCase().includes(query));
-    if (match) { visible.add(match.id); for (const id of adjacency.get(match.id) ?? []) visible.add(id); showDetails(match.id); }
+    if (match) showDetails(match.id);
   });
-  typeFilter.addEventListener("change", rebuild); repositoryFilter.addEventListener("change", rebuild); membershipFilter.addEventListener("change", rebuild);
+  typeFilter.addEventListener("change", () => applyVisibility());
+  repositoryFilter.addEventListener("change", () => applyVisibility());
+  membershipFilter.addEventListener("change", () => applyVisibility());
+  flowToggle.addEventListener("change", () => applyVisibility({ fit: false }));
   document.querySelector("#focus-one").addEventListener("click", () => focus(1));
   document.querySelector("#focus-two").addEventListener("click", () => focus(2));
   document.querySelector("#reset").addEventListener("click", () => {
-    focused = undefined; selected = undefined; typeFilter.value = "all"; repositoryFilter.value = "all"; membershipFilter.value = "all";
-    visible = new Set(projection.nodes.filter((node) => highLevelTypes.has(node.type) || node.membership === "boundary").map((node) => node.id)); rebuild();
+    selected = undefined;
+    search.value = "";
+    typeFilter.value = "all";
+    repositoryFilter.value = "all";
+    membershipFilter.value = "all";
+    flowToggle.checked = false;
+    visible = initialVisible();
+    cy.nodes().unselect();
+    clearDetails();
+    applyVisibility();
   });
-
-  const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
-  let dragging = false, moved = false, previous = { x: 0, y: 0 };
-  renderer.domElement.addEventListener("pointerdown", (event) => { dragging = true; moved = false; previous = { x: event.clientX, y: event.clientY }; renderer.domElement.setPointerCapture(event.pointerId); });
-  renderer.domElement.addEventListener("pointermove", (event) => {
-    if (!dragging) return;
-    const dx = event.clientX - previous.x, dy = event.clientY - previous.y; moved ||= Math.abs(dx) + Math.abs(dy) > 2;
-    graph.rotation.y += dx * .006; graph.rotation.x = THREE.MathUtils.clamp(graph.rotation.x + dy * .004, -.8, .8); previous = { x: event.clientX, y: event.clientY };
-  });
-  renderer.domElement.addEventListener("pointerup", (event) => {
-    dragging = false; if (moved) return;
-    const rect = renderer.domElement.getBoundingClientRect(); pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1; pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    raycaster.setFromCamera(pointer, camera); const hit = raycaster.intersectObjects([...nodeObjects.values()], false)[0]; if (hit?.object.userData.id) showDetails(hit.object.userData.id);
-  });
-  renderer.domElement.addEventListener("wheel", (event) => { event.preventDefault(); camera.position.z = THREE.MathUtils.clamp(camera.position.z + event.deltaY * .025, 18, 110); }, { passive: false });
-
-  function resize() {
-    const rect = host.getBoundingClientRect(); renderer.setSize(rect.width, rect.height, false); camera.aspect = rect.width / Math.max(1, rect.height); camera.updateProjectionMatrix();
-  }
-  new ResizeObserver(resize).observe(host); resize(); rebuild();
-  function animate() {
-    requestAnimationFrame(animate);
-    for (const [id, label] of labels) {
-      const mesh = nodeObjects.get(id); if (!mesh) continue;
-      const point = mesh.position.clone().applyMatrix4(graph.matrixWorld).project(camera);
-      label.style.left = `${(point.x * .5 + .5) * host.clientWidth}px`; label.style.top = `${(-point.y * .5 + .5) * host.clientHeight}px`;
-      label.style.opacity = point.z < 1 ? "1" : "0";
-    }
-    renderer.render(scene, camera);
-  }
-  animate();
+  new ResizeObserver(() => cy.resize()).observe(graphHost);
+  applyVisibility();
 }
 
 start().catch(showFallback);

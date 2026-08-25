@@ -17,7 +17,7 @@
       <div class="snapshot" id="snapshot"></div>
     </header>
     <section class="workspace">
-      <aside class="controls" aria-label="Graph controls">
+      <aside class="controls" aria-label="Map controls">
         <label class="search-label" for="search">Find knowledge</label>
         <input id="search" type="search" placeholder="System, repository, component…" autocomplete="off">
         <div class="control-grid">
@@ -25,28 +25,29 @@
           <label>Repository<select id="repository-filter"><option value="all">All repositories</option></select></label>
           <label>Membership<select id="membership-filter"><option value="all">All</option><option value="primary">Primary</option><option value="boundary">Boundary</option></select></label>
         </div>
+        <label class="toggle"><input id="flow-toggle" type="checkbox"> Show Flow steps</label>
         <p class="section-label">Focus</p>
         <div class="button-row">
           <button id="focus-one" type="button">1 hop</button>
           <button id="focus-two" type="button">2 hops</button>
           <button id="reset" type="button">Reset</button>
         </div>
-        <p class="hint">Drag to orbit · scroll to zoom · select a node to reveal nearby concepts.</p>
-        <div id="stats" class="stats"></div>
-        <div class="legend">
-          <span><i class="dot domain"></i>Domain</span>
-          <span><i class="dot system"></i>System</span>
-          <span><i class="dot repository"></i>Repository</span>
-          <span><i class="dot concept"></i>Concept</span>
-          <span><i class="dot boundary"></i>External boundary</span>
+        <p class="hint">Drag to pan · scroll to zoom · select a node to inspect and reveal nearby knowledge.</p>
+        <div id="stats" class="stats" aria-live="polite"></div>
+        <div class="legend" aria-label="Map legend">
+          <span><i class="swatch domain"></i>Domain</span>
+          <span><i class="swatch system"></i>System</span>
+          <span><i class="swatch repository"></i>Repository</span>
+          <span><i class="swatch concept"></i>Concept</span>
+          <span><i class="swatch runtime"></i>Runtime relation</span>
+          <span><i class="swatch boundary"></i>External boundary</span>
         </div>
       </aside>
-      <section class="stage" aria-label="Interactive 3D Domain graph">
-        <div id="canvas-host"></div>
-        <div id="labels" aria-hidden="true"></div>
+      <section class="stage" aria-label="Interactive 2D Domain knowledge map">
+        <div id="graph" role="img" aria-label="Published Domain concepts and accepted relations" tabindex="0"></div>
         <div id="fallback" class="fallback" hidden>
-          <h2>3D view unavailable</h2>
-          <p>This browser or device does not provide WebGL. The Published snapshot remains available in <code>data/domain.json</code>.</p>
+          <h2>Knowledge map unavailable</h2>
+          <p>The Published snapshot remains available in <code>data/domain.json</code>.</p>
         </div>
       </section>
       <aside class="details" aria-live="polite">
@@ -58,6 +59,7 @@
       </aside>
     </section>
   </main>
+  <script src="assets/cytoscape.min.js"></script>
   <script type="module" src="assets/app.js"></script>
 </body>
 </html>
