@@ -33,7 +33,8 @@ function showFallback(error) {
 
 async function start() {
   if (typeof globalThis.cytoscape !== "function") throw new Error("The local 2D renderer is unavailable.");
-  const response = await fetch("data/domain.json");
+  const browserBuildQuery = new URL(import.meta.url).search;
+  const response = await fetch(`data/domain.json${browserBuildQuery}`);
   if (!response.ok) throw new Error("Published Domain snapshot could not be loaded.");
   const projection = await response.json();
   const nodeById = new Map(projection.nodes.map((node) => [node.id, node]));
