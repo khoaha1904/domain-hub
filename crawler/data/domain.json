@@ -26,8 +26,8 @@
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/api_sourcing/src/main.py#L29-L58",
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
       ],
-      "membership": "boundary",
-      "expandable": false
+      "membership": "primary",
+      "expandable": true
     },
     {
       "id": "components/apiscript",
@@ -47,8 +47,8 @@
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/README.md#L23-L28",
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/glue_job.tf#L33-L56"
       ],
-      "membership": "boundary",
-      "expandable": false
+      "membership": "primary",
+      "expandable": true
     },
     {
       "id": "components/athena-query-execution",
@@ -68,8 +68,8 @@
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/athena_query_execution/src/main.py#L46-L66",
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
       ],
-      "membership": "boundary",
-      "expandable": false
+      "membership": "primary",
+      "expandable": true
     },
     {
       "id": "components/comprehend-analysis",
@@ -89,8 +89,8 @@
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/comprehend_analysis/src/main.py#L107-L133",
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
       ],
-      "membership": "boundary",
-      "expandable": false
+      "membership": "primary",
+      "expandable": true
     },
     {
       "id": "components/glue-crawler-initiation",
@@ -111,8 +111,8 @@
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/glue_crawler_initiation/src/main.py#L50-L66",
         "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
       ],
-      "membership": "boundary",
-      "expandable": false
+      "membership": "primary",
+      "expandable": true
     },
     {
       "id": "domains/crawler",

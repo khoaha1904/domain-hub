@@ -5,7 +5,10 @@ const repositoryFilter = document.querySelector("#repository-filter");
 const membershipFilter = document.querySelector("#membership-filter");
 const flowToggle = document.querySelector("#flow-toggle");
 const search = document.querySelector("#search");
-const highLevelTypes = new Set(["Domain", "System", "Repository"]);
+const details = document.querySelector(".details");
+const closeDetails = document.querySelector("#close-details");
+const viewDocument = document.querySelector("#view-document");
+const documentDialog = document.querySelector("#document-dialog");
 
 function addTextBlock(parent, title, values) {
   if (!values.length) return;
@@ -104,14 +107,14 @@ async function start() {
       { selector: "node", style: {
         "background-color": "#55c995", "border-color": "#b9f3d7", "border-width": 1,
         color: "#f7f9fc", label: "data(label)", "font-family": "Inter, system-ui, sans-serif",
-        "font-size": 11, "font-weight": 600, height: "label", padding: 10, shape: "round-rectangle",
-        "text-halign": "center", "text-max-width": 130, "text-outline-color": "#111827",
+        "font-size": 11, "font-weight": 600, height: 34, label: "data(label)", padding: 0, shape: "ellipse",
+        "text-halign": "center", "text-max-width": 150, "text-outline-color": "#111827",
         "text-outline-opacity": .72, "text-outline-width": 2, "text-valign": "center",
-        "text-wrap": "wrap", width: "label",
+        "text-margin-y": 27, "text-valign": "bottom", "text-wrap": "wrap", width: 34,
       } },
-      { selector: 'node[type = "Domain"]', style: { "background-color": "#ff7657", "border-color": "#ffd0c4", "font-size": 14, padding: 16 } },
-      { selector: 'node[type = "System"]', style: { "background-color": "#337ec8", "border-color": "#8bc5ff", padding: 13 } },
-      { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "border-color": "#c8b1ff" } },
+      { selector: 'node[type = "Domain"]', style: { "background-color": "#ff7657", "border-color": "#ffd0c4", "font-size": 13, width: 42, height: 42, "text-margin-y": 31 } },
+      { selector: 'node[type = "System"]', style: { "background-color": "#337ec8", "border-color": "#8bc5ff", width: 38, height: 38, "text-margin-y": 29 } },
+      { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "border-color": "#c8b1ff", width: 38, height: 38, "text-margin-y": 29 } },
       { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "border-color": "#f4cf86" } },
       { selector: "node.boundary", style: { "background-opacity": .3, "border-style": "dashed", "border-width": 2, color: "#c0c8d4" } },
       { selector: "node.question", style: { "border-color": "#ff7657", "border-width": 4 } },
@@ -131,9 +134,7 @@ async function start() {
     ],
   });
 
-  const initialVisible = () => new Set(projection.nodes
-    .filter((node) => highLevelTypes.has(node.type) || node.membership === "boundary")
-    .map((node) => node.id));
+  const initialVisible = () => new Set(projection.nodes.map((node) => node.id));
   let visible = initialVisible();
   let selected;
 
@@ -193,6 +194,8 @@ async function start() {
     const node = nodeById.get(id);
     if (!node) return;
     selected = id;
+    details.classList.add("is-open");
+    details.setAttribute("aria-label", `Details for ${node.title}`);
     visible.add(id);
     if (node.expandable) for (const related of adjacency.get(id) ?? []) visible.add(related);
     document.querySelector("#detail-title").textContent = node.title;
@@ -204,17 +207,40 @@ async function start() {
     addTextBlock(meta, "Published sources", node.sources);
     addTextBlock(meta, "Active questions", (questionsBySubject.get(id) ?? []).map((item) => `${item.state}: ${item.property}`));
     addTextBlock(meta, "Direct relations", allEdges.filter((edge) => edge.displaySource === id || edge.displayTarget === id)
-      .map((edge) => `${edge.displaySource} — ${edge.predicate} → ${edge.displayTarget}`));
+      .map((edge) => {
+        const source = nodeById.get(edge.displaySource)?.title ?? edge.displaySource;
+        const target = nodeById.get(edge.displayTarget)?.title ?? edge.displayTarget;
+        return `${source} — ${edge.predicate} → ${target}`;
+      }));
+    viewDocument.disabled = false;
     cy.nodes().unselect();
     cy.$id(id).select();
     applyVisibility();
   }
 
   function clearDetails() {
+    details.classList.remove("is-open");
+    details.removeAttribute("aria-label");
     document.querySelector("#detail-title").textContent = "Choose a node";
     document.querySelector("#detail-type").textContent = "Published concept details appear here.";
     document.querySelector("#detail-description").textContent = "";
     document.querySelector("#detail-meta").replaceChildren();
+    viewDocument.disabled = true;
+  }
+
+  function showDocument(id) {
+    const node = nodeById.get(id);
+    if (!node) return;
+    document.querySelector("#document-title").textContent = node.title;
+    document.querySelector("#document-type").textContent = `${node.type} · ${node.membership}`;
+    document.querySelector("#document-description").textContent = node.description || "No Published description.";
+    const meta = document.querySelector("#document-meta");
+    meta.replaceChildren();
+    addTextBlock(meta, "Identity", [node.id, node.path]);
+    addTextBlock(meta, "Published sources", node.sources);
+    addTextBlock(meta, "Direct relations", allEdges.filter((edge) => edge.displaySource === id || edge.displayTarget === id)
+      .map((edge) => `${nodeById.get(edge.displaySource)?.title ?? edge.displaySource} — ${edge.predicate} → ${nodeById.get(edge.displayTarget)?.title ?? edge.displayTarget}`));
+    documentDialog.showModal();
   }
 
   function focus(hops) {
@@ -233,6 +259,8 @@ async function start() {
   }
 
   cy.on("tap", "node", (event) => showDetails(event.target.id()));
+  closeDetails.addEventListener("click", () => { selected = undefined; cy.nodes().unselect(); clearDetails(); applyVisibility({ fit: false }); });
+  viewDocument.addEventListener("click", () => showDocument(selected));
   search.addEventListener("input", () => {
     const query = search.value.trim().toLowerCase();
     if (!query) return;
