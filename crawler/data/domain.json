@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "hub": "github.com/khoaha1904/AgentBase-Hub#main",
-  "commit": "59059443f71c358cbeebf84e6a12796f3d54aabe",
+  "commit": "03658439323097e07c7134bd2bdb25869d348da1",
   "domain": {
     "id": "domains/crawler",
     "path": "domains/crawler.md",
