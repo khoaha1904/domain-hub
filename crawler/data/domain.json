@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "hub": "github.com/khoaha1904/AgentBase-Hub#main",
-  "commit": "03658439323097e07c7134bd2bdb25869d348da1",
+  "hub": "fixture/crawler-qualification#main",
+  "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "domain": {
     "id": "domains/crawler",
     "path": "domains/crawler.md",
@@ -9,107 +9,43 @@
   },
   "nodes": [
     {
-      "id": "components/api-sourcing",
-      "path": "components/api-sourcing.md",
+      "id": "components/crawler-publisher",
+      "path": "components/crawler-publisher.md",
       "type": "Function",
-      "title": "Api_Sourcing",
-      "description": "Find the independently deployed function that sources Best Buy API pages into the landing zone.",
+      "title": "Crawler publisher Lambda",
+      "description": "Lambda that sends crawler jobs to SQS.",
       "domainIds": [],
       "parentIds": [
-        "repositories/serverless-data-pipelines-demo"
+        "repositories/crawler-publisher"
       ],
       "systemIds": [],
       "repositoryIds": [
-        "repositories/serverless-data-pipelines-demo"
+        "repositories/crawler-publisher"
       ],
       "sources": [
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/api_sourcing/src/main.py#L29-L58",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
+        "repository://repository-crawler-publisher-111111111111/main.tf#L1-L24",
+        "repository://repository-crawler-publisher-111111111111/src/handler.py#L1-L24"
       ],
       "membership": "primary",
       "expandable": true
     },
     {
-      "id": "components/apiscript",
-      "path": "components/apiscript.md",
-      "type": "Component",
-      "title": "ApiScript",
-      "description": "Find the deployed ETL workload that transforms landing data into trusted Parquet data.",
-      "domainIds": [],
-      "parentIds": [
-        "repositories/serverless-data-pipelines-demo"
-      ],
-      "systemIds": [],
-      "repositoryIds": [
-        "repositories/serverless-data-pipelines-demo"
-      ],
-      "sources": [
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/README.md#L23-L28",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/glue_job.tf#L33-L56"
-      ],
-      "membership": "primary",
-      "expandable": true
-    },
-    {
-      "id": "components/athena-query-execution",
-      "path": "components/athena-query-execution.md",
+      "id": "components/crawler-worker",
+      "path": "components/crawler-worker.md",
       "type": "Function",
-      "title": "Athena_query_execution",
-      "description": "Find the deployed function that executes the reporting SQL queries in Athena.",
+      "title": "Crawler worker Lambda",
+      "description": "Lambda triggered by SQS and writing results.",
       "domainIds": [],
       "parentIds": [
-        "repositories/serverless-data-pipelines-demo"
+        "repositories/crawler-worker"
       ],
       "systemIds": [],
       "repositoryIds": [
-        "repositories/serverless-data-pipelines-demo"
+        "repositories/crawler-worker"
       ],
       "sources": [
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/athena_query_execution/src/main.py#L46-L66",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
-      ],
-      "membership": "primary",
-      "expandable": true
-    },
-    {
-      "id": "components/comprehend-analysis",
-      "path": "components/comprehend-analysis.md",
-      "type": "Function",
-      "title": "Comprehend_analysis",
-      "description": "Find the deployed function that queries Athena, extracts entities with Comprehend, and writes analytics output.",
-      "domainIds": [],
-      "parentIds": [
-        "repositories/serverless-data-pipelines-demo"
-      ],
-      "systemIds": [],
-      "repositoryIds": [
-        "repositories/serverless-data-pipelines-demo"
-      ],
-      "sources": [
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/comprehend_analysis/src/main.py#L107-L133",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
-      ],
-      "membership": "primary",
-      "expandable": true
-    },
-    {
-      "id": "components/glue-crawler-initiation",
-      "path": "components/glue-crawler-initiation.md",
-      "type": "Function",
-      "title": "Glue_crawler_initiation",
-      "description": "Find the deployed function that starts and polls AWS Glue crawlers.",
-      "domainIds": [],
-      "parentIds": [
-        "repositories/serverless-data-pipelines-demo"
-      ],
-      "systemIds": [],
-      "repositoryIds": [
-        "repositories/serverless-data-pipelines-demo"
-      ],
-      "sources": [
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/glue_crawler_initiation/README.md#L1-L3",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/lambdas/glue_crawler_initiation/src/main.py#L50-L66",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/python_lambda/main.tf#L1-L16"
+        "repository://repository-crawler-worker-222222222222/main.tf#L1-L24",
+        "repository://repository-crawler-worker-222222222222/src/handler.py#L1-L24"
       ],
       "membership": "primary",
       "expandable": true
@@ -119,7 +55,7 @@
       "path": "domains/crawler.md",
       "type": "Domain",
       "title": "Crawler",
-      "description": "Crawler business domain",
+      "description": "Crawler qualification Domain",
       "domainIds": [
         "domains/crawler"
       ],
@@ -127,8 +63,53 @@
       "systemIds": [],
       "repositoryIds": [],
       "sources": [
+        "agentbase://owner-guidance/domains/crawler"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/crawler-publisher",
+      "path": "repositories/crawler-publisher.md",
+      "type": "Repository",
+      "title": "Crawler publisher",
+      "description": "Publishes crawler jobs.",
+      "domainIds": [
+        "domains/crawler"
+      ],
+      "parentIds": [
+        "domains/crawler"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/crawler-publisher"
+      ],
+      "sources": [
         "agentbase://owner-guidance/domains/crawler",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/README.md#L11-L13"
+        "repository://repository-crawler-publisher-111111111111/README.md#L1-L24"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "repositories/crawler-worker",
+      "path": "repositories/crawler-worker.md",
+      "type": "Repository",
+      "title": "Crawler worker",
+      "description": "Consumes and stores crawler jobs.",
+      "domainIds": [
+        "domains/crawler"
+      ],
+      "parentIds": [
+        "domains/crawler"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/crawler-worker"
+      ],
+      "sources": [
+        "agentbase://owner-guidance/domains/crawler",
+        "repository://repository-crawler-worker-222222222222/README.md#L1-L24"
       ],
       "membership": "primary",
       "expandable": true
@@ -137,8 +118,8 @@
       "id": "repositories/serverless-data-pipelines-demo",
       "path": "repositories/serverless-data-pipelines-demo.md",
       "type": "Repository",
-      "title": "serverless-data-pipelines-demo",
-      "description": "Find the source repository that deploys the serverless AWS data pipeline.",
+      "title": "Serverless data pipelines",
+      "description": "Existing crawler data pipeline fixture.",
       "domainIds": [
         "domains/crawler"
       ],
@@ -151,8 +132,71 @@
       ],
       "sources": [
         "agentbase://owner-guidance/domains/crawler",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/.github/workflows/terraform.yml#L8-L44",
-        "repository://repository-serverless-data-pipelines-demo-95c2a8f15f93/README.md#L11-L13"
+        "repository://repository-serverless-pipeline-333333333333/README.md#L1-L24"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "resources/crawler-jobs",
+      "path": "resources/crawler-jobs.md",
+      "type": "Resource",
+      "title": "crawler-jobs SQS queue",
+      "description": "Shared SQS queue carrying crawler jobs.",
+      "domainIds": [
+        "domains/crawler"
+      ],
+      "parentIds": [
+        "domains/crawler"
+      ],
+      "systemIds": [],
+      "repositoryIds": [],
+      "sources": [
+        "agentbase://owner-guidance/domains/crawler",
+        "repository://repository-crawler-publisher-111111111111/main.tf#L1-L24",
+        "repository://repository-crawler-worker-222222222222/main.tf#L1-L24"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "resources/crawler-jobs-table",
+      "path": "resources/crawler-jobs-table.md",
+      "type": "Resource",
+      "title": "Crawler jobs DynamoDB table",
+      "description": "DynamoDB table indexing processed crawler jobs.",
+      "domainIds": [
+        "domains/crawler"
+      ],
+      "parentIds": [
+        "domains/crawler"
+      ],
+      "systemIds": [],
+      "repositoryIds": [],
+      "sources": [
+        "agentbase://owner-guidance/domains/crawler",
+        "repository://repository-crawler-worker-222222222222/main.tf#L1-L24"
+      ],
+      "membership": "primary",
+      "expandable": true
+    },
+    {
+      "id": "resources/crawler-results-bucket",
+      "path": "resources/crawler-results-bucket.md",
+      "type": "Resource",
+      "title": "Crawler results S3 bucket",
+      "description": "S3 bucket storing processed crawler payloads.",
+      "domainIds": [
+        "domains/crawler"
+      ],
+      "parentIds": [
+        "domains/crawler"
+      ],
+      "systemIds": [],
+      "repositoryIds": [],
+      "sources": [
+        "agentbase://owner-guidance/domains/crawler",
+        "repository://repository-crawler-worker-222222222222/main.tf#L1-L24"
       ],
       "membership": "primary",
       "expandable": true
@@ -173,80 +217,191 @@
       ]
     },
     {
-      "id": "edge-65bdc4a94d68b6b24edc4cbd",
-      "predicate": "implemented-in",
-      "declaredSource": "components/athena-query-execution",
-      "declaredTarget": "repositories/serverless-data-pipelines-demo",
-      "displaySource": "components/athena-query-execution",
-      "displayTarget": "repositories/serverless-data-pipelines-demo",
-      "directed": false,
-      "displayClass": "structural",
+      "id": "edge-2840040703b64a77e81a5ad9",
+      "predicate": "publishes-to",
+      "declaredSource": "components/crawler-publisher",
+      "declaredTarget": "resources/crawler-jobs",
+      "displaySource": "components/crawler-publisher",
+      "displayTarget": "resources/crawler-jobs",
+      "directed": true,
+      "displayClass": "runtime",
       "evidence": [
-        "sem-athena-handler"
+        "publisher-handler",
+        "publisher-terraform"
       ]
     },
     {
-      "id": "edge-7ac3e28ae6cc5d48d0e8ac07",
-      "predicate": "implemented-in",
-      "declaredSource": "components/glue-crawler-initiation",
-      "declaredTarget": "repositories/serverless-data-pipelines-demo",
-      "displaySource": "components/glue-crawler-initiation",
-      "displayTarget": "repositories/serverless-data-pipelines-demo",
-      "directed": false,
-      "displayClass": "structural",
+      "id": "edge-2fe2dd5050e9a4a1a2b6e7c1",
+      "predicate": "writes-to",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "resources/crawler-results-bucket",
+      "displaySource": "components/crawler-worker",
+      "displayTarget": "resources/crawler-results-bucket",
+      "directed": true,
+      "displayClass": "runtime",
       "evidence": [
-        "sem-crawler-handler"
+        "worker-terraform"
       ]
     },
     {
-      "id": "edge-8d4d5ebed8d5ee905e674aa5",
+      "id": "edge-30699f7e80cb17ab89e71396",
       "predicate": "implemented-in",
-      "declaredSource": "components/comprehend-analysis",
-      "declaredTarget": "repositories/serverless-data-pipelines-demo",
-      "displaySource": "components/comprehend-analysis",
-      "displayTarget": "repositories/serverless-data-pipelines-demo",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "repositories/crawler-worker",
+      "displaySource": "components/crawler-worker",
+      "displayTarget": "repositories/crawler-worker",
       "directed": false,
       "displayClass": "structural",
       "evidence": [
-        "sem-comprehend-handler"
+        "worker-terraform"
       ]
     },
     {
-      "id": "edge-c2f23a10424985944512a60a",
-      "predicate": "implemented-in",
-      "declaredSource": "components/api-sourcing",
-      "declaredTarget": "repositories/serverless-data-pipelines-demo",
-      "displaySource": "components/api-sourcing",
-      "displayTarget": "repositories/serverless-data-pipelines-demo",
-      "directed": false,
-      "displayClass": "structural",
+      "id": "edge-3afb83bf2dd31a46b63f16f3",
+      "predicate": "triggered-by",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "resources/crawler-jobs",
+      "displaySource": "resources/crawler-jobs",
+      "displayTarget": "components/crawler-worker",
+      "directed": true,
+      "displayClass": "runtime",
       "evidence": [
-        "sem-api-handler"
+        "worker-handler",
+        "worker-terraform"
       ]
     },
     {
-      "id": "edge-dacf0fb53319dcc6fa686c4e",
+      "id": "edge-48234ed53a9fc77ff818a681",
       "predicate": "implemented-in",
-      "declaredSource": "components/apiscript",
-      "declaredTarget": "repositories/serverless-data-pipelines-demo",
-      "displaySource": "components/apiscript",
-      "displayTarget": "repositories/serverless-data-pipelines-demo",
+      "declaredSource": "components/crawler-publisher",
+      "declaredTarget": "repositories/crawler-publisher",
+      "displaySource": "components/crawler-publisher",
+      "displayTarget": "repositories/crawler-publisher",
       "directed": false,
       "displayClass": "structural",
       "evidence": [
-        "tf-glue-job"
+        "publisher-terraform"
+      ]
+    },
+    {
+      "id": "edge-6b7fa09275f8dc90ac3aeb96",
+      "predicate": "part-of",
+      "declaredSource": "repositories/crawler-worker",
+      "declaredTarget": "domains/crawler",
+      "displaySource": "repositories/crawler-worker",
+      "displayTarget": "domains/crawler",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-8b57aae0a09511bcfc16d938",
+      "predicate": "writes-to",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "resources/crawler-jobs-table",
+      "displaySource": "components/crawler-worker",
+      "displayTarget": "resources/crawler-jobs-table",
+      "directed": true,
+      "displayClass": "runtime",
+      "evidence": [
+        "worker-terraform"
+      ]
+    },
+    {
+      "id": "edge-9235e3837c4dc7b5fdb9c045",
+      "predicate": "part-of",
+      "declaredSource": "resources/crawler-results-bucket",
+      "declaredTarget": "domains/crawler",
+      "displaySource": "resources/crawler-results-bucket",
+      "displayTarget": "domains/crawler",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-db48dd5ae9e082842ab53c21",
+      "predicate": "part-of",
+      "declaredSource": "resources/crawler-jobs",
+      "declaredTarget": "domains/crawler",
+      "displaySource": "resources/crawler-jobs",
+      "displayTarget": "domains/crawler",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-e63b24c2e0c86c76bb449007",
+      "predicate": "part-of",
+      "declaredSource": "resources/crawler-jobs-table",
+      "declaredTarget": "domains/crawler",
+      "displaySource": "resources/crawler-jobs-table",
+      "displayTarget": "domains/crawler",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
+      ]
+    },
+    {
+      "id": "edge-f0d36e810988779afe79c3ef",
+      "predicate": "part-of",
+      "declaredSource": "repositories/crawler-publisher",
+      "declaredTarget": "domains/crawler",
+      "displaySource": "repositories/crawler-publisher",
+      "displayTarget": "domains/crawler",
+      "directed": false,
+      "displayClass": "structural",
+      "evidence": [
+        "owner-domain"
       ]
     }
   ],
   "flows": [],
   "questions": [
     {
-      "id": "question-fdef536388c97e1c411d44ca",
-      "subject": "repositories/serverless-data-pipelines-demo",
+      "id": "question-42e7cd074990c6c54fa0be6c",
+      "subject": "components/crawler-publisher",
       "state": "open",
-      "kind": "maintainer-decision",
-      "property": "operational-ownership"
+      "kind": "relation-candidate",
+      "property": "queue"
     }
   ],
-  "omissions": []
+  "omissions": [
+    {
+      "code": "relationship-warning",
+      "subject": "domains/crawler",
+      "detail": "components/crawler-publisher.md: relationship publishes-to -> resources/crawler-jobs is unjudged by Function schema guidance"
+    },
+    {
+      "code": "relationship-warning",
+      "subject": "domains/crawler",
+      "detail": "components/crawler-worker.md: relationship writes-to -> resources/crawler-jobs-table is unjudged by Function schema guidance"
+    },
+    {
+      "code": "relationship-warning",
+      "subject": "domains/crawler",
+      "detail": "components/crawler-worker.md: relationship writes-to -> resources/crawler-results-bucket is unjudged by Function schema guidance"
+    },
+    {
+      "code": "relationship-warning",
+      "subject": "domains/crawler",
+      "detail": "resources/crawler-jobs-table.md: relationship part-of -> domains/crawler is unjudged by Resource schema guidance"
+    },
+    {
+      "code": "relationship-warning",
+      "subject": "domains/crawler",
+      "detail": "resources/crawler-jobs.md: relationship part-of -> domains/crawler is unjudged by Resource schema guidance"
+    },
+    {
+      "code": "relationship-warning",
+      "subject": "domains/crawler",
+      "detail": "resources/crawler-results-bucket.md: relationship part-of -> domains/crawler is unjudged by Resource schema guidance"
+    }
+  ]
 }
