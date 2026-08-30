@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crawler architecture · AgentBase</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--paper:#f5f5f5;--ink:#2d3142;--muted:#596275;--accent:#eb6c36;--blue:#2e5aa8;--line:#9aa1af;--sans:system-ui,-apple-system,"Segoe UI",sans-serif;--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,"SFMono-Regular",Consolas,monospace}body{background:var(--paper);color:var(--ink);font-family:var(--sans);min-height:100vh;padding:38px 24px}main{margin:auto;max-width:1240px}.top{display:flex;justify-content:space-between;gap:24px;align-items:end}.eyebrow{color:var(--muted);font:700 10px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase}h1{font:400 clamp(1.6rem,3vw,2.2rem)/1.15 var(--serif);margin:.35rem 0 1rem}.back{color:var(--blue);font-size:.9rem}svg{display:block;min-width:1000px;width:100%;background:#fff;border:1px solid #d9dbe1}.node{fill:#fff;stroke:#596275;stroke-width:1.5}.repo{fill:#f1f3f7;stroke:#798292}.boundary{fill:#fffaf5;stroke:#eb6c36;stroke-width:1.6;stroke-dasharray:7 5}.domain{fill:#fafafa;stroke:#9aa1af;stroke-width:1.4}.runtime{fill:none;stroke:#2e5aa8;stroke-width:2}.structural{fill:none;stroke:#9aa1af;stroke-width:1.4;stroke-dasharray:5 4}.label-bg{fill:#fff}.title{fill:#2d3142;font:600 14px var(--sans)}.kind{fill:#596275;font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}.edge-label{fill:#40506b;font:600 10px var(--mono)}.note{fill:#7a3d22;font:600 11px var(--sans)}.footer{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font:12px/1.5 var(--mono);margin-top:10px}.badge{fill:#eb6c36}.badge-text{fill:white;font:700 10px var(--mono)}</style>
+</head>
+<body>
+<main>
+  <div class="top"><div><p class="eyebrow">AgentBase · Published Hub · Architecture</p><h1>Crawler cross-repository architecture</h1></div><a class="back" href="index.html">Benchmark index</a></div>
+  <svg viewBox="0 0 1160 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="diagram-title diagram-desc">
+    <title id="diagram-title">Crawler cross-repository architecture</title>
+    <desc id="diagram-desc">Eight Published nodes and eight supplied structural or runtime edges connect publisher and worker repositories through boundary resources.</desc>
+    <defs><marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#2e5aa8"/></marker></defs>
+    <rect width="1160" height="720" fill="#fff"/>
+    <!-- groups/nodes that also represent exact packet nodes -->
+    <rect class="domain" x="35" y="65" width="745" height="585" rx="8"/>
+    <text class="kind" x="55" y="91">Domain node</text><text class="title" x="55" y="116">Crawler</text>
+    <rect class="repo" x="85" y="165" width="285" height="300" rx="6"/>
+    <text class="kind" x="105" y="191">Repository node</text><text class="title" x="105" y="216">Crawler publisher</text>
+    <rect class="repo" x="445" y="165" width="285" height="390" rx="6"/>
+    <text class="kind" x="465" y="191">Repository node</text><text class="title" x="465" y="216">Crawler worker</text>
+    <!-- connectors before leaf nodes -->
+    <path class="structural" d="M228 295 V225"/><path class="structural" d="M228 465 V635"/>
+    <path class="structural" d="M588 295 V225"/><path class="structural" d="M588 555 V635"/>
+    <path class="runtime" marker-end="url(#arrow)" d="M335 330 H400 V140 H790 V315 H835"/>
+    <path class="runtime" marker-end="url(#arrow)" d="M835 330 H760 V365 H690"/>
+    <path class="runtime" marker-end="url(#arrow)" d="M690 390 H835 V470"/>
+    <path class="runtime" marker-end="url(#arrow)" d="M690 405 H810 V590 H835"/>
+    <rect class="label-bg" x="537" y="127" width="82" height="20"/><text class="edge-label" x="545" y="141">depends-on</text>
+    <rect class="label-bg" x="726" y="340" width="75" height="20"/><text class="edge-label" x="733" y="354">triggers</text>
+    <rect class="label-bg" x="751" y="443" width="84" height="20"/><text class="edge-label" x="758" y="457">depends-on</text>
+    <rect class="label-bg" x="725" y="563" width="84" height="20"/><text class="edge-label" x="732" y="577">depends-on</text>
+    <!-- leaf nodes -->
+    <rect class="node" x="120" y="295" width="215" height="70" rx="5"/><text class="kind" x="138" y="319">Function</text><text class="title" x="138" y="344">Crawler publisher Lambda</text>
+    <circle class="badge" cx="326" cy="304" r="13"/><text class="badge-text" x="322" y="308">Q</text>
+    <rect class="node" x="480" y="295" width="210" height="95" rx="5"/><text class="kind" x="498" y="319">Function</text><text class="title" x="498" y="344">Crawler worker Lambda</text><text class="note" x="498" y="369">Consumes and persists jobs</text>
+    <rect class="boundary" x="835" y="285" width="270" height="90" rx="5"/><text class="kind" x="853" y="312">Boundary resource</text><text class="title" x="853" y="338">crawler-jobs SQS queue</text><text class="note" x="853" y="358">Non-expandable endpoint</text>
+    <rect class="boundary" x="835" y="435" width="270" height="90" rx="5"/><text class="kind" x="853" y="462">Boundary resource</text><text class="title" x="853" y="488">Crawler jobs DynamoDB table</text><text class="note" x="853" y="508">Non-expandable endpoint</text>
+    <rect class="boundary" x="835" y="555" width="270" height="90" rx="5"/><text class="kind" x="853" y="582">Boundary resource</text><text class="title" x="853" y="608">Crawler results S3 bucket</text><text class="note" x="853" y="628">Non-expandable endpoint</text>
+  </svg>
+  <div class="footer"><span>8 packet nodes · 8 packet edges · Q = open Question</span><span>Published b7ccbc364317</span></div>
+</main>
+</body>
+</html>

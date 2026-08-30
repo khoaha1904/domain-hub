@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentBase diagram benchmark</title>
+  <style>
+    :root { color-scheme: light; --paper:#f5f5f5; --ink:#2d3142; --muted:#596275; --accent:#eb6c36; --line:#d7d9df; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { max-width:1000px; margin:auto; padding:56px 28px; }
+    .eyebrow { color:var(--muted); font:700 11px/1.4 ui-monospace,monospace; letter-spacing:.16em; text-transform:uppercase; }
+    h1 { margin:.45rem 0 .6rem; font:400 clamp(2rem,5vw,3.5rem)/1.05 Georgia,serif; }
+    .lede { max-width:760px; color:var(--muted); }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin:36px 0; }
+    a.card { display:block; min-height:190px; padding:22px; color:inherit; text-decoration:none; background:white; border:1px solid var(--line); border-top:4px solid var(--accent); }
+    a.card:hover { border-color:var(--accent); }
+    .type { color:var(--accent); font:700 11px/1.4 ui-monospace,monospace; letter-spacing:.14em; text-transform:uppercase; }
+    h2 { margin:.45rem 0; font:400 1.6rem/1.2 Georgia,serif; }
+    .meta { color:var(--muted); font-size:.9rem; }
+    .finding { background:#fff8f2; border-left:4px solid var(--accent); padding:18px 20px; }
+    code { font-family:ui-monospace,monospace; font-size:.88em; }
+    ul { padding-left:1.25rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">AgentBase · Published Hub visual review</p>
+    <h1>Diagram benchmark</h1>
+    <p class="lede">Three self-contained artifacts rendered from exact Published packets at <code>b7ccbc364317</code>. Review presentation quality here; topology correctness remains owned by AgentBase.</p>
+    <section class="cards" aria-label="Diagram artifacts">
+      <a class="card" href="architecture.html"><span class="type">Architecture</span><h2>Crawler system shape</h2><p>Repositories, functions, shared queue and persistence boundaries.</p><p class="meta">8 nodes · 8 supplied edges</p></a>
+      <a class="card" href="dependency.html"><span class="type">Dependency</span><h2>Crawler job path</h2><p>Only accepted runtime edges from publisher through worker storage.</p><p class="meta">5 nodes · 4 supplied edges</p></a>
+      <a class="card" href="sequence.html"><span class="type">Sequence</span><h2>Application delivery</h2><p>One Published Flow with two ordered asynchronous steps.</p><p class="meta">3 actors · 2 supplied steps</p></a>
+    </section>
+    <section class="finding">
+      <strong>Current-data finding.</strong> Crawler Architecture and Dependency are ready. Crawler Sequence is not: its Flow document lacks an accepted membership relationship into the Crawler projection. The queue, table and bucket likewise render truthfully as boundary resources because they are runtime endpoints, not admitted Domain members. The ready Sequence example therefore comes from Digital Experience.
+    </section>
+    <h2>Review questions</h2>
+    <ul>
+      <li>Is the primary story clear within five seconds?</li>
+      <li>Are labels, direction and async behavior unambiguous?</li>
+      <li>Do grouping, boundary styling and Question badges help?</li>
+      <li>Would you use this artifact in a design or onboarding review?</li>
+    </ul>
+  </main>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crawler dependencies · AgentBase</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--paper:#f5f5f5;--ink:#2d3142;--muted:#596275;--accent:#eb6c36;--blue:#2e5aa8;--sans:system-ui,-apple-system,"Segoe UI",sans-serif;--serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,"SFMono-Regular",Consolas,monospace}body{background:var(--paper);color:var(--ink);font-family:var(--sans);min-height:100vh;padding:38px 24px}main{margin:auto;max-width:1240px}.top{display:flex;justify-content:space-between;gap:24px;align-items:end}.eyebrow{color:var(--muted);font:700 10px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase}h1{font:400 clamp(1.6rem,3vw,2.2rem)/1.15 var(--serif);margin:.35rem 0 1rem}.back{color:var(--blue);font-size:.9rem}svg{display:block;min-width:1000px;width:100%;background:#fff;border:1px solid #d9dbe1}.node{fill:#fff;stroke:#596275;stroke-width:1.5}.boundary{fill:#fffaf5;stroke:#eb6c36;stroke-width:1.6;stroke-dasharray:7 5}.runtime{fill:none;stroke:#2e5aa8;stroke-width:2.2}.label-bg{fill:#fff}.title{fill:#2d3142;font:600 14px var(--sans)}.kind{fill:#596275;font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}.edge-label{fill:#40506b;font:600 10px var(--mono)}.footer{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font:12px/1.5 var(--mono);margin-top:10px}.badge{fill:#eb6c36}.badge-text{fill:white;font:700 10px var(--mono)}</style>
+</head>
+<body>
+<main>
+  <div class="top"><div><p class="eyebrow">AgentBase · Published Hub · Dependency</p><h1>Crawler job dependency path</h1></div><a class="back" href="index.html">Benchmark index</a></div>
+  <svg viewBox="0 0 1160 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="diagram-title diagram-desc">
+    <title id="diagram-title">Crawler job dependency path</title>
+    <desc id="diagram-desc">Five Published nodes connected by exactly four directed runtime edges from publisher through the shared queue to worker storage.</desc>
+    <defs><marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#2e5aa8"/></marker></defs>
+    <rect width="1160" height="620" fill="#fff"/>
+    <!-- connectors -->
+    <path class="runtime" marker-end="url(#arrow)" d="M275 310 H390"/>
+    <path class="runtime" marker-end="url(#arrow)" d="M620 310 H730"/>
+    <path class="runtime" marker-end="url(#arrow)" d="M940 290 H980 V175 H1010"/>
+    <path class="runtime" marker-end="url(#arrow)" d="M940 330 H980 V445 H1010"/>
+    <rect class="label-bg" x="294" y="296" width="84" height="20"/><text class="edge-label" x="301" y="310">depends-on</text>
+    <rect class="label-bg" x="645" y="296" width="70" height="20"/><text class="edge-label" x="652" y="310">triggers</text>
+    <rect class="label-bg" x="944" y="217" width="84" height="20"/><text class="edge-label" x="951" y="231">depends-on</text>
+    <rect class="label-bg" x="944" y="389" width="84" height="20"/><text class="edge-label" x="951" y="403">depends-on</text>
+    <!-- nodes -->
+    <rect class="node" x="45" y="260" width="230" height="100" rx="6"/><text class="kind" x="65" y="290">Function</text><text class="title" x="65" y="318">Crawler publisher Lambda</text><text class="kind" x="65" y="343">Sends crawler jobs</text>
+    <circle class="badge" cx="264" cy="271" r="13"/><text class="badge-text" x="260" y="275">Q</text>
+    <rect class="boundary" x="390" y="260" width="230" height="100" rx="6"/><text class="kind" x="410" y="290">Boundary resource</text><text class="title" x="410" y="318">crawler-jobs SQS queue</text><text class="kind" x="410" y="343">Shared transport</text>
+    <rect class="node" x="730" y="260" width="210" height="100" rx="6"/><text class="kind" x="750" y="290">Function</text><text class="title" x="750" y="318">Crawler worker Lambda</text><text class="kind" x="750" y="343">Consumes jobs</text>
+    <rect class="boundary" x="1010" y="125" width="130" height="100" rx="6"/><text class="kind" x="1028" y="153">Resource</text><text class="title" x="1028" y="179">DynamoDB</text><text class="kind" x="1028" y="204">Job index</text>
+    <rect class="boundary" x="1010" y="395" width="130" height="100" rx="6"/><text class="kind" x="1028" y="423">Resource</text><text class="title" x="1028" y="449">S3 bucket</text><text class="kind" x="1028" y="474">Results</text>
+  </svg>
+  <div class="footer"><span>5 packet nodes · 4 directed runtime edges · Q = open Question</span><span>Published b7ccbc364317</span></div>
+</main>
+</body>
+</html>
+
