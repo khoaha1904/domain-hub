@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crawler Discovery Impact Map · AgentBase AIT benchmark</title>
+  <style>
+    :root{--paper:#f4f1ea;--ink:#202632;--muted:#626b78;--blue:#275dad;--orange:#d86432;--green:#147657;--red:#a43c31;--line:#d5d0c7;--panel:#fff;--soft:#e9edf4;--warn:#fff7ec}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1280px;margin:auto;padding:48px 28px 72px}.eyebrow{color:var(--muted);font:700 11px/1.4 ui-monospace,monospace;letter-spacing:.15em;text-transform:uppercase}h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:400}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.4rem 0 1rem}h2{font-size:1.7rem;margin:2.3rem 0 .8rem}.lede{max-width:850px;color:var(--muted);font-size:1.05rem}.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font:700 11px ui-monospace,monospace}.canvas{overflow-x:auto;background:#fff;border:1px solid var(--line);box-shadow:0 12px 35px #28231b12}.canvas svg{display:block;min-width:1160px;width:100%;height:auto}.repo{fill:#f4f6f9;stroke:#808a99;stroke-width:1.5}.node{fill:#fff;stroke:#4f5c6d;stroke-width:1.6}.resource{fill:#fff9f3;stroke:var(--orange);stroke-width:1.8}.gap{fill:#fff7ec;stroke:#d37b2f;stroke-width:1.6;stroke-dasharray:7 5}.runtime{fill:none;stroke:var(--blue);stroke-width:2.4}.structural{fill:none;stroke:#8d96a3;stroke-width:1.5;stroke-dasharray:5 4}.kind{fill:#657083;font:700 10px ui-monospace,monospace;letter-spacing:.09em}.title{fill:var(--ink);font:650 14px system-ui,sans-serif}.small{fill:#5f6875;font:12px system-ui,sans-serif}.edge{fill:#33527c;font:700 10px ui-monospace,monospace}.warn{fill:#81431e;font:650 12px system-ui,sans-serif}.label-bg{fill:#fff}.legend{display:flex;flex-wrap:wrap;gap:18px;margin:12px 2px;color:var(--muted);font:12px ui-monospace,monospace}.key{display:inline-block;width:22px;border-top:2px solid var(--blue);vertical-align:middle;margin-right:6px}.key.struct{border-top-style:dashed;border-color:#8d96a3}.key.gap-key{height:12px;border:1px dashed #d37b2f;background:var(--warn)}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:26px 0}.card{background:#fff;border:1px solid var(--line);padding:20px}.number{font:700 2.7rem/1 ui-monospace,monospace}.pass{color:var(--green)}.fail{color:var(--red)}.label{margin-top:.5rem;color:var(--muted);font:700 11px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em}table{width:100%;border-collapse:collapse;background:#fff}th,td{text-align:left;vertical-align:top;border:1px solid var(--line);padding:11px 13px}th{background:var(--soft);font-size:.85rem}.verdict{background:var(--warn);border-left:5px solid var(--orange);padding:20px 22px;margin:26px 0}.foot{color:var(--muted);font-size:.88rem}code{font-family:ui-monospace,monospace;font-size:.9em}@media(max-width:680px){main{padding:30px 16px 50px}h1{font-size:2.2rem}}
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">AgentBase · AIT Phase 1 · P0 benchmark</p>
+  <h1>Crawler Discovery Impact Map</h1>
+  <p class="lede">Decision under test: can this visual identify the accepted current-system surface affected by retry handling and operational visibility for failed Crawler jobs, without inventing controls that the Hub does not prove?</p>
+  <div class="meta">
+    <span class="chip">Published 521f5bfffccb</span>
+    <span class="chip">7 packet nodes</span>
+    <span class="chip">6 packet relations</span>
+    <span class="chip">0 packet questions</span>
+    <span class="chip">0 unsupported claims</span>
+  </div>
+
+  <div class="canvas">
+    <svg viewBox="0 0 1200 690" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="map-title map-desc">
+      <title id="map-title">Crawler Discovery Impact Map</title>
+      <desc id="map-desc">The publisher repository sends jobs through an SQS queue to the worker repository, which persists to DynamoDB and S3. A separate benchmark gap panel identifies retry, redrive, alarm and recovery ownership questions missing from the supplied diagram packet.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#275dad"/></marker>
+      </defs>
+      <rect width="1200" height="690" fill="#fff"/>
+      <text class="kind" x="45" y="42">PUBLISHED, EVIDENCE-BACKED IMPACT SURFACE</text>
+
+      <rect class="repo" x="45" y="85" width="265" height="225" rx="8"/>
+      <text class="kind" x="65" y="112">REPOSITORY</text>
+      <text class="title" x="65" y="137">Crawler publisher</text>
+      <rect class="node" x="75" y="180" width="205" height="80" rx="6"/>
+      <text class="kind" x="93" y="206">FUNCTION</text>
+      <text class="title" x="93" y="232">Publisher Lambda</text>
+
+      <rect class="resource" x="405" y="180" width="225" height="80" rx="6"/>
+      <text class="kind" x="425" y="206">BOUNDARY RESOURCE</text>
+      <text class="title" x="425" y="232">crawler-jobs SQS queue</text>
+
+      <rect class="repo" x="725" y="85" width="430" height="355" rx="8"/>
+      <text class="kind" x="745" y="112">REPOSITORY</text>
+      <text class="title" x="745" y="137">Crawler worker</text>
+      <rect class="node" x="755" y="180" width="205" height="80" rx="6"/>
+      <text class="kind" x="773" y="206">FUNCTION</text>
+      <text class="title" x="773" y="232">Worker Lambda</text>
+      <rect class="resource" x="755" y="325" width="175" height="75" rx="6"/>
+      <text class="kind" x="773" y="350">RESOURCE</text>
+      <text class="title" x="773" y="376">DynamoDB table</text>
+      <rect class="resource" x="950" y="325" width="175" height="75" rx="6"/>
+      <text class="kind" x="968" y="350">RESOURCE</text>
+      <text class="title" x="968" y="376">S3 results bucket</text>
+
+      <path class="structural" d="M177 180 V142"/>
+      <path class="structural" d="M857 180 V142"/>
+      <path class="runtime" marker-end="url(#arrow)" d="M280 220 H405"/>
+      <path class="runtime" marker-end="url(#arrow)" d="M630 220 H755"/>
+      <path class="runtime" marker-end="url(#arrow)" d="M835 260 V325"/>
+      <path class="runtime" marker-end="url(#arrow)" d="M900 260 V290 H1038 V325"/>
+      <rect class="label-bg" x="325" y="201" width="55" height="18"/><text class="edge" x="331" y="214">sends</text>
+      <rect class="label-bg" x="654" y="201" width="73" height="18"/><text class="edge" x="660" y="214">triggers</text>
+      <rect class="label-bg" x="842" y="284" width="48" height="18"/><text class="edge" x="848" y="297">writes</text>
+      <rect class="label-bg" x="982" y="278" width="48" height="18"/><text class="edge" x="988" y="291">writes</text>
+
+      <rect class="gap" x="45" y="500" width="1110" height="135" rx="8"/>
+      <text class="kind" x="68" y="528">BENCHMARK GAP · QUESTIONS FROM THE FEATURE SCENARIO, NOT HUB CLAIMS</text>
+      <text class="warn" x="68" y="560">Retry behavior?</text>
+      <text class="warn" x="290" y="560">DLQ / redrive policy?</text>
+      <text class="warn" x="565" y="560">Failure alarm / visibility?</text>
+      <text class="warn" x="885" y="560">Recovery owner?</text>
+      <text class="small" x="68" y="596">The selected packet supplies no Question or omission for these decisions. The renderer must not infer “absent” or “configured.”</text>
+    </svg>
+  </div>
+  <div class="legend"><span><i class="key"></i>Published runtime relation</span><span><i class="key struct"></i>Published structural relation</span><span><i class="key gap-key"></i>Evaluator overlay: missing decision context</span></div>
+
+  <div class="cards">
+    <div class="card"><div class="number fail">1/2</div><div class="label">Critical gates passed</div></div>
+    <div class="card"><div class="number">3/4</div><div class="label">Important gates passed</div></div>
+    <div class="card"><div class="number">67%</div><div class="label">Semantic coverage</div></div>
+    <div class="card"><div class="number pass">0</div><div class="label">Unsupported claims</div></div>
+  </div>
+
+  <div class="verdict"><strong>Verdict: useful for impact scoping, not yet qualified as the complete Phase 1 P0 map.</strong> The topology is sufficient and should not be expanded. The missing work is to supply decision-relevant Questions and explicit omissions to the diagram packet.</div>
+
+  <h2>Decision gates</h2>
+  <table>
+    <thead><tr><th>Gate</th><th>Priority</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Publisher → queue → worker path</td><td>Critical</td><td class="pass"><strong>Pass</strong></td><td>Three exact packet nodes and two directed runtime relations.</td></tr>
+      <tr><td>Retry/DLQ/alarm explicitly unverified</td><td>Critical</td><td class="fail"><strong>Fail</strong></td><td>Packet has <code>questions: []</code> and <code>omissions: []</code>.</td></tr>
+      <tr><td>Repository boundaries</td><td>Important</td><td class="pass"><strong>Pass</strong></td><td>Publisher and worker repositories plus structural membership.</td></tr>
+      <tr><td>Downstream persistence impact</td><td>Important</td><td class="pass"><strong>Pass</strong></td><td>Worker dependencies on DynamoDB and S3.</td></tr>
+      <tr><td>Recovery ownership explicit</td><td>Important</td><td class="fail"><strong>Fail</strong></td><td>No relevant Question is supplied for this selected path.</td></tr>
+      <tr><td>Exact Published provenance</td><td>Important</td><td class="pass"><strong>Pass</strong></td><td><code>521f5bfffccb7918076f5b287bbfd78d052ed0fc</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>What to improve</h2>
+  <p>Do not add more components or resources. Add a query-to-visualization context step that carries the relevant open Questions and explicit omissions selected during Feature Discovery. Provider observations can be attached when useful, but queue ARN and timeout values cannot replace uncertainty about retry, redrive, alarms or ownership.</p>
+  <p class="foot">Measured 2026-08-30. The upper topology is rendered only from the exact Published diagram packet. The lower dashed panel is visibly separated evaluator context and makes no assertion about current AWS configuration.</p>
+</main>
+</body>
+</html>
