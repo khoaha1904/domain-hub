@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentBase diagram quality report</title>
+  <style>
+    :root{--paper:#f5f5f5;--ink:#2d3142;--muted:#596275;--accent:#eb6c36;--blue:#2e5aa8;--line:#d7d9df;--good:#176b4d;--warn:#9a541f}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1080px;margin:auto;padding:52px 28px}.eyebrow{color:var(--muted);font:700 11px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase}h1{font:400 clamp(2rem,5vw,3.4rem)/1.05 Georgia,serif;margin:.4rem 0 1rem}h2{font:400 1.55rem/1.2 Georgia,serif;margin:2rem 0 .8rem}.lede{max-width:780px;color:var(--muted)}.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin:30px 0}.score{background:#fff;border:1px solid var(--line);padding:22px}.number{font:700 3rem/1 ui-monospace,monospace}.good{color:var(--good)}.warn{color:var(--warn)}.label{color:var(--muted);font:700 11px/1.4 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin-top:.6rem}table{width:100%;border-collapse:collapse;background:#fff}th,td{text-align:left;vertical-align:top;padding:12px 14px;border:1px solid var(--line)}th{background:#eceef2;font-size:.85rem}td.score-cell{font:700 1.1rem ui-monospace,monospace}.pass{color:var(--good);font-weight:700}.caution{color:var(--warn);font-weight:700}code{font-family:ui-monospace,monospace;font-size:.9em}.method{background:#fff8f2;border-left:4px solid var(--accent);padding:18px 20px}.back{color:var(--blue)}ul{padding-left:1.25rem}</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">AgentBase · Published b7ccbc364317 · measured 2026-08-30</p>
+  <h1>Diagram quality report</h1>
+  <p class="lede">This separates the quality of the three rendered artifacts from confidence that the benchmark represents future diagrams. A clean artifact score does not compensate for weak benchmark coverage.</p>
+  <div class="scores">
+    <div class="score"><div class="number good">89</div><div class="label">Artifact quality / 100</div><p>Strong internal-review baseline.</p></div>
+    <div class="score"><div class="number warn">55</div><div class="label">Benchmark confidence / 100</div><p>Not yet release-qualified.</p></div>
+    <div class="score"><div class="number">0</div><div class="label">Opaque-node collisions</div><p>Across 14 measured paths.</p></div>
+  </div>
+
+  <h2>Artifact scores</h2>
+  <table>
+    <thead><tr><th>Artifact</th><th>Truthfulness<br>/30</th><th>Visual integrity<br>/30</th><th>Usefulness<br>/30</th><th>Portable & accessible<br>/10</th><th>Total</th></tr></thead>
+    <tbody>
+      <tr><td><a href="architecture.html">Architecture</a><br><small>8 nodes · 8 edges</small></td><td>30</td><td>23</td><td>24</td><td>10</td><td class="score-cell">87</td></tr>
+      <tr><td><a href="dependency.html">Dependency</a><br><small>5 nodes · 4 runtime edges</small></td><td>30</td><td>29</td><td>27</td><td>10</td><td class="score-cell">96</td></tr>
+      <tr><td><a href="sequence.html">Sequence</a><br><small>3 actors · 2 async steps</small></td><td>30</td><td>29</td><td>15</td><td>10</td><td class="score-cell">84</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Mean: 89/100.</strong> Architecture loses visual points for dense right-side routing and a vertically scrolling 1440×900 page. Sequence loses usefulness points because two asynchronous steps do not test realistic sequencing complexity.</p>
+
+  <h2>Measured browser evidence</h2>
+  <table>
+    <thead><tr><th>Check at 1440×900</th><th>Architecture</th><th>Dependency</th><th>Sequence</th></tr></thead>
+    <tbody>
+      <tr><td>Packet topology count</td><td class="pass">8 / 8 pass</td><td class="pass">5 / 4 pass</td><td class="pass">3 / 2 pass</td></tr>
+      <tr><td>Path enters unrelated opaque node</td><td class="pass">0 of 8</td><td class="pass">0 of 4</td><td class="pass">0 of 2</td></tr>
+      <tr><td>Horizontal overflow</td><td class="pass">None</td><td class="pass">None</td><td class="pass">None</td></tr>
+      <tr><td>Text outside SVG viewBox</td><td class="pass">None</td><td class="pass">None</td><td class="pass">None</td></tr>
+      <tr><td>Minimum SVG label size</td><td>10 px</td><td>10 px</td><td>10 px</td></tr>
+      <tr><td>Accessible SVG title + description</td><td class="pass">Pass</td><td class="pass">Pass</td><td class="pass">Pass</td></tr>
+      <tr><td>Remote asset dependency</td><td class="pass">None</td><td class="pass">None</td><td class="pass">None</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Why confidence is only 55/100</h2>
+  <table>
+    <thead><tr><th>Coverage dimension</th><th>Score</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Supported diagram types</td><td class="score-cell">25/25</td><td>Architecture, Dependency and Sequence each produced one ready artifact.</td></tr>
+      <tr><td>Complexity coverage</td><td class="score-cell">15/30</td><td>Architecture has boundaries and Dependency has fan-out; Sequence has only two async steps and no sync/mixed path.</td></tr>
+      <tr><td>Current-data coverage</td><td class="score-cell">10/20</td><td>Two Domains participate, but Crawler cannot produce its own Sequence and resources remain boundary members.</td></tr>
+      <tr><td>Generation repeatability</td><td class="score-cell">0/15</td><td>Only one agent-authored run exists, so model/layout variance is unmeasured.</td></tr>
+      <tr><td>Viewport coverage</td><td class="score-cell">5/10</td><td>Final DOM geometry and screenshots were inspected at the primary 1440×900 desktop only.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Verdict</h2>
+  <div class="method"><strong class="pass">Baseline pass.</strong> The current renderer is truthful, portable and capable of producing useful diagrams. <strong class="caution">Release-quality claim deferred.</strong> The next benchmark needs repeated generation plus a 5–8 step mixed sync/async Sequence and a denser routing case.</div>
+
+  <h2>Method limits</h2>
+  <ul>
+    <li>Collision sampling detects paths entering opaque leaf nodes; it does not fully prove route-to-route or label-to-route clearance.</li>
+    <li>Readability and usefulness scores include visual judgment and are therefore provisional until owner review.</li>
+    <li>No Hub, OKF or product runtime was changed to obtain these measurements.</li>
+  </ul>
+  <p><a class="back" href="index.html">← Back to benchmark index</a></p>
+</main>
+</body>
+</html>

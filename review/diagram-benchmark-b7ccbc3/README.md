@@ -12,6 +12,13 @@ packet.
 | [Dependency](dependency.html) | Crawler | Ready | 5 nodes, 4 runtime edges |
 | [Sequence](sequence.html) | Digital Experience | Ready | 3 actors, 2 ordered asynchronous steps |
 
+[Open the quantitative quality report](quality-report.html).
+
+Provisional artifact quality is **89/100**. Benchmark confidence is **55/100**:
+the current artifacts are a strong internal-review baseline, but one run and a
+two-step Sequence do not yet qualify the renderer for release-level visual
+quality.
+
 ## Current-data finding
 
 The current Hub can render all three supported types, but not all three from
