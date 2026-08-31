@@ -19,7 +19,7 @@
     },
     {
       "path": "assets/app.js",
-      "sha256": "a467795b25466e9fb71d45ff222e1ae35f864bab21687911fd9a4f1ada51cf2c"
+      "sha256": "415ab661b2534dd552ace89f13441e713599303ca76451a94e5c074056fbe9b9"
     },
     {
       "path": "assets/cytoscape.min.js",
@@ -31,7 +31,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "5440ab19fc7fb1ac34db63bc231e4ccbd3cccb717479f9bd167a30ee061421f4"
+      "sha256": "4bcdd9cce70dca7f7825f7f3300f7e555c2811b4816336b17cd5285157b0f4e9"
     }
   ]
 }

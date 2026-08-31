@@ -196,7 +196,8 @@ async function start() {
       selectable: false,
     })),
     ...graphNodes.map((node) => ({
-      data: { id: node.id, label: outsideLabel(node) ? `${node.title}\n${outsideLabel(node)}` : node.title,
+      data: { id: node.id, label: node.type === "Flow" ? `Flow · ${node.title}`
+        : outsideLabel(node) ? `${node.title}\n${outsideLabel(node)}` : node.title,
         type: node.type, membership: node.membership,
         questionCount: (questionsBySubject.get(node.id) ?? []).length },
       position: positions.get(node.id),
@@ -235,7 +236,10 @@ async function start() {
         "border-color": "#c5adff", "border-width": 1.5, "font-size": 11, "font-weight": 700,
         height: 34, shape: "roundrectangle", "text-margin-y": 0, "text-outline-opacity": 0,
         "text-max-width": 116, "text-valign": "center", "text-wrap": "ellipsis", width: 132, "z-index": 8 } },
-      { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "border-color": "#f4cf86" } },
+      { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "background-opacity": .16,
+        "border-color": "#f4cf86", "border-style": "dashed", "font-size": 9, height: 28,
+        shape: "roundrectangle", "text-margin-y": 0, "text-max-width": 150, "text-outline-opacity": 0,
+        "text-valign": "center", "text-wrap": "ellipsis", width: 170 } },
       { selector: "node.embedded", style: { "background-color": "#263b35", "border-color": "#f4be5b",
         "border-style": "dashed", "border-width": 2, color: "#d7deea", height: 27, width: 27, "text-margin-y": 23 } },
       { selector: "node.boundary", style: { "background-opacity": .3, "border-style": "dashed", "border-width": 2, color: "#c0c8d4" } },
@@ -309,6 +313,13 @@ async function start() {
     const node = cy.$id(selected);
     if (!node.length || node.hasClass("hidden")) return;
     cy.elements().not(".hidden").addClass("faded");
+    if (nodeById.get(selected)?.type === "System") {
+      const members = new Set([selected, ...projection.nodes
+        .filter((candidate) => candidate.parentIds.includes(selected)).map((candidate) => candidate.id)]);
+      cy.nodes().filter((candidate) => members.has(candidate.id())).removeClass("faded");
+      cy.edges().filter((edge) => members.has(edge.source().id()) && members.has(edge.target().id())).removeClass("faded");
+      return;
+    }
     node.closedNeighborhood().removeClass("faded");
   }
 
@@ -421,7 +432,7 @@ async function start() {
     typeFilter.value = "all";
     repositoryFilter.value = "all";
     membershipFilter.value = "all";
-    flowToggle.checked = false;
+    flowToggle.checked = true;
     visible = initialVisible();
     cy.nodes().unselect();
     for (const [id, position] of initialPositions) cy.$id(id).position(position);
