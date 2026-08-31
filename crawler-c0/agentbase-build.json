@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "generator": "agentbase-domain-site",
   "generatorVersion": 3,
-  "hub": "github.com/khoaha1904/hub-3#main",
-  "commit": "19c90ac943f06a5b6a2f9c3ac8044948ec20ccaa",
+  "hub": "github.com/khoaha1904/hub-2#main",
+  "commit": "c7f86739e44cef4e86c947a8dd83693939300e8b",
   "domain": "domains/crawler",
   "projectionVersion": 1,
   "counts": {
@@ -27,11 +27,11 @@
     },
     {
       "path": "data/domain.json",
-      "sha256": "fe060789d9aef6bbc8ea6d6808672c004d946643a81702c965d3ee3a64cbb442"
+      "sha256": "b54a7355d73256881ac2abd7e50cb00a02d60fe0d3f1a11647adda32ce5eae19"
     },
     {
       "path": "index.html",
-      "sha256": "dde50e342c3dd1311918b656aa19725ef414b6dc3ab4d93889ccad80d1bb917c"
+      "sha256": "2442f2575dd6d6943129fc8c66fd1f28b000eb784d4085a8e1353291afd4cf7e"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "hub": "github.com/khoaha1904/hub-3#main",
-  "commit": "19c90ac943f06a5b6a2f9c3ac8044948ec20ccaa",
+  "hub": "github.com/khoaha1904/hub-2#main",
+  "commit": "c7f86739e44cef4e86c947a8dd83693939300e8b",
   "domain": {
     "id": "domains/crawler",
     "path": "domains/crawler.md",
@@ -26,15 +26,9 @@
         "repository://repository-crawler-worker-9d317196a45f/main.tf#L11-L13",
         "repository://repository-crawler-worker-9d317196a45f/main.tf#L15-L20",
         "repository://repository-crawler-worker-9d317196a45f/main.tf#L22-L35",
-        "repository://repository-crawler-worker-9d317196a45f/main.tf#L37-L39",
         "repository://repository-crawler-worker-9d317196a45f/main.tf#L37-L40",
-        "repository://repository-crawler-worker-9d317196a45f/main.tf#L41-L47",
-        "repository://repository-crawler-worker-9d317196a45f/main.tf#L49-L61",
-        "repository://repository-crawler-worker-9d317196a45f/main.tf#L63-L66",
         "repository://repository-crawler-worker-9d317196a45f/src/handler.py#L10-L14",
-        "repository://repository-crawler-worker-9d317196a45f/src/handler.py#L15-L16",
         "repository://repository-crawler-worker-9d317196a45f/src/handler.py#L7-L15",
-        "repository://repository-crawler-worker-9d317196a45f/src/handler.py#L7-L19",
         "repository://repository-crawler-worker-9d317196a45f/src/handler.py#L9-L14"
       ],
       "membership": "primary",
@@ -72,8 +66,6 @@
       "sources": [
         "repository://repository-crawler-worker-9d317196a45f/README.md#L1-L4",
         "repository://repository-crawler-worker-9d317196a45f/main.tf#L37-L40",
-        "repository://repository-crawler-worker-9d317196a45f/main.tf#L41-L47",
-        "repository://repository-crawler-worker-9d317196a45f/main.tf#L63-L66",
         "repository://repository-crawler-worker-9d317196a45f/main.tf#L7-L9"
       ],
       "membership": "boundary",
@@ -114,8 +106,8 @@
       "directed": false,
       "displayClass": "structural",
       "evidence": [
-        "res-lambda-worker-current",
-        "sem-handler-current"
+        "res-lambda-worker",
+        "sem-handler"
       ]
     },
     {
@@ -141,7 +133,7 @@
       "directed": true,
       "displayClass": "runtime",
       "evidence": [
-        "res-event-mapping-current"
+        "res-event-mapping"
       ]
     }
   ],
