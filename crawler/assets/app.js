@@ -26,6 +26,54 @@ function addTextBlock(parent, title, values) {
   parent.append(block);
 }
 
+function sourceGroup(value) {
+  const repository = /^repository:\/\/([^/]+)\/([^#]+)(?:#.*)?$/.exec(value);
+  if (repository) return { key: `${repository[1]}/${repository[2]}`, label: repository[2] };
+  const base = value.split("#", 1)[0];
+  return { key: base, label: base };
+}
+
+function addEvidenceBlock(parent, values) {
+  const exact = [...new Set(values)].sort();
+  if (!exact.length) return;
+  const groups = new Map();
+  for (const value of exact) {
+    const group = sourceGroup(value), current = groups.get(group.key) ?? { label: group.label, count: 0 };
+    current.count += 1; groups.set(group.key, current);
+  }
+  const block = document.createElement("section");
+  block.className = "meta-block evidence-block";
+  const heading = document.createElement("h3");
+  heading.textContent = "Evidence";
+  const summary = document.createElement("p");
+  summary.className = "evidence-summary";
+  summary.textContent = `${groups.size} files or sources · ${exact.length} citations`;
+  const files = document.createElement("ul");
+  for (const { label, count } of [...groups.values()].sort((left, right) => left.label.localeCompare(right.label))) {
+    const item = document.createElement("li");
+    item.textContent = `${label} · ${count}`;
+    files.append(item);
+  }
+  const disclosure = document.createElement("details");
+  const disclosureLabel = document.createElement("summary");
+  disclosureLabel.textContent = "Show exact evidence";
+  const citations = document.createElement("ul");
+  citations.className = "exact-evidence";
+  for (const value of exact) {
+    const item = document.createElement("li");
+    item.textContent = value; citations.append(item);
+  }
+  disclosure.append(disclosureLabel, citations);
+  block.append(heading, summary, files, disclosure);
+  parent.append(block);
+}
+
+function nodeType(node) {
+  return node.representation === "embedded"
+    ? `${node.type} / ${node.resourceKind} · embedded`
+    : `${node.type} · ${node.membership}`;
+}
+
 function showFallback(error) {
   graphHost.hidden = true;
   fallback.hidden = false;
@@ -87,7 +135,7 @@ async function start() {
     ...projection.nodes.map((node) => ({
       data: { id: node.id, label: node.title, type: node.type, membership: node.membership,
         questionCount: (questionsBySubject.get(node.id) ?? []).length },
-      classes: `${node.membership}${questionsBySubject.has(node.id) ? " question" : ""}`,
+      classes: `${node.membership} ${node.representation}${questionsBySubject.has(node.id) ? " question" : ""}`,
     })),
     ...allEdges.map((edge, index) => ({
       data: { id: `edge-${index}-${edge.id}`, source: edge.displaySource, target: edge.displayTarget,
@@ -116,6 +164,8 @@ async function start() {
       { selector: 'node[type = "System"]', style: { "background-color": "#337ec8", "border-color": "#8bc5ff", width: 38, height: 38, "text-margin-y": 29 } },
       { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "border-color": "#c8b1ff", width: 38, height: 38, "text-margin-y": 29 } },
       { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "border-color": "#f4cf86" } },
+      { selector: "node.embedded", style: { "background-color": "#263b35", "border-color": "#f4be5b",
+        "border-style": "dashed", "border-width": 2, color: "#d7deea", height: 27, width: 27, "text-margin-y": 23 } },
       { selector: "node.boundary", style: { "background-opacity": .3, "border-style": "dashed", "border-width": 2, color: "#c0c8d4" } },
       { selector: "node.question", style: { "border-color": "#ff7657", "border-width": 4 } },
       { selector: "edge", style: { "curve-style": "bezier", "line-color": "#465367", opacity: .62, width: 1.2 } },
@@ -199,12 +249,13 @@ async function start() {
     visible.add(id);
     if (node.expandable) for (const related of adjacency.get(id) ?? []) visible.add(related);
     document.querySelector("#detail-title").textContent = node.title;
-    document.querySelector("#detail-type").textContent = `${node.type} · ${node.membership}`;
+    document.querySelector("#detail-type").textContent = nodeType(node);
     document.querySelector("#detail-description").textContent = node.description || "No Published description.";
     const meta = document.querySelector("#detail-meta");
     meta.replaceChildren();
-    addTextBlock(meta, "Identity", [node.id, node.path]);
-    addTextBlock(meta, "Published sources", node.sources);
+    addTextBlock(meta, "Identity", [node.externalIdentity ?? node.id, node.path]);
+    if (node.representation === "embedded") addTextBlock(meta, "Published parents", node.parentIds);
+    addEvidenceBlock(meta, node.sources);
     addTextBlock(meta, "Active questions", (questionsBySubject.get(id) ?? []).map((item) => `${item.state}: ${item.property}`));
     addTextBlock(meta, "Direct relations", allEdges.filter((edge) => edge.displaySource === id || edge.displayTarget === id)
       .map((edge) => {
@@ -212,7 +263,8 @@ async function start() {
         const target = nodeById.get(edge.displayTarget)?.title ?? edge.displayTarget;
         return `${source} — ${edge.predicate} → ${target}`;
       }));
-    viewDocument.disabled = false;
+    viewDocument.disabled = node.representation === "embedded";
+    viewDocument.textContent = node.representation === "embedded" ? "Contained in parent document" : "View document";
     cy.nodes().unselect();
     cy.$id(id).select();
     applyVisibility();
@@ -226,18 +278,19 @@ async function start() {
     document.querySelector("#detail-description").textContent = "";
     document.querySelector("#detail-meta").replaceChildren();
     viewDocument.disabled = true;
+    viewDocument.textContent = "View document";
   }
 
   function showDocument(id) {
     const node = nodeById.get(id);
     if (!node) return;
     document.querySelector("#document-title").textContent = node.title;
-    document.querySelector("#document-type").textContent = `${node.type} · ${node.membership}`;
+    document.querySelector("#document-type").textContent = nodeType(node);
     document.querySelector("#document-description").textContent = node.description || "No Published description.";
     const meta = document.querySelector("#document-meta");
     meta.replaceChildren();
     addTextBlock(meta, "Identity", [node.id, node.path]);
-    addTextBlock(meta, "Published sources", node.sources);
+    addEvidenceBlock(meta, node.sources);
     addTextBlock(meta, "Direct relations", allEdges.filter((edge) => edge.displaySource === id || edge.displayTarget === id)
       .map((edge) => `${nodeById.get(edge.displaySource)?.title ?? edge.displaySource} — ${edge.predicate} → ${nodeById.get(edge.displayTarget)?.title ?? edge.displayTarget}`));
     documentDialog.showModal();
@@ -264,7 +317,7 @@ async function start() {
   search.addEventListener("input", () => {
     const query = search.value.trim().toLowerCase();
     if (!query) return;
-    const match = projection.nodes.find((node) => `${node.title} ${node.id} ${node.description}`.toLowerCase().includes(query));
+    const match = projection.nodes.find((node) => `${node.title} ${node.id} ${node.description} ${node.resourceKind ?? ""} ${node.externalIdentity ?? ""}`.toLowerCase().includes(query));
     if (match) showDetails(match.id);
   });
   typeFilter.addEventListener("change", () => applyVisibility());

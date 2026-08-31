@@ -1,25 +1,25 @@
 {
   "schemaVersion": 1,
   "generator": "agentbase-domain-site",
-  "generatorVersion": 3,
+  "generatorVersion": 4,
   "hub": "github.com/khoaha1904/hub-2#main",
   "commit": "c7f86739e44cef4e86c947a8dd83693939300e8b",
   "domain": "domains/crawler",
-  "projectionVersion": 1,
+  "projectionVersion": 2,
   "counts": {
-    "nodes": 4,
-    "edges": 3,
+    "nodes": 6,
+    "edges": 5,
     "flows": 0,
     "questions": 0
   },
   "files": [
     {
       "path": "assets/app.css",
-      "sha256": "8c8113ded71dc0ea617e395fe005ad1c1e96880d11c11eb9566426ef9a47e6f4"
+      "sha256": "f7732f439874a239b0c6223ab741c26bcca4019366fde7d4634986a0e59d7d26"
     },
     {
       "path": "assets/app.js",
-      "sha256": "876daffd1cff0f1957e2e457c92bc524b2ceca2b0bae1cf0faa76b536654ddfa"
+      "sha256": "a56aea653ca48e6a9d9922cc63c3935b49b53d4c62d40d11ca5cf1a7470b0bf3"
     },
     {
       "path": "assets/cytoscape.min.js",
@@ -27,11 +27,11 @@
     },
     {
       "path": "data/domain.json",
-      "sha256": "b54a7355d73256881ac2abd7e50cb00a02d60fe0d3f1a11647adda32ce5eae19"
+      "sha256": "3f433ad636d7a9791e066eaa66c10687fbddb12dd6b3b98fab464aaa3d97d89c"
     },
     {
       "path": "index.html",
-      "sha256": "2442f2575dd6d6943129fc8c66fd1f28b000eb784d4085a8e1353291afd4cf7e"
+      "sha256": "0b6f4ee311b683c603b9c42ddc13e40cb026ba358af2be64eec8ac1c95f99ec0"
     }
   ]
 }

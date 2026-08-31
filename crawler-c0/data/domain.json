@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "hub": "github.com/khoaha1904/hub-2#main",
   "commit": "c7f86739e44cef4e86c947a8dd83693939300e8b",
   "domain": {
@@ -12,6 +12,7 @@
       "id": "components/crawler-worker",
       "path": "components/crawler-worker.md",
       "type": "Function",
+      "representation": "concept",
       "title": "Crawler Worker",
       "description": "Understand the independently deployed crawler job processing runtime.",
       "domainIds": [],
@@ -38,6 +39,7 @@
       "id": "domains/crawler",
       "path": "domains/crawler.md",
       "type": "Domain",
+      "representation": "concept",
       "title": "Crawler",
       "description": "Crawler business domain",
       "domainIds": [
@@ -54,9 +56,56 @@
       "expandable": true
     },
     {
+      "id": "embedded:3848d316789e336a7f08911e",
+      "path": "components/crawler-worker.md",
+      "type": "Resource",
+      "representation": "embedded",
+      "resourceKind": "database-table",
+      "title": "Crawler Jobs Table",
+      "description": "Find where worker job records are written.",
+      "domainIds": [],
+      "parentIds": [
+        "components/crawler-worker"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/crawler-worker"
+      ],
+      "sources": [
+        "repository://repository-crawler-worker-9d317196a45f/main.tf#L15-L20",
+        "repository://repository-crawler-worker-9d317196a45f/src/handler.py#L9-L14"
+      ],
+      "membership": "primary",
+      "expandable": false
+    },
+    {
+      "id": "embedded:b20599e888e1430f770c7a96",
+      "path": "components/crawler-worker.md",
+      "type": "Resource",
+      "representation": "embedded",
+      "resourceKind": "object-storage",
+      "title": "Crawler Results Bucket",
+      "description": "Find where worker payload results are written.",
+      "domainIds": [],
+      "parentIds": [
+        "components/crawler-worker"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "repositories/crawler-worker"
+      ],
+      "sources": [
+        "repository://repository-crawler-worker-9d317196a45f/main.tf#L11-L13",
+        "repository://repository-crawler-worker-9d317196a45f/src/handler.py#L10-L14"
+      ],
+      "membership": "primary",
+      "expandable": false
+    },
+    {
       "id": "interfaces/crawler-jobs-queue",
       "path": "interfaces/crawler-jobs-queue.md",
       "type": "Interface",
+      "representation": "concept",
       "title": "Crawler Jobs Queue",
       "description": "Find the shared asynchronous ingestion contract used to trigger crawler processing.",
       "domainIds": [],
@@ -75,6 +124,7 @@
       "id": "repositories/crawler-worker",
       "path": "repositories/crawler-worker.md",
       "type": "Repository",
+      "representation": "concept",
       "title": "crawler-worker",
       "description": "Locate the crawler-worker source repository and its purpose.",
       "domainIds": [
@@ -105,9 +155,25 @@
       "displayTarget": "repositories/crawler-worker",
       "directed": false,
       "displayClass": "structural",
+      "representation": "accepted",
       "evidence": [
         "res-lambda-worker",
         "sem-handler"
+      ]
+    },
+    {
+      "id": "edge-5c2c3b8fb0279437bead2124",
+      "predicate": "embedded-in",
+      "declaredSource": "embedded:b20599e888e1430f770c7a96",
+      "declaredTarget": "components/crawler-worker",
+      "displaySource": "embedded:b20599e888e1430f770c7a96",
+      "displayTarget": "components/crawler-worker",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "embedded",
+      "evidence": [
+        "res-results-bucket",
+        "sem-s3-write"
       ]
     },
     {
@@ -119,6 +185,7 @@
       "displayTarget": "domains/crawler",
       "directed": false,
       "displayClass": "structural",
+      "representation": "accepted",
       "evidence": [
         "owner-domain"
       ]
@@ -132,8 +199,24 @@
       "displayTarget": "components/crawler-worker",
       "directed": true,
       "displayClass": "runtime",
+      "representation": "accepted",
       "evidence": [
         "res-event-mapping"
+      ]
+    },
+    {
+      "id": "edge-db4e638be155304e36b6d9f6",
+      "predicate": "embedded-in",
+      "declaredSource": "embedded:3848d316789e336a7f08911e",
+      "declaredTarget": "components/crawler-worker",
+      "displaySource": "embedded:3848d316789e336a7f08911e",
+      "displayTarget": "components/crawler-worker",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "embedded",
+      "evidence": [
+        "res-jobs-table",
+        "sem-ddb-write"
       ]
     }
   ],
