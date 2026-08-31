@@ -87,9 +87,9 @@ function repositoryRegionId(repositoryId) {
   return `region:${repositoryId}`;
 }
 
-function fixedPositions(nodes, repositoryColumns) {
+function fixedPositions(nodes, repositoryColumns, edges) {
   const positions = new Map(), regions = new Map(), repositories = nodes.filter((node) => node.type === "Repository")
-    .sort((left, right) => left.id.localeCompare(right.id));
+    .sort((left, right) => left.id.localeCompare(right.id)), nodeById = new Map(nodes.map((node) => [node.id, node]));
   let nextX = 0, nextY = 0, rowHeight = 0, maximumBottom = 0;
   repositories.forEach((repository, repositoryIndex) => {
     if (repositoryIndex > 0 && repositoryIndex % repositoryColumns === 0) {
@@ -117,11 +117,42 @@ function fixedPositions(nodes, repositoryColumns) {
     maximumBottom = Math.max(maximumBottom, nextY + height);
   });
   const outside = nodes.filter((node) => !positions.has(node.id)).sort((left, right) => left.id.localeCompare(right.id));
-  const outsideColumns = Math.min(5, Math.max(1, outside.length));
-  outside.forEach((node, index) => positions.set(node.id, {
-    x: 80 + (index % outsideColumns) * 150,
-    y: maximumBottom + 100 + Math.floor(index / outsideColumns) * 120,
+  const relatedRepositories = new Map(outside.map((node) => {
+    const related = new Set(node.repositoryIds.filter((repositoryId) => regions.has(repositoryId)));
+    for (const edge of edges) {
+      const otherId = edge.displaySource === node.id ? edge.displayTarget : edge.displayTarget === node.id ? edge.displaySource : undefined;
+      for (const repositoryId of nodeById.get(otherId)?.repositoryIds ?? []) if (regions.has(repositoryId)) related.add(repositoryId);
+    }
+    return [node.id, [...related].sort()];
   }));
+  const groups = new Map();
+  for (const node of outside) {
+    const key = relatedRepositories.get(node.id).join("|") || "unassociated";
+    const group = groups.get(key) ?? [];
+    group.push(node); groups.set(key, group);
+  }
+  for (const [key, group] of groups) group.forEach((node, index) => {
+    const repositoryIds = relatedRepositories.get(node.id);
+    if (repositoryIds.length === 1) {
+      const repositoryId = repositoryIds[0], region = regions.get(repositoryId);
+      const side = repositories.findIndex((repository) => repository.id === repositoryId) % repositoryColumns === 0 ? -1 : 1;
+      positions.set(node.id, { x: region.x + side * (region.width / 2 + 90), y: region.y + (index - (group.length - 1) / 2) * 90 });
+      return;
+    }
+    if (repositoryIds.length > 1) {
+      const related = repositoryIds.map((repositoryId) => regions.get(repositoryId));
+      const spread = index === 0 ? 0 : Math.ceil(index / 2) * 70 * (index % 2 ? 1 : -1);
+      const horizontal = Math.max(...related.map((region) => region.x)) - Math.min(...related.map((region) => region.x))
+        >= Math.max(...related.map((region) => region.y)) - Math.min(...related.map((region) => region.y));
+      positions.set(node.id, {
+        x: related.reduce((total, region) => total + region.x, 0) / related.length + (horizontal ? 0 : spread),
+        y: related.reduce((total, region) => total + region.y, 0) / related.length + (horizontal ? spread : 0),
+      });
+      return;
+    }
+    const columns = Math.min(5, Math.max(1, group.length));
+    positions.set(node.id, { x: 80 + (index % columns) * 150, y: maximumBottom + 100 + Math.floor(index / columns) * 120 });
+  });
   return { positions, regions };
 }
 
@@ -152,7 +183,7 @@ async function start() {
   const graphNodeIds = new Set(graphNodes.map((node) => node.id));
   const visualEdges = [...projection.edges.filter((edge) => edge.displayClass !== "structural"), ...flowEdges]
     .filter((edge) => graphNodeIds.has(edge.displaySource) && graphNodeIds.has(edge.displayTarget));
-  const { positions, regions } = fixedPositions(graphNodes, graphHost.clientWidth <= 720 ? 1 : 2);
+  const { positions, regions } = fixedPositions(graphNodes, graphHost.clientWidth <= 720 ? 1 : 2, visualEdges);
   const repositories = graphNodes.filter((node) => node.type === "Repository");
   const adjacency = new Map(projection.nodes.map((node) => [node.id, new Set(node.parentIds)]));
   for (const node of projection.nodes) {
