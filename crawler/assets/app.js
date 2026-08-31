@@ -9,6 +9,7 @@ const details = document.querySelector(".details");
 const closeDetails = document.querySelector("#close-details");
 const viewDocument = document.querySelector("#view-document");
 const documentDialog = document.querySelector("#document-dialog");
+const domainDetails = document.querySelector("#domain-details");
 
 function addTextBlock(parent, title, values) {
   if (!values.length) return;
@@ -82,6 +83,41 @@ function showFallback(error) {
   fallback.append(detail);
 }
 
+function fixedPositions(nodes, repositoryColumns) {
+  const positions = new Map(), repositories = nodes.filter((node) => node.type === "Repository")
+    .sort((left, right) => left.id.localeCompare(right.id));
+  let nextX = 0, nextY = 0, rowHeight = 0, maximumBottom = 0;
+  repositories.forEach((repository, repositoryIndex) => {
+    if (repositoryIndex > 0 && repositoryIndex % repositoryColumns === 0) {
+      nextX = 0; nextY += rowHeight + 90; rowHeight = 0;
+    }
+    const owned = nodes.filter((node) => node.id !== repository.id
+      && node.repositoryIds.length === 1 && node.repositoryIds[0] === repository.id)
+      .sort((left, right) => left.id.localeCompare(right.id));
+    const width = Math.max(420, Math.min(720, owned.length * 120));
+    const height = Math.max(320, Math.min(480, owned.length * 80));
+    const center = { x: nextX + width / 2, y: nextY + height / 2 };
+    positions.set(repository.id, { ...center, width, height });
+    owned.forEach((node, index) => {
+      const angle = -Math.PI / 2 + index * 2 * Math.PI / Math.max(owned.length, 1);
+      positions.set(node.id, {
+        x: center.x + Math.cos(angle) * (width / 2 - 90),
+        y: center.y + Math.sin(angle) * (height / 2 - 80),
+      });
+    });
+    nextX += width + 90;
+    rowHeight = Math.max(rowHeight, height);
+    maximumBottom = Math.max(maximumBottom, nextY + height);
+  });
+  const outside = nodes.filter((node) => !positions.has(node.id)).sort((left, right) => left.id.localeCompare(right.id));
+  const outsideColumns = Math.min(5, Math.max(1, outside.length));
+  outside.forEach((node, index) => positions.set(node.id, {
+    x: 80 + (index % outsideColumns) * 150,
+    y: maximumBottom + 100 + Math.floor(index / outsideColumns) * 120,
+  }));
+  return positions;
+}
+
 async function start() {
   if (typeof globalThis.cytoscape !== "function") throw new Error("The local 2D renderer is unavailable.");
   const browserBuildQuery = new URL(import.meta.url).search;
@@ -99,6 +135,11 @@ async function start() {
     flow: flow.id,
   })));
   const allEdges = [...projection.edges, ...flowEdges];
+  const graphNodes = projection.nodes.filter((node) => node.type !== "Domain");
+  const graphNodeIds = new Set(graphNodes.map((node) => node.id));
+  const visualEdges = [...projection.edges.filter((edge) => edge.displayClass !== "structural"), ...flowEdges]
+    .filter((edge) => graphNodeIds.has(edge.displaySource) && graphNodeIds.has(edge.displayTarget));
+  const positions = fixedPositions(graphNodes, graphHost.clientWidth <= 720 ? 1 : 2);
   const adjacency = new Map(projection.nodes.map((node) => [node.id, new Set(node.parentIds)]));
   for (const node of projection.nodes) {
     for (const parent of node.parentIds) adjacency.get(parent)?.add(node.id);
@@ -116,7 +157,7 @@ async function start() {
 
   document.querySelector("#domain-title").textContent = projection.domain.title;
   document.querySelector("#snapshot").textContent = `${projection.hub} · ${projection.commit.slice(0, 12)}`;
-  for (const type of [...new Set(projection.nodes.map((node) => node.type))].sort()) {
+  for (const type of [...new Set(graphNodes.map((node) => node.type))].sort()) {
     const option = document.createElement("option");
     option.value = type;
     option.textContent = type;
@@ -132,12 +173,14 @@ async function start() {
   flowToggle.disabled = projection.flows.length === 0;
 
   const elements = [
-    ...projection.nodes.map((node) => ({
+    ...graphNodes.map((node) => ({
       data: { id: node.id, label: node.title, type: node.type, membership: node.membership,
+        regionWidth: positions.get(node.id)?.width, regionHeight: positions.get(node.id)?.height,
         questionCount: (questionsBySubject.get(node.id) ?? []).length },
+      position: positions.get(node.id),
       classes: `${node.membership} ${node.representation}${questionsBySubject.has(node.id) ? " question" : ""}`,
     })),
-    ...allEdges.map((edge, index) => ({
+    ...visualEdges.map((edge, index) => ({
       data: { id: `edge-${index}-${edge.id}`, source: edge.displaySource, target: edge.displayTarget,
         label: edge.predicate, displayClass: edge.displayClass, directed: edge.directed },
       classes: `${edge.displayClass}${edge.directed ? " directed" : ""}`,
@@ -151,6 +194,8 @@ async function start() {
     maxZoom: 2.5,
     wheelSensitivity: .22,
     boxSelectionEnabled: false,
+    autoungrabify: true,
+    layout: { name: "preset", fit: false },
     style: [
       { selector: "node", style: {
         "background-color": "#55c995", "border-color": "#b9f3d7", "border-width": 1,
@@ -158,11 +203,13 @@ async function start() {
         "font-size": 11, "font-weight": 600, height: 34, label: "data(label)", padding: 0, shape: "ellipse",
         "text-halign": "center", "text-max-width": 150, "text-outline-color": "#111827",
         "text-outline-opacity": .72, "text-outline-width": 2, "text-valign": "center",
-        "text-margin-y": 27, "text-valign": "bottom", "text-wrap": "wrap", width: 34,
+        "text-margin-y": 27, "text-valign": "bottom", "text-wrap": "wrap", width: 34, "z-index": 10,
       } },
-      { selector: 'node[type = "Domain"]', style: { "background-color": "#ff7657", "border-color": "#ffd0c4", "font-size": 13, width: 42, height: 42, "text-margin-y": 31 } },
       { selector: 'node[type = "System"]', style: { "background-color": "#337ec8", "border-color": "#8bc5ff", width: 38, height: 38, "text-margin-y": 29 } },
-      { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "border-color": "#c8b1ff", width: 38, height: 38, "text-margin-y": 29 } },
+      { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "background-opacity": .12,
+        "border-color": "#7552b9", "border-width": 2, "font-size": 12, "font-weight": 700,
+        height: "data(regionHeight)", shape: "roundrectangle", "text-halign": "left", "text-margin-x": 16,
+        "text-margin-y": 15, "text-outline-opacity": 0, "text-valign": "top", width: "data(regionWidth)", "z-index": 0 } },
       { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "border-color": "#f4cf86" } },
       { selector: "node.embedded", style: { "background-color": "#263b35", "border-color": "#f4be5b",
         "border-style": "dashed", "border-width": 2, color: "#d7deea", height: 27, width: 27, "text-margin-y": 23 } },
@@ -184,17 +231,21 @@ async function start() {
     ],
   });
 
-  const initialVisible = () => new Set(projection.nodes.map((node) => node.id));
+  const initialVisible = () => new Set(graphNodes.map((node) => node.id));
   let visible = initialVisible();
   let selected;
 
   function shownNodeIds() {
-    return new Set([...visible].filter((id) => {
+    const shown = new Set([...visible].filter((id) => {
       const node = nodeById.get(id);
       return node && (typeFilter.value === "all" || node.type === typeFilter.value)
         && (repositoryFilter.value === "all" || node.repositoryIds.includes(repositoryFilter.value))
         && (membershipFilter.value === "all" || node.membership === membershipFilter.value);
     }));
+    for (const id of [...shown]) {
+      for (const repositoryId of nodeById.get(id)?.repositoryIds ?? []) if (graphNodeIds.has(repositoryId)) shown.add(repositoryId);
+    }
+    return shown;
   }
 
   function applyHighlight() {
@@ -215,29 +266,10 @@ async function start() {
     });
     const displayed = cy.elements().not(".hidden");
     if (displayed.nodes().length) {
-      displayed.layout({
-        name: "concentric",
-        animate: false,
-        avoidOverlap: false,
-        equidistant: true,
-        minNodeSpacing: 16,
-        spacingFactor: .78,
-        startAngle: -Math.PI / 2,
-        concentric(node) {
-          const type = node.data("type");
-          if (type === "Domain") return 4;
-          if (type === "System") return 3;
-          if (type === "Repository") return 2;
-          if (type === "Flow") return 1;
-          return 0;
-        },
-        levelWidth: () => 1,
-        sort: (left, right) => left.id().localeCompare(right.id()),
-      }).run();
-      if (fit) cy.fit(displayed, 52);
+      if (fit) cy.fit(displayed, 80);
     }
     applyHighlight();
-    document.querySelector("#stats").textContent = `${displayed.nodes().length} shown / ${projection.nodes.length} nodes\n${displayed.edges().length} shown / ${allEdges.length} links\n${projection.questions.length} active questions`;
+    document.querySelector("#stats").textContent = `${displayed.nodes().length} shown / ${graphNodes.length} nodes\n${displayed.edges().length} shown / ${visualEdges.length} arrows\n${projection.questions.length} active questions`;
   }
 
   function showDetails(id) {
@@ -246,8 +278,8 @@ async function start() {
     selected = id;
     details.classList.add("is-open");
     details.setAttribute("aria-label", `Details for ${node.title}`);
-    visible.add(id);
-    if (node.expandable) for (const related of adjacency.get(id) ?? []) visible.add(related);
+    if (graphNodeIds.has(id)) visible.add(id);
+    if (node.expandable) for (const related of adjacency.get(id) ?? []) if (graphNodeIds.has(related)) visible.add(related);
     document.querySelector("#detail-title").textContent = node.title;
     document.querySelector("#detail-type").textContent = nodeType(node);
     document.querySelector("#detail-description").textContent = node.description || "No Published description.";
@@ -266,7 +298,7 @@ async function start() {
     viewDocument.disabled = node.representation === "embedded";
     viewDocument.textContent = node.representation === "embedded" ? "Contained in parent document" : "View document";
     cy.nodes().unselect();
-    cy.$id(id).select();
+    if (graphNodeIds.has(id)) cy.$id(id).select();
     applyVisibility();
   }
 
@@ -312,6 +344,7 @@ async function start() {
   }
 
   cy.on("tap", "node", (event) => showDetails(event.target.id()));
+  domainDetails.addEventListener("click", () => showDetails(projection.domain.id));
   closeDetails.addEventListener("click", () => { selected = undefined; cy.nodes().unselect(); clearDetails(); applyVisibility({ fit: false }); });
   viewDocument.addEventListener("click", () => showDocument(selected));
   search.addEventListener("input", () => {

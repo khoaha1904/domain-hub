@@ -20,6 +20,8 @@ body { background: radial-gradient(circle at 45% -15%, #172844 0, transparent 42
 .topbar { align-items: end; display: flex; justify-content: space-between; margin: 0 auto 16px; max-width: 1680px; }
 .eyebrow, .section-label { color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .14em; margin: 0 0 8px; text-transform: uppercase; }
 h1 { font-size: clamp(29px, 3vw, 42px); font-weight: 620; letter-spacing: -.04em; margin: 0; }
+.text-button { background: transparent; border: 0; color: var(--blue); font-size: 10px; margin-top: 5px; padding: 0; }
+.text-button:hover { background: transparent; color: #a8d2ff; }
 .snapshot { color: var(--muted); font-family: var(--mono); font-size: 10px; max-width: 440px; overflow-wrap: anywhere; text-align: right; }
 .workspace { background: var(--rule); border: 1px solid var(--rule); border-radius: 16px; display: grid; gap: 1px; grid-template-columns: 260px minmax(520px, 1fr); height: calc(100vh - 110px); margin: auto; max-width: 1680px; min-height: 620px; overflow: hidden; position: relative; box-shadow: 0 24px 80px rgba(0, 0, 0, .28); }
 .controls, .details { background: rgba(14, 20, 32, .96); overflow: auto; padding: 22px; }
@@ -50,7 +52,7 @@ button:hover { background: #19283d; border-color: #365679; }
 .legend { display: grid; gap: 9px; margin-top: 18px; }
 .legend span { align-items: center; color: var(--muted); display: flex; font-size: 11px; gap: 8px; }
 .swatch { background: var(--green); border: 1px solid rgba(255,255,255,.35); border-radius: 4px; height: 9px; width: 14px; }
-.swatch.domain { background: var(--accent); }.swatch.system { background: var(--blue); }.swatch.repository { background: var(--violet); }.swatch.embedded { background: #263b35; border: 1px dashed var(--amber); }.swatch.runtime { background: var(--blue); border-radius: 1px; height: 2px; }.swatch.boundary { background: transparent; border: 1px dashed #8e99aa; }
+.swatch.system { background: var(--blue); }.swatch.repository { background: rgba(117,82,185,.28); border: 1px solid var(--violet); }.swatch.embedded { background: #263b35; border: 1px dashed var(--amber); }.swatch.runtime { background: var(--blue); border-radius: 1px; height: 2px; }.swatch.boundary { background: transparent; border: 1px dashed #8e99aa; }
 .details h2 { font-size: 20px; line-height: 1.25; margin: 4px 0 5px; }
 .detail-type { color: var(--blue); font-family: var(--mono); font-size: 10px; margin: 0 0 18px; text-transform: uppercase; }
 .detail-description { color: #c3cad5; font-size: 13px; line-height: 1.6; }

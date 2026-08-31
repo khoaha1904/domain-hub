@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "hub": "github.com/khoaha1904/hub-3#main",
-  "commit": "19c90ac943f06a5b6a2f9c3ac8044948ec20ccaa",
+  "commit": "8f08c2ecf1b98bf575d89063bb208db46eb4f0cf",
   "domain": {
     "id": "domains/crawler",
     "path": "domains/crawler.md",
@@ -244,6 +244,20 @@
       ]
     },
     {
+      "id": "edge-88388b8cebc99a349acfb9db",
+      "predicate": "redrives-to",
+      "declaredSource": "interfaces/crawler-jobs-queue",
+      "declaredTarget": "embedded:db57da8b074eb44e29388b9f",
+      "displaySource": "interfaces/crawler-jobs-queue",
+      "displayTarget": "embedded:db57da8b074eb44e29388b9f",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "res-redrive-policy"
+      ]
+    },
+    {
       "id": "edge-aa8adff7217bcf3ce1bfd4fa",
       "predicate": "embedded-in",
       "declaredSource": "embedded:34254e77ad8f906686c44ab3",
@@ -255,6 +269,20 @@
       "representation": "embedded",
       "evidence": [
         "res-dlq-alarm"
+      ]
+    },
+    {
+      "id": "edge-d6b917152a1f33dfaa1b6fe7",
+      "predicate": "writes-to",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "embedded:b20599e888e1430f770c7a96",
+      "displaySource": "components/crawler-worker",
+      "displayTarget": "embedded:b20599e888e1430f770c7a96",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "sem-s3-write-current"
       ]
     },
     {
@@ -284,6 +312,34 @@
       "evidence": [
         "res-jobs-table-current",
         "sem-ddb-write-current"
+      ]
+    },
+    {
+      "id": "edge-e3ea2c637ea54cce2d80a69e",
+      "predicate": "writes-to",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "embedded:3848d316789e336a7f08911e",
+      "displaySource": "components/crawler-worker",
+      "displayTarget": "embedded:3848d316789e336a7f08911e",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "sem-ddb-write-current"
+      ]
+    },
+    {
+      "id": "edge-e69809d8e09449e97f3425ca",
+      "predicate": "monitors",
+      "declaredSource": "embedded:34254e77ad8f906686c44ab3",
+      "declaredTarget": "embedded:db57da8b074eb44e29388b9f",
+      "displaySource": "embedded:34254e77ad8f906686c44ab3",
+      "displayTarget": "embedded:db57da8b074eb44e29388b9f",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "res-dlq-alarm"
       ]
     },
     {

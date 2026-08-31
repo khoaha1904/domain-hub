@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "hub": "github.com/khoaha1904/hub-2#main",
-  "commit": "c7f86739e44cef4e86c947a8dd83693939300e8b",
+  "commit": "ffdebfa0c75e28d050f98c53872717b059e1aa14",
   "domain": {
     "id": "domains/crawler",
     "path": "domains/crawler.md",
@@ -191,6 +191,20 @@
       ]
     },
     {
+      "id": "edge-d6b917152a1f33dfaa1b6fe7",
+      "predicate": "writes-to",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "embedded:b20599e888e1430f770c7a96",
+      "displaySource": "components/crawler-worker",
+      "displayTarget": "embedded:b20599e888e1430f770c7a96",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "sem-s3-write"
+      ]
+    },
+    {
       "id": "edge-d809133a5a38d79ecd246ac9",
       "predicate": "triggered-by",
       "declaredSource": "components/crawler-worker",
@@ -216,6 +230,20 @@
       "representation": "embedded",
       "evidence": [
         "res-jobs-table",
+        "sem-ddb-write"
+      ]
+    },
+    {
+      "id": "edge-e3ea2c637ea54cce2d80a69e",
+      "predicate": "writes-to",
+      "declaredSource": "components/crawler-worker",
+      "declaredTarget": "embedded:3848d316789e336a7f08911e",
+      "displaySource": "components/crawler-worker",
+      "displayTarget": "embedded:3848d316789e336a7f08911e",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
         "sem-ddb-write"
       ]
     }
