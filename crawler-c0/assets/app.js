@@ -83,8 +83,12 @@ function showFallback(error) {
   fallback.append(detail);
 }
 
+function repositoryRegionId(repositoryId) {
+  return `region:${repositoryId}`;
+}
+
 function fixedPositions(nodes, repositoryColumns) {
-  const positions = new Map(), repositories = nodes.filter((node) => node.type === "Repository")
+  const positions = new Map(), regions = new Map(), repositories = nodes.filter((node) => node.type === "Repository")
     .sort((left, right) => left.id.localeCompare(right.id));
   let nextX = 0, nextY = 0, rowHeight = 0, maximumBottom = 0;
   repositories.forEach((repository, repositoryIndex) => {
@@ -97,7 +101,10 @@ function fixedPositions(nodes, repositoryColumns) {
     const width = Math.max(420, Math.min(720, owned.length * 120));
     const height = Math.max(320, Math.min(480, owned.length * 80));
     const center = { x: nextX + width / 2, y: nextY + height / 2 };
-    positions.set(repository.id, { ...center, width, height });
+    const region = { ...center, width, height };
+    regions.set(repository.id, region);
+    positions.set(repositoryRegionId(repository.id), center);
+    positions.set(repository.id, { x: nextX + 82, y: nextY + 34 });
     owned.forEach((node, index) => {
       const angle = -Math.PI / 2 + index * 2 * Math.PI / Math.max(owned.length, 1);
       positions.set(node.id, {
@@ -115,7 +122,13 @@ function fixedPositions(nodes, repositoryColumns) {
     x: 80 + (index % outsideColumns) * 150,
     y: maximumBottom + 100 + Math.floor(index / outsideColumns) * 120,
   }));
-  return positions;
+  return { positions, regions };
+}
+
+function outsideLabel(node) {
+  if (node.membership === "boundary") return "Shared / External";
+  if (node.repositoryIds.length > 1) return "Shared";
+  return "";
 }
 
 async function start() {
@@ -139,7 +152,8 @@ async function start() {
   const graphNodeIds = new Set(graphNodes.map((node) => node.id));
   const visualEdges = [...projection.edges.filter((edge) => edge.displayClass !== "structural"), ...flowEdges]
     .filter((edge) => graphNodeIds.has(edge.displaySource) && graphNodeIds.has(edge.displayTarget));
-  const positions = fixedPositions(graphNodes, graphHost.clientWidth <= 720 ? 1 : 2);
+  const { positions, regions } = fixedPositions(graphNodes, graphHost.clientWidth <= 720 ? 1 : 2);
+  const repositories = graphNodes.filter((node) => node.type === "Repository");
   const adjacency = new Map(projection.nodes.map((node) => [node.id, new Set(node.parentIds)]));
   for (const node of projection.nodes) {
     for (const parent of node.parentIds) adjacency.get(parent)?.add(node.id);
@@ -173,12 +187,20 @@ async function start() {
   flowToggle.disabled = projection.flows.length === 0;
 
   const elements = [
+    ...repositories.map((repository) => ({
+      data: { id: repositoryRegionId(repository.id), repositoryId: repository.id,
+        regionWidth: regions.get(repository.id)?.width, regionHeight: regions.get(repository.id)?.height },
+      position: positions.get(repositoryRegionId(repository.id)),
+      classes: "repository-region",
+      grabbable: false,
+      selectable: false,
+    })),
     ...graphNodes.map((node) => ({
-      data: { id: node.id, label: node.title, type: node.type, membership: node.membership,
-        regionWidth: positions.get(node.id)?.width, regionHeight: positions.get(node.id)?.height,
+      data: { id: node.id, label: outsideLabel(node) ? `${node.title}\n${outsideLabel(node)}` : node.title,
+        type: node.type, membership: node.membership,
         questionCount: (questionsBySubject.get(node.id) ?? []).length },
       position: positions.get(node.id),
-      classes: `${node.membership} ${node.representation}${questionsBySubject.has(node.id) ? " question" : ""}`,
+      classes: `${node.membership} ${node.representation}${outsideLabel(node) ? " outside" : ""}${questionsBySubject.has(node.id) ? " question" : ""}`,
     })),
     ...visualEdges.map((edge, index) => ({
       data: { id: `edge-${index}-${edge.id}`, source: edge.displaySource, target: edge.displayTarget,
@@ -194,7 +216,7 @@ async function start() {
     maxZoom: 2.5,
     wheelSensitivity: .22,
     boxSelectionEnabled: false,
-    autoungrabify: true,
+    autoungrabify: false,
     layout: { name: "preset", fit: false },
     style: [
       { selector: "node", style: {
@@ -206,14 +228,18 @@ async function start() {
         "text-margin-y": 27, "text-valign": "bottom", "text-wrap": "wrap", width: 34, "z-index": 10,
       } },
       { selector: 'node[type = "System"]', style: { "background-color": "#337ec8", "border-color": "#8bc5ff", width: 38, height: 38, "text-margin-y": 29 } },
-      { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "background-opacity": .12,
-        "border-color": "#7552b9", "border-width": 2, "font-size": 12, "font-weight": 700,
-        height: "data(regionHeight)", shape: "roundrectangle", "text-halign": "left", "text-margin-x": 16,
-        "text-margin-y": 15, "text-outline-opacity": 0, "text-valign": "top", width: "data(regionWidth)", "z-index": 0 } },
+      { selector: "node.repository-region", style: { "background-color": "#7552b9", "background-opacity": .1,
+        "border-color": "#7552b9", "border-width": 2, events: "no", height: "data(regionHeight)",
+        shape: "roundrectangle", width: "data(regionWidth)", "z-index": 0 } },
+      { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "background-opacity": .92,
+        "border-color": "#c5adff", "border-width": 1.5, "font-size": 11, "font-weight": 700,
+        height: 34, shape: "roundrectangle", "text-margin-y": 0, "text-outline-opacity": 0,
+        "text-valign": "center", width: 132, "z-index": 8 } },
       { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "border-color": "#f4cf86" } },
       { selector: "node.embedded", style: { "background-color": "#263b35", "border-color": "#f4be5b",
         "border-style": "dashed", "border-width": 2, color: "#d7deea", height: 27, width: 27, "text-margin-y": 23 } },
       { selector: "node.boundary", style: { "background-opacity": .3, "border-style": "dashed", "border-width": 2, color: "#c0c8d4" } },
+      { selector: "node.outside", style: { "font-size": 9, "text-max-width": 170 } },
       { selector: "node.question", style: { "border-color": "#ff7657", "border-width": 4 } },
       { selector: "edge", style: { "curve-style": "bezier", "line-color": "#465367", opacity: .62, width: 1.2 } },
       { selector: "edge.structural", style: { "line-style": "dashed", opacity: .38 } },
@@ -230,6 +256,9 @@ async function start() {
       { selector: "node:selected", style: { "border-color": "#ffffff", "border-width": 4, "overlay-color": "#58a6ff", "overlay-opacity": .12, "overlay-padding": 8 } },
     ],
   });
+  cy.nodes(".repository-region").ungrabify();
+  cy.nodes('[type = "Repository"]').ungrabify();
+  const initialPositions = new Map([...positions].map(([id, position]) => [id, { x: position.x, y: position.y }]));
 
   const initialVisible = () => new Set(graphNodes.map((node) => node.id));
   let visible = initialVisible();
@@ -245,7 +274,33 @@ async function start() {
     for (const id of [...shown]) {
       for (const repositoryId of nodeById.get(id)?.repositoryIds ?? []) if (graphNodeIds.has(repositoryId)) shown.add(repositoryId);
     }
+    for (const repository of repositories) if (shown.has(repository.id)) shown.add(repositoryRegionId(repository.id));
     return shown;
+  }
+
+  function clampToOwnership(graphNode) {
+    const node = nodeById.get(graphNode.id());
+    if (!node || node.type === "Repository") return;
+    const position = graphNode.position(), padding = 52;
+    if (node.repositoryIds.length === 1 && regions.has(node.repositoryIds[0])) {
+      const region = regions.get(node.repositoryIds[0]);
+      graphNode.position({
+        x: Math.max(region.x - region.width / 2 + padding, Math.min(region.x + region.width / 2 - padding, position.x)),
+        y: Math.max(region.y - region.height / 2 + 72, Math.min(region.y + region.height / 2 - padding, position.y)),
+      });
+      return;
+    }
+    for (const region of regions.values()) {
+      const left = region.x - region.width / 2 - padding, right = region.x + region.width / 2 + padding;
+      const top = region.y - region.height / 2 - padding, bottom = region.y + region.height / 2 + padding;
+      if (position.x <= left || position.x >= right || position.y <= top || position.y >= bottom) continue;
+      const nearest = Math.min(position.x - left, right - position.x, position.y - top, bottom - position.y);
+      if (nearest === position.x - left) position.x = left;
+      else if (nearest === right - position.x) position.x = right;
+      else if (nearest === position.y - top) position.y = top;
+      else position.y = bottom;
+    }
+    graphNode.position(position);
   }
 
   function applyHighlight() {
@@ -269,7 +324,7 @@ async function start() {
       if (fit) cy.fit(displayed, 80);
     }
     applyHighlight();
-    document.querySelector("#stats").textContent = `${displayed.nodes().length} shown / ${graphNodes.length} nodes\n${displayed.edges().length} shown / ${visualEdges.length} arrows\n${projection.questions.length} active questions`;
+    document.querySelector("#stats").textContent = `${displayed.nodes().not(".repository-region").length} shown / ${graphNodes.length} nodes\n${displayed.edges().length} shown / ${visualEdges.length} arrows\n${projection.questions.length} active questions`;
   }
 
   function showDetails(id) {
@@ -344,6 +399,7 @@ async function start() {
   }
 
   cy.on("tap", "node", (event) => showDetails(event.target.id()));
+  cy.on("dragfree", "node", (event) => clampToOwnership(event.target));
   domainDetails.addEventListener("click", () => showDetails(projection.domain.id));
   closeDetails.addEventListener("click", () => { selected = undefined; cy.nodes().unselect(); clearDetails(); applyVisibility({ fit: false }); });
   viewDocument.addEventListener("click", () => showDocument(selected));
@@ -368,6 +424,7 @@ async function start() {
     flowToggle.checked = false;
     visible = initialVisible();
     cy.nodes().unselect();
+    for (const [id, position] of initialPositions) cy.$id(id).position(position);
     clearDetails();
     applyVisibility();
   });

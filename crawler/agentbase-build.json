@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generator": "agentbase-domain-site",
-  "generatorVersion": 5,
+  "generatorVersion": 6,
   "hub": "github.com/khoaha1904/hub-3#main",
   "commit": "8f08c2ecf1b98bf575d89063bb208db46eb4f0cf",
   "domain": "domains/crawler",
@@ -19,7 +19,7 @@
     },
     {
       "path": "assets/app.js",
-      "sha256": "188ee2baa8ff6eb4b7142b055acc573b9aeac800e0caf399748a785b0b1ada90"
+      "sha256": "99f2224328aceb69c97c7bde62ad43ca43c1fa4b47e3ca7402a794e1e7582777"
     },
     {
       "path": "assets/cytoscape.min.js",
@@ -31,7 +31,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "c3e2aee735806018ded2016483201596772efa43b2569e0e5fc0b1c099d8642b"
+      "sha256": "42398c64ff9fa1c49c675f5cf058fbf00bb58dc636a968e38266e5b5759b5ae6"
     }
   ]
 }
