@@ -3,13 +3,13 @@
   "generator": "agentbase-domain-site",
   "generatorVersion": 6,
   "hub": "github.com/khoaha1904/hub-3#main",
-  "commit": "8f08c2ecf1b98bf575d89063bb208db46eb4f0cf",
+  "commit": "045186428df338233cbbe96a5b1ddee2ad9ecdb5",
   "domain": "domains/crawler",
   "projectionVersion": 3,
   "counts": {
-    "nodes": 8,
-    "edges": 11,
-    "flows": 0,
+    "nodes": 16,
+    "edges": 26,
+    "flows": 1,
     "questions": 0
   },
   "files": [
@@ -27,11 +27,11 @@
     },
     {
       "path": "data/domain.json",
-      "sha256": "124542fbdeef36e65ebd0f0c3f61cbf585f65bfe64e00c6e3ea9d356f7b09e9b"
+      "sha256": "77d90ca1f91c4e6232314b3ba6405d423d1acba17d2716baa2e81a1e7d86fedf"
     },
     {
       "path": "index.html",
-      "sha256": "42398c64ff9fa1c49c675f5cf058fbf00bb58dc636a968e38266e5b5759b5ae6"
+      "sha256": "5440ab19fc7fb1ac34db63bc231e4ccbd3cccb717479f9bd167a30ee061421f4"
     }
   ]
 }
