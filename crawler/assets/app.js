@@ -87,24 +87,80 @@ function repositoryRegionId(repositoryId) {
   return `region:${repositoryId}`;
 }
 
-function fixedPositions(nodes, repositoryColumns, edges) {
-  const positions = new Map(), regions = new Map(), repositories = nodes.filter((node) => node.type === "Repository")
-    .sort((left, right) => left.id.localeCompare(right.id)), nodeById = new Map(nodes.map((node) => [node.id, node]));
-  let nextX = 0, nextY = 0, rowHeight = 0, maximumBottom = 0;
-  repositories.forEach((repository, repositoryIndex) => {
-    if (repositoryIndex > 0 && repositoryIndex % repositoryColumns === 0) {
-      nextX = 0; nextY += rowHeight + 90; rowHeight = 0;
+function relationOrderedRepositories(repositories, nodeById, edges) {
+  const repositoryIds = new Set(repositories.map((repository) => repository.id)), weights = new Map();
+  const key = (left, right) => [left, right].sort().join("|");
+  for (const edge of edges) {
+    const source = (nodeById.get(edge.displaySource)?.repositoryIds ?? []).filter((id) => repositoryIds.has(id));
+    const target = (nodeById.get(edge.displayTarget)?.repositoryIds ?? []).filter((id) => repositoryIds.has(id));
+    for (const left of source) for (const right of target) if (left !== right) {
+      const pair = key(left, right); weights.set(pair, (weights.get(pair) ?? 0) + 1);
     }
+  }
+  const weight = (left, right) => weights.get(key(left, right)) ?? 0;
+  const degree = (id) => repositories.reduce((total, repository) => total + weight(id, repository.id), 0);
+  const remaining = [...repositories], ordered = [];
+  while (remaining.length) {
+    const previous = ordered.at(-1)?.id;
+    remaining.sort((left, right) => (previous ? weight(previous, right.id) - weight(previous, left.id) : 0)
+      || degree(right.id) - degree(left.id) || left.id.localeCompare(right.id));
+    ordered.push(remaining.shift());
+  }
+  return ordered;
+}
+
+function fixedPositions(nodes, repositoryColumns, edges) {
+  const positions = new Map(), regions = new Map(), nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const repositories = relationOrderedRepositories(nodes.filter((node) => node.type === "Repository")
+    .sort((left, right) => left.id.localeCompare(right.id)), nodeById, edges);
+  const layouts = repositories.map((repository) => {
     const owned = nodes.filter((node) => node.id !== repository.id
       && node.repositoryIds.length === 1 && node.repositoryIds[0] === repository.id)
       .sort((left, right) => left.id.localeCompare(right.id));
     const width = Math.max(420, Math.min(720, owned.length * 120));
     const height = Math.max(320, Math.min(480, owned.length * 80));
-    const center = { x: nextX + width / 2, y: nextY + height / 2 };
+    return { repository, owned, width, height };
+  });
+  const ring = layouts.length >= 3;
+  let ringCenter, maximumBottom = 0;
+  if (ring) {
+    let radiusX = Math.max(...layouts.map((layout) => layout.width)) * .65;
+    let radiusY = Math.max(...layouts.map((layout) => layout.height)) * .65;
+    const centerAt = (index) => ({ x: Math.cos(-Math.PI / 2 + index * 2 * Math.PI / layouts.length) * radiusX,
+      y: Math.sin(-Math.PI / 2 + index * 2 * Math.PI / layouts.length) * radiusY });
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const centers = layouts.map((_, index) => centerAt(index));
+      const overlaps = layouts.some((layout, index) => layouts.slice(index + 1).some((other, offset) => {
+        const left = centers[index], right = centers[index + offset + 1];
+        return Math.abs(left.x - right.x) < (layout.width + other.width) / 2 + 90
+          && Math.abs(left.y - right.y) < (layout.height + other.height) / 2 + 90;
+      }));
+      if (!overlaps) break;
+      radiusX *= 1.15; radiusY *= 1.15;
+    }
+    const maximumWidth = Math.max(...layouts.map((layout) => layout.width));
+    const maximumHeight = Math.max(...layouts.map((layout) => layout.height));
+    ringCenter = { x: radiusX + maximumWidth / 2, y: radiusY + maximumHeight / 2 };
+    layouts.forEach((layout, index) => {
+      const relative = centerAt(index);
+      layout.center = { x: ringCenter.x + relative.x, y: ringCenter.y + relative.y };
+    });
+  } else {
+    let nextX = 0, nextY = 0, rowHeight = 0;
+    layouts.forEach((layout, index) => {
+      if (index > 0 && index % repositoryColumns === 0) {
+        nextX = 0; nextY += rowHeight + 90; rowHeight = 0;
+      }
+      layout.center = { x: nextX + layout.width / 2, y: nextY + layout.height / 2 };
+      nextX += layout.width + 90;
+      rowHeight = Math.max(rowHeight, layout.height);
+    });
+  }
+  layouts.forEach(({ repository, owned, width, height, center }) => {
     const region = { ...center, width, height };
     regions.set(repository.id, region);
     positions.set(repositoryRegionId(repository.id), center);
-    positions.set(repository.id, { x: nextX + 82, y: nextY + 34 });
+    positions.set(repository.id, { x: center.x - width / 2 + 82, y: center.y - height / 2 + 34 });
     owned.forEach((node, index) => {
       const angle = -Math.PI / 2 + index * 2 * Math.PI / Math.max(owned.length, 1);
       positions.set(node.id, {
@@ -112,9 +168,7 @@ function fixedPositions(nodes, repositoryColumns, edges) {
         y: center.y + Math.sin(angle) * (height / 2 - 80),
       });
     });
-    nextX += width + 90;
-    rowHeight = Math.max(rowHeight, height);
-    maximumBottom = Math.max(maximumBottom, nextY + height);
+    maximumBottom = Math.max(maximumBottom, center.y + height / 2);
   });
   const outside = nodes.filter((node) => !positions.has(node.id)).sort((left, right) => left.id.localeCompare(right.id));
   const relatedRepositories = new Map(outside.map((node) => {
@@ -135,6 +189,13 @@ function fixedPositions(nodes, repositoryColumns, edges) {
     const repositoryIds = relatedRepositories.get(node.id);
     if (repositoryIds.length === 1) {
       const repositoryId = repositoryIds[0], region = regions.get(repositoryId);
+      if (ring) {
+        const dx = region.x - ringCenter.x, dy = region.y - ringCenter.y;
+        const distance = Math.hypot(dx, dy) || 1;
+        positions.set(node.id, { x: region.x + dx / distance * (region.width / 2 + 90),
+          y: region.y + dy / distance * (region.height / 2 + 90) + (index - (group.length - 1) / 2) * 70 });
+        return;
+      }
       const side = repositories.findIndex((repository) => repository.id === repositoryId) % repositoryColumns === 0 ? -1 : 1;
       positions.set(node.id, { x: region.x + side * (region.width / 2 + 90), y: region.y + (index - (group.length - 1) / 2) * 90 });
       return;
@@ -244,7 +305,7 @@ async function start() {
   const cy = globalThis.cytoscape({
     container: graphHost,
     elements,
-    minZoom: .25,
+    minZoom: .12,
     maxZoom: 2.5,
     wheelSensitivity: .22,
     boxSelectionEnabled: false,
