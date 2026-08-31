@@ -234,7 +234,7 @@ async function start() {
       { selector: 'node[type = "Repository"]', style: { "background-color": "#7552b9", "background-opacity": .92,
         "border-color": "#c5adff", "border-width": 1.5, "font-size": 11, "font-weight": 700,
         height: 34, shape: "roundrectangle", "text-margin-y": 0, "text-outline-opacity": 0,
-        "text-valign": "center", width: 132, "z-index": 8 } },
+        "text-max-width": 116, "text-valign": "center", "text-wrap": "ellipsis", width: 132, "z-index": 8 } },
       { selector: 'node[type = "Flow"]', style: { "background-color": "#b77a18", "border-color": "#f4cf86" } },
       { selector: "node.embedded", style: { "background-color": "#263b35", "border-color": "#f4be5b",
         "border-style": "dashed", "border-width": 2, color: "#d7deea", height: 27, width: 27, "text-margin-y": 23 } },
