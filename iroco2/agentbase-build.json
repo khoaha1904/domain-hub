@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "generator": "agentbase-domain-site",
+  "generatorVersion": 8,
+  "profile": "profile-1.0",
+  "hub": "github.com/khoaha1904/hub-3#main",
+  "commit": "8acf21bb0626006eb312108ec0e8c484b4e5942d",
+  "domain": "domains/iroco2/domain",
+  "projectionVersion": 3,
+  "counts": {
+    "nodes": 12,
+    "edges": 7,
+    "flows": 0,
+    "questions": 13
+  },
+  "files": [
+    {
+      "path": "assets/app.css",
+      "sha256": "0b4e7d1643af6f8e3b075c846518c6b81a8b2de9c469975f6639925336020bb0"
+    },
+    {
+      "path": "assets/app.js",
+      "sha256": "a26a3336c04de8ff0fa9169b94818c1353b50a2ee0ceaed9a0bb5830fdb255b7"
+    },
+    {
+      "path": "assets/cytoscape.min.js",
+      "sha256": "b85c213252b880cbb2d86c10dc537f673560e82494da4330f1ccc18fbcb5f145"
+    },
+    {
+      "path": "data/domain.json",
+      "sha256": "62ae5dc0e25c3d8a17008e0a3eab7abca4558c6d769d1725a0351d1dccff1ba6"
+    },
+    {
+      "path": "index.html",
+      "sha256": "34397d715f6f42bac48d3989963771ca6624d3226d0f54514519918173c4f8ab"
+    }
+  ]
+}
