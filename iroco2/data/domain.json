@@ -1,175 +1,353 @@
 {
   "schemaVersion": 3,
   "profile": "profile-1.0",
-  "hub": "github.com/khoaha1904/hub-3#main",
-  "commit": "8acf21bb0626006eb312108ec0e8c484b4e5942d",
+  "hub": "github.com/khoaha1904/hub-2#main",
+  "commit": "040eb38df7fa83ec771f1bef96d31d286338b020",
   "domain": {
-    "id": "domains/iroco2/domain",
-    "path": "domains/iroco2/domain.md",
-    "title": "IroCO2",
+    "id": "domains/iroco2",
+    "path": "domains/iroco2/index.md",
+    "title": "Iroco2",
     "selector": "domains/iroco2"
   },
   "nodes": [
     {
-      "id": "domains/iroco2/components/iroco2-authorizer-lambda",
-      "path": "domains/iroco2/components/iroco2-authorizer-lambda.md",
-      "type": "Component",
-      "representation": "concept",
-      "title": "Iroco2-authorizer-lambda",
-      "description": "IroCO2 Authorizer Lambda",
-      "domainIds": [
-        "domains/iroco2/domain"
-      ],
-      "parentIds": [
-        "domains/iroco2/domain"
-      ],
-      "systemIds": [],
-      "repositoryIds": [],
-      "sources": [
-        "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-authorizer/README.md#L1-L8",
-        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-authorizer/tf/10-lambda.tf#L17-L65"
-      ],
-      "membership": "primary",
-      "home": "domains/iroco2",
-      "scopeRoles": [
-        "home",
-        "participant"
-      ],
-      "expandable": true
-    },
-    {
-      "id": "domains/iroco2/components/iroco2-backend-runtime",
-      "path": "domains/iroco2/components/iroco2-backend-runtime.md",
-      "type": "Component",
-      "representation": "concept",
-      "title": "Iroco2-backend-runtime",
-      "description": "IroCO2 Backend",
-      "domainIds": [
-        "domains/iroco2/domain"
-      ],
-      "parentIds": [
-        "domains/iroco2/domain"
-      ],
-      "systemIds": [],
-      "repositoryIds": [],
-      "sources": [
-        "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L144-L150",
-        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L30-L50",
-        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L5-L5",
-        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/service.tf#L17-L40"
-      ],
-      "membership": "primary",
-      "home": "domains/iroco2",
-      "scopeRoles": [
-        "home",
-        "participant"
-      ],
-      "expandable": true
-    },
-    {
-      "id": "domains/iroco2/components/iroco2-client-side-scanner-lambda",
-      "path": "domains/iroco2/components/iroco2-client-side-scanner-lambda.md",
-      "type": "Component",
-      "representation": "concept",
-      "title": "Iroco2-client-side-scanner-lambda",
-      "description": "IroCO2 Client Side Scanner",
-      "domainIds": [
-        "domains/iroco2/domain"
-      ],
-      "parentIds": [
-        "domains/iroco2/domain"
-      ],
-      "systemIds": [],
-      "repositoryIds": [],
-      "sources": [
-        "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-client-side-scanner/README.md#L1-L9",
-        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-client-side-scanner/lambda.yaml#L158-L188"
-      ],
-      "membership": "primary",
-      "home": "domains/iroco2",
-      "scopeRoles": [
-        "home",
-        "participant"
-      ],
-      "expandable": true
-    },
-    {
-      "id": "domains/iroco2/components/iroco2-cur-analyzer-lambda",
-      "path": "domains/iroco2/components/iroco2-cur-analyzer-lambda.md",
-      "type": "Component",
-      "representation": "concept",
-      "title": "Iroco2-cur-analyzer-lambda",
-      "description": "IroCO2 CUR Analyzer",
-      "domainIds": [
-        "domains/iroco2/domain"
-      ],
-      "parentIds": [
-        "domains/iroco2/domain"
-      ],
-      "systemIds": [],
-      "repositoryIds": [],
-      "sources": [
-        "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/README.md#L61-L96",
-        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/10-lambda.tf#L16-L82",
-        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/30-s3.tf#L24-L33"
-      ],
-      "membership": "primary",
-      "home": "domains/iroco2",
-      "scopeRoles": [
-        "home",
-        "participant"
-      ],
-      "expandable": true
-    },
-    {
-      "id": "domains/iroco2/components/iroco2-frontend-runtime",
-      "path": "domains/iroco2/components/iroco2-frontend-runtime.md",
-      "type": "Component",
-      "representation": "concept",
-      "title": "Iroco2-frontend-runtime",
-      "description": "IroCO2 Frontend",
-      "domainIds": [
-        "domains/iroco2/domain"
-      ],
-      "parentIds": [
-        "domains/iroco2/domain"
-      ],
-      "systemIds": [],
-      "repositoryIds": [],
-      "sources": [
-        "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L5-L5",
-        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L51-L59",
-        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L88-L108"
-      ],
-      "membership": "primary",
-      "home": "domains/iroco2",
-      "scopeRoles": [
-        "home",
-        "participant"
-      ],
-      "expandable": true
-    },
-    {
-      "id": "domains/iroco2/domain",
-      "path": "domains/iroco2/domain.md",
+      "id": "domains/iroco2",
+      "path": "domains/iroco2/index.md",
       "type": "Domain",
       "representation": "concept",
-      "title": "IroCO2",
-      "description": "IroCO2 business domain",
+      "title": "Iroco2",
+      "description": "Iroco2 business domain",
       "domainIds": [
-        "domains/iroco2/domain"
+        "domains/iroco2"
       ],
       "parentIds": [],
       "systemIds": [],
       "repositoryIds": [],
       "sources": [
         "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-03bf0b6eab9b/README.md#L1-L44"
+        "repository://repository-iroco2-03bf0b6eab9b/README.md#L3-L5"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2",
+      "path": "domains/iroco2/knowledge/iroco2.md",
+      "type": "System",
+      "representation": "concept",
+      "title": "IroCO2",
+      "description": "Understand the IroCO2 cloud-carbon-estimation system, its capabilities, repository composition, and deployment boundary.",
+      "domainIds": [
+        "domains/iroco2"
+      ],
+      "parentIds": [
+        "domains/iroco2"
+      ],
+      "systemIds": [
+        "domains/iroco2/knowledge/iroco2"
+      ],
+      "repositoryIds": [],
+      "sources": [
+        "agentbase://owner-guidance/domains/iroco2",
+        "repository://repository-iroco2-03bf0b6eab9b/README.md#L19-L25",
+        "repository://repository-iroco2-03bf0b6eab9b/README.md#L27-L34",
+        "repository://repository-iroco2-03bf0b6eab9b/README.md#L3-L3",
+        "repository://repository-iroco2-03bf0b6eab9b/docs/deployment/guide.md#L33-L49",
+        "repository://repository-iroco2-03bf0b6eab9b/docs/deployment/guide.md#L7-L12"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-analyzer-queue",
+      "path": "domains/iroco2/knowledge/iroco2-analyzer-queue.md",
+      "type": "Resource",
+      "representation": "concept",
+      "title": "IroCO2 Analyzer Queue",
+      "description": "Understand the shared SQS delivery boundary between CUR analysis and downstream estimate processing.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "sources": [
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/00-outputs.tf#L16-L18",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/40-sqs.tf#L16-L24",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/40-sqs.tf#L26-L35"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-authorizer",
+      "path": "domains/iroco2/knowledge/iroco2-authorizer.md",
+      "type": "Function",
+      "representation": "concept",
+      "title": "IroCO2 Authorizer",
+      "description": "Understand the IroCO2 scanner API Gateway authorizer trigger, validation behavior and Lambda deployment.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "sources": [
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-authorizer/README.md#L1-L9",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-authorizer/src/main.go#L34-L47",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-authorizer/tf/10-lambda.tf#L43-L66"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-aws-infrastructure",
+      "path": "domains/iroco2/knowledge/iroco2-aws-infrastructure.md",
+      "type": "Component",
+      "representation": "concept",
+      "title": "IroCO2 AWS Infrastructure",
+      "description": "Understand the IroCO2 AWS deployment composition, dependency order, core infrastructure and operational boundaries.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-terraform-modules"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-terraform-modules"
+      ],
+      "sources": [
+        "repository://repository-iroco2-terraform-modules-02f579561668/.github/workflows/terraform-ci.yml#L1-L47",
+        "repository://repository-iroco2-terraform-modules-02f579561668/main.tf#L1-L17",
+        "repository://repository-iroco2-terraform-modules-02f579561668/main.tf#L1-L63",
+        "repository://repository-iroco2-terraform-modules-02f579561668/main.tf#L37-L63",
+        "repository://repository-iroco2-terraform-modules-02f579561668/main.tf#L65-L254",
+        "repository://repository-iroco2-terraform-modules-02f579561668/modules/data/10-rds.tf#L21-L77",
+        "repository://repository-iroco2-terraform-modules-02f579561668/modules/fargate-task/40-ecs.tf#L18-L58",
+        "repository://repository-iroco2-terraform-modules-02f579561668/modules/fargate-task/40-ecs.tf#L70-L99",
+        "repository://repository-iroco2-terraform-modules-02f579561668/modules/network/10-vpc.tf#L17-L44",
+        "repository://repository-iroco2-terraform-modules-02f579561668/modules/services/20-ecs.tf#L17-L29",
+        "repository://repository-iroco2-terraform-modules-02f579561668/modules/services/50-cloudfront.tf#L27-L81"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-backend",
+      "path": "domains/iroco2/knowledge/iroco2-backend.md",
+      "type": "Component",
+      "representation": "concept",
+      "title": "IroCO2 Backend",
+      "description": "Understand the independently deployed IroCO2 backend runtime, its architecture, persistence, security and operations.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L1-L76",
+        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L13-L16",
+        "repository://repository-iroco2-backend-ef023b5db8be/docs/hexagonal_architecture_and_iroco2.md#L1-L65",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/MainApp.java#L23-L28",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/access/jwt/AwsKeyManagementService.java#L34-L71",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/analyzer/aws_s3/BucketStorage.java#L28-L49",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/analyzer/aws_sqs/AnalyzerSqsConsumer.java#L35-L42",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/calculator/infrastructure/secondary/InfrastructureRepository.java#L20-L31",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/scanner/aws_sqs/ScannerSqsConsumer.java#L35-L42",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/resources/application.properties#L1-L38",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/api-fargate.tf#L24-L31",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/datasources.tf#L8-L20",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/cloudwatch.tf#L17-L66",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/ecs-scheduler.tf#L17-L99",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/network.tf#L19-L39",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/service.tf#L17-L41",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/sns.tf#L17-L19",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/sns.tf#L21-L26",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/task.tf#L38-L72"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-backend-api",
+      "path": "domains/iroco2/knowledge/iroco2-backend-api.md",
+      "type": "Interface",
+      "representation": "concept",
+      "title": "IroCO2 Backend API",
+      "description": "Find the IroCO2 backend HTTP operations for infrastructure modeling, catalog access, scanner credentials, scans and analyses.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/access/primary/ScannerJwtController.java#L32-L56",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/analyzer/primary/AnalyzerController.java#L37-L77",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/calculator/infrastructure/component/primary/ComponentController.java#L44-L80",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/calculator/infrastructure/component/primary/ServiceInstanceController.java#L31-L45",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/calculator/infrastructure/primary/InfrastructureController.java#L45-L113",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/catalog/primary/CatalogController.java#L34-L50",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/catalog/primary/provider/CloudServiceProviderController.java#L23-L51",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/catalog/primary/setting/ServiceConfigurationSettingController.java#L34-L45",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/scanner/primary/ScannerController.java#L38-L73"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-client-side-scanner",
+      "path": "domains/iroco2/knowledge/iroco2-client-side-scanner.md",
+      "type": "Function",
+      "representation": "concept",
+      "title": "IroCO2 Client-side Scanner",
+      "description": "Understand the client-side scanner Lambda trigger, CUR processing and API delivery boundary.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "sources": [
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-client-side-scanner/README.md#L1-L13",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-client-side-scanner/lambda.yaml#L158-L180",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-client-side-scanner/package/cur_scrapper.py#L53-L62"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-cur-analyzer",
+      "path": "domains/iroco2/knowledge/iroco2-cur-analyzer.md",
+      "type": "Function",
+      "representation": "concept",
+      "title": "IroCO2 CUR Analyzer",
+      "description": "Understand how uploaded CUR objects trigger parsing and delivery to SQS.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-lambdas"
+      ],
+      "sources": [
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/src/handler/send_parsed_cur_to_queue_handler.py#L21-L28",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/10-lambda.tf#L56-L82",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/10-lambda.tf#L68-L73",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/30-s3.tf#L24-L33",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/40-sqs.tf#L16-L24",
+        "repository://repository-iroco2-lambdas-568911baee57/lambdas/functions/iroco2-cur-analyzer/tf/40-sqs.tf#L26-L28"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-frontend",
+      "path": "domains/iroco2/knowledge/iroco2-frontend.md",
+      "type": "Component",
+      "representation": "concept",
+      "title": "IroCO2 Frontend",
+      "description": "Understand the IroCO2 frontend runtime, user-facing responsibility, backend integration, build and delivery boundary.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-frontend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-frontend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-frontend-565d1281b3eb/.github/workflows/build_and_test.yml#L1-L81",
+        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L3-L5",
+        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L88-L108",
+        "repository://repository-iroco2-frontend-565d1281b3eb/nuxt.config.ts#L19-L58",
+        "repository://repository-iroco2-frontend-565d1281b3eb/plugins/02-irocalcApi.ts#L56-L132",
+        "repository://repository-iroco2-frontend-565d1281b3eb/service/api/curApiClient.ts#L26-L47"
+      ],
+      "membership": "primary",
+      "home": "domains/iroco2",
+      "scopeRoles": [
+        "home",
+        "participant"
+      ],
+      "expandable": true
+    },
+    {
+      "id": "domains/iroco2/knowledge/iroco2-scanner-ingest-api",
+      "path": "domains/iroco2/knowledge/iroco2-scanner-ingest-api.md",
+      "type": "Interface",
+      "representation": "concept",
+      "title": "IroCO2 Scanner Ingest API",
+      "description": "Find the scanner payload-ingest HTTP contract, authorization and SQS delivery behavior.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/repositories/iroco2-terraform-modules"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-terraform-modules"
+      ],
+      "sources": [
+        "repository://repository-iroco2-terraform-modules-02f579561668/layers/api-gateway/10-api-gateway-infrastructure.tf#L20-L26",
+        "repository://repository-iroco2-terraform-modules-02f579561668/layers/api-gateway/10-api-gateway-infrastructure.tf#L20-L76",
+        "repository://repository-iroco2-terraform-modules-02f579561668/layers/api-gateway/10-api-gateway-infrastructure.tf#L48-L54",
+        "repository://repository-iroco2-terraform-modules-02f579561668/layers/api-gateway/10-api-gateway-infrastructure.tf#L61-L76"
       ],
       "membership": "primary",
       "home": "domains/iroco2",
@@ -184,13 +362,13 @@
       "path": "domains/iroco2/repositories/iroco2.md",
       "type": "Repository",
       "representation": "concept",
-      "title": "iroco2",
-      "description": "IroCO2 documentation and deployment guidance",
+      "title": "IroCO2 Documentation",
+      "description": "Find the IroCO2 documentation and coordination repository, including installation guidance and delivery surfaces.",
       "domainIds": [
-        "domains/iroco2/domain"
+        "domains/iroco2"
       ],
       "parentIds": [
-        "domains/iroco2/domain"
+        "domains/iroco2"
       ],
       "systemIds": [],
       "repositoryIds": [
@@ -198,8 +376,9 @@
       ],
       "sources": [
         "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-03bf0b6eab9b/README.md#L1-L44",
-        "repository://repository-iroco2-03bf0b6eab9b/docs/deployment/guide.md#L79-L79"
+        "repository://repository-iroco2-03bf0b6eab9b/.github/workflows/deploy-docsify.yml#L1-L41",
+        "repository://repository-iroco2-03bf0b6eab9b/README.md#L3-L5",
+        "repository://repository-iroco2-03bf0b6eab9b/docs/deployment/guide.md#L1-L10"
       ],
       "membership": "primary",
       "home": "domains/iroco2",
@@ -215,21 +394,31 @@
       "type": "Repository",
       "representation": "concept",
       "title": "iroco2-backend",
-      "description": "iroco2-backend",
-      "domainIds": [],
-      "parentIds": [],
+      "description": "Find the IroCO2 backend source, build, architecture, testing, security and deployment dossier.",
+      "domainIds": [
+        "domains/iroco2"
+      ],
+      "parentIds": [
+        "domains/iroco2"
+      ],
       "systemIds": [],
       "repositoryIds": [
         "domains/iroco2/repositories/iroco2-backend"
       ],
       "sources": [
-        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L1-L5",
-        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L5-L5"
+        "agentbase://owner-guidance/domains/iroco2",
+        "repository://repository-iroco2-backend-ef023b5db8be/.github/workflows/docker-build-and-push.yml#L3-L51",
+        "repository://repository-iroco2-backend-ef023b5db8be/README.md#L1-L76",
+        "repository://repository-iroco2-backend-ef023b5db8be/docs/hexagonal_architecture_and_iroco2.md#L1-L65",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/pom.xml#L12-L114",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/resources/application.properties#L1-L38",
+        "repository://repository-iroco2-backend-ef023b5db8be/pom.xml#L6-L84"
       ],
       "membership": "primary",
       "home": "domains/iroco2",
       "scopeRoles": [
-        "home"
+        "home",
+        "participant"
       ],
       "expandable": true
     },
@@ -239,21 +428,27 @@
       "type": "Repository",
       "representation": "concept",
       "title": "iroco2-frontend",
-      "description": "iroco2-frontend",
-      "domainIds": [],
-      "parentIds": [],
+      "description": "Find the IroCO2 frontend source, development, build, testing and deployment dossier.",
+      "domainIds": [
+        "domains/iroco2"
+      ],
+      "parentIds": [
+        "domains/iroco2"
+      ],
       "systemIds": [],
       "repositoryIds": [
         "domains/iroco2/repositories/iroco2-frontend"
       ],
       "sources": [
-        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L1-L5",
-        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L5-L5"
+        "agentbase://owner-guidance/domains/iroco2",
+        "repository://repository-iroco2-frontend-565d1281b3eb/.github/workflows/build_and_test.yml#L1-L81",
+        "repository://repository-iroco2-frontend-565d1281b3eb/README.md#L1-L126"
       ],
       "membership": "primary",
       "home": "domains/iroco2",
       "scopeRoles": [
-        "home"
+        "home",
+        "participant"
       ],
       "expandable": true
     },
@@ -263,20 +458,26 @@
       "type": "Repository",
       "representation": "concept",
       "title": "iroco2-lambdas",
-      "description": "iroco2-lambdas",
-      "domainIds": [],
-      "parentIds": [],
+      "description": "Find the IroCO2 Lambda source, function inventory, packaging, testing and infrastructure dossier.",
+      "domainIds": [
+        "domains/iroco2"
+      ],
+      "parentIds": [
+        "domains/iroco2"
+      ],
       "systemIds": [],
       "repositoryIds": [
         "domains/iroco2/repositories/iroco2-lambdas"
       ],
       "sources": [
-        "repository://repository-iroco2-lambdas-568911baee57/README.md#L3-L13"
+        "agentbase://owner-guidance/domains/iroco2",
+        "repository://repository-iroco2-lambdas-568911baee57/README.md#L1-L13"
       ],
       "membership": "primary",
       "home": "domains/iroco2",
       "scopeRoles": [
-        "home"
+        "home",
+        "participant"
       ],
       "expandable": true
     },
@@ -286,47 +487,21 @@
       "type": "Repository",
       "representation": "concept",
       "title": "iroco2-terraform-modules",
-      "description": "iroco2-terraform-modules",
-      "domainIds": [],
-      "parentIds": [],
+      "description": "Find the IroCO2 Terraform module, layer, validation and deployment dossier.",
+      "domainIds": [
+        "domains/iroco2"
+      ],
+      "parentIds": [
+        "domains/iroco2"
+      ],
       "systemIds": [],
       "repositoryIds": [
         "domains/iroco2/repositories/iroco2-terraform-modules"
       ],
       "sources": [
-        "repository://repository-iroco2-terraform-modules-02f579561668/README.md#L3-L14"
-      ],
-      "membership": "primary",
-      "home": "domains/iroco2",
-      "scopeRoles": [
-        "home"
-      ],
-      "expandable": true
-    },
-    {
-      "id": "domains/iroco2/systems/iroco2-aws-platform",
-      "path": "domains/iroco2/systems/iroco2-aws-platform.md",
-      "type": "System",
-      "representation": "concept",
-      "title": "Iroco2-aws-platform",
-      "description": "IroCO2 AWS Platform",
-      "domainIds": [
-        "domains/iroco2/domain"
-      ],
-      "parentIds": [
-        "domains/iroco2/domain"
-      ],
-      "systemIds": [
-        "domains/iroco2/systems/iroco2-aws-platform"
-      ],
-      "repositoryIds": [],
-      "sources": [
         "agentbase://owner-guidance/domains/iroco2",
-        "repository://repository-iroco2-terraform-modules-02f579561668/layers/api-gateway/10-api-gateway-infrastructure.tf#L43-L55",
-        "repository://repository-iroco2-terraform-modules-02f579561668/layers/iroco2-client-side-scanner/README.md#L33-L64",
-        "repository://repository-iroco2-terraform-modules-02f579561668/main.tf#L1-L17",
-        "repository://repository-iroco2-terraform-modules-02f579561668/main.tf#L115-L191",
-        "repository://repository-iroco2-terraform-modules-02f579561668/main.tf#L19-L63"
+        "repository://repository-iroco2-terraform-modules-02f579561668/.github/workflows/terraform-ci.yml#L1-L47",
+        "repository://repository-iroco2-terraform-modules-02f579561668/README.md#L1-L14"
       ],
       "membership": "primary",
       "home": "domains/iroco2",
@@ -335,16 +510,214 @@
         "participant"
       ],
       "expandable": true
+    },
+    {
+      "id": "embedded:4495e8a8b71ef2162ded5091",
+      "path": "domains/iroco2/knowledge/iroco2-backend.md",
+      "type": "Resource",
+      "representation": "embedded",
+      "resourceKind": "scheduler",
+      "title": "Office-hours scheduler",
+      "description": "Scale the ECS service down and restore its configured capacity on weekday schedules.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/knowledge/iroco2-backend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/ecs-scheduler.tf#L17-L99"
+      ],
+      "membership": "primary",
+      "expandable": false
+    },
+    {
+      "id": "embedded:81c9f1c1e3f44db8eea9bdfc",
+      "path": "domains/iroco2/knowledge/iroco2-backend.md",
+      "type": "Resource",
+      "representation": "embedded",
+      "resourceKind": "message-topic",
+      "title": "Failover email topic",
+      "description": "Know the backend failover notification channel.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/knowledge/iroco2-backend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/sns.tf#L17-L19",
+        "repository://repository-iroco2-backend-ef023b5db8be/tf/modules/fargate-task/sns.tf#L21-L26"
+      ],
+      "membership": "primary",
+      "expandable": false
+    },
+    {
+      "id": "embedded:95606e32a6ae15b5ee323cd7",
+      "path": "domains/iroco2/knowledge/iroco2-backend.md",
+      "type": "Resource",
+      "representation": "embedded",
+      "resourceKind": "object-storage",
+      "title": "Analysis upload bucket",
+      "description": "Issue pre-signed PUT URLs for analysis uploads.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/knowledge/iroco2-backend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/analyzer/aws_s3/BucketStorage.java#L28-L49",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/resources/application.properties#L1-L38"
+      ],
+      "membership": "primary",
+      "expandable": false
+    },
+    {
+      "id": "embedded:99668a3aadf871aa32ec78be",
+      "path": "domains/iroco2/knowledge/iroco2-backend.md",
+      "type": "Resource",
+      "representation": "embedded",
+      "resourceKind": "message-queue",
+      "title": "Scanner estimation queue",
+      "description": "Receive asynchronous CUR estimates for a scan.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/knowledge/iroco2-backend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/scanner/aws_sqs/ScannerSqsConsumer.java#L35-L42",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/resources/application.properties#L1-L38"
+      ],
+      "membership": "primary",
+      "expandable": false
+    },
+    {
+      "id": "embedded:fbc5d6629621f7d7ace89a34",
+      "path": "domains/iroco2/knowledge/iroco2-backend.md",
+      "type": "Resource",
+      "representation": "embedded",
+      "resourceKind": "cryptographic-key",
+      "title": "Scanner signing key",
+      "description": "Sign scanner JWTs and expose its configured public key for verification.",
+      "domainIds": [],
+      "parentIds": [
+        "domains/iroco2/knowledge/iroco2-backend"
+      ],
+      "systemIds": [],
+      "repositoryIds": [
+        "domains/iroco2/repositories/iroco2-backend"
+      ],
+      "sources": [
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/java/fr/ippon/iroco2/access/jwt/AwsKeyManagementService.java#L34-L71",
+        "repository://repository-iroco2-backend-ef023b5db8be/infrastructure/src/main/resources/application.properties#L1-L38"
+      ],
+      "membership": "primary",
+      "expandable": false
     }
   ],
   "edges": [
     {
-      "id": "edge-16f9718cfc6d809daf19f1bf",
+      "id": "edge-0a5f0dacfab09a01201e6a02",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-backend-api",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-backend",
+      "displaySource": "domains/iroco2/knowledge/iroco2-backend-api",
+      "displayTarget": "domains/iroco2/repositories/iroco2-backend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "backend-scanner-api"
+      ]
+    },
+    {
+      "id": "edge-18c597398e12bb21f356cd16",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-analyzer-queue",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-lambdas",
+      "displaySource": "domains/iroco2/knowledge/iroco2-analyzer-queue",
+      "displayTarget": "domains/iroco2/repositories/iroco2-lambdas",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "analyzer-queue-declaration"
+      ]
+    },
+    {
+      "id": "edge-25800f1efa3e5264b5dd9936",
+      "predicate": "embedded-in",
+      "declaredSource": "embedded:4495e8a8b71ef2162ded5091",
+      "declaredTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "displaySource": "embedded:4495e8a8b71ef2162ded5091",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "embedded",
+      "evidence": [
+        "backend-office-hours-scaling"
+      ]
+    },
+    {
+      "id": "edge-259031d1eea6cb389e99dc5a",
+      "predicate": "depends-on",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-backend",
+      "declaredTarget": "embedded:95606e32a6ae15b5ee323cd7",
+      "displaySource": "domains/iroco2/knowledge/iroco2-backend",
+      "displayTarget": "embedded:95606e32a6ae15b5ee323cd7",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "backend-s3-upload"
+      ]
+    },
+    {
+      "id": "edge-27df71659d9c75e5eb700cce",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-cur-analyzer",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-lambdas",
+      "displaySource": "domains/iroco2/knowledge/iroco2-cur-analyzer",
+      "displayTarget": "domains/iroco2/repositories/iroco2-lambdas",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "cur-handler"
+      ]
+    },
+    {
+      "id": "edge-330705b1087a68bfa300d4db",
+      "predicate": "reads-from",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-backend",
+      "declaredTarget": "domains/iroco2/knowledge/iroco2-analyzer-queue",
+      "displaySource": "domains/iroco2/knowledge/iroco2-analyzer-queue",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "accepted",
+      "evidence": [
+        "backend-analyzer-sqs"
+      ]
+    },
+    {
+      "id": "edge-349bc0257a2ba134e0e50c45",
       "predicate": "part-of",
-      "declaredSource": "domains/iroco2/components/iroco2-backend-runtime",
-      "declaredTarget": "domains/iroco2/domain",
-      "displaySource": "domains/iroco2/components/iroco2-backend-runtime",
-      "displayTarget": "domains/iroco2/domain",
+      "declaredSource": "domains/iroco2/knowledge/iroco2",
+      "declaredTarget": "domains/iroco2",
+      "displaySource": "domains/iroco2/knowledge/iroco2",
+      "displayTarget": "domains/iroco2",
       "directed": false,
       "displayClass": "structural",
       "representation": "accepted",
@@ -353,12 +726,12 @@
       ]
     },
     {
-      "id": "edge-2d5716b0d8dd77fbfb172398",
+      "id": "edge-5b20ec71dac4b264c454b078",
       "predicate": "part-of",
-      "declaredSource": "domains/iroco2/components/iroco2-frontend-runtime",
-      "declaredTarget": "domains/iroco2/domain",
-      "displaySource": "domains/iroco2/components/iroco2-frontend-runtime",
-      "displayTarget": "domains/iroco2/domain",
+      "declaredSource": "domains/iroco2/repositories/iroco2-lambdas",
+      "declaredTarget": "domains/iroco2",
+      "displaySource": "domains/iroco2/repositories/iroco2-lambdas",
+      "displayTarget": "domains/iroco2",
       "directed": false,
       "displayClass": "structural",
       "representation": "accepted",
@@ -367,26 +740,55 @@
       ]
     },
     {
-      "id": "edge-6c153e3ee36bfc40e89b85b9",
-      "predicate": "part-of",
-      "declaredSource": "domains/iroco2/components/iroco2-client-side-scanner-lambda",
-      "declaredTarget": "domains/iroco2/domain",
-      "displaySource": "domains/iroco2/components/iroco2-client-side-scanner-lambda",
-      "displayTarget": "domains/iroco2/domain",
+      "id": "edge-71b6bd81bdc22391328e30d4",
+      "predicate": "embedded-in",
+      "declaredSource": "embedded:fbc5d6629621f7d7ace89a34",
+      "declaredTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "displaySource": "embedded:fbc5d6629621f7d7ace89a34",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "embedded",
+      "evidence": [
+        "backend-kms-signing",
+        "backend-runtime-config"
+      ]
+    },
+    {
+      "id": "edge-83db4e432bc6f536327df895",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-authorizer",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-lambdas",
+      "displaySource": "domains/iroco2/knowledge/iroco2-authorizer",
+      "displayTarget": "domains/iroco2/repositories/iroco2-lambdas",
       "directed": false,
       "displayClass": "structural",
       "representation": "accepted",
       "evidence": [
-        "owner-domain-iroco2"
+        "authorizer-handler"
       ]
     },
     {
-      "id": "edge-6f5ea99ee4fbe69d81407d09",
+      "id": "edge-8fcf831bbf1c5ec63d7ad8c6",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-backend",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-backend",
+      "displaySource": "domains/iroco2/knowledge/iroco2-backend",
+      "displayTarget": "domains/iroco2/repositories/iroco2-backend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "backend-main"
+      ]
+    },
+    {
+      "id": "edge-99e56b5f4c4977e45a7ca496",
       "predicate": "part-of",
       "declaredSource": "domains/iroco2/repositories/iroco2",
-      "declaredTarget": "domains/iroco2/domain",
+      "declaredTarget": "domains/iroco2",
       "displaySource": "domains/iroco2/repositories/iroco2",
-      "displayTarget": "domains/iroco2/domain",
+      "displayTarget": "domains/iroco2",
       "directed": false,
       "displayClass": "structural",
       "representation": "accepted",
@@ -395,12 +797,55 @@
       ]
     },
     {
-      "id": "edge-bc8011f619e8089abad9739e",
+      "id": "edge-a3c4594263975a953868d432",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-client-side-scanner",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-lambdas",
+      "displaySource": "domains/iroco2/knowledge/iroco2-client-side-scanner",
+      "displayTarget": "domains/iroco2/repositories/iroco2-lambdas",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "scanner-handler"
+      ]
+    },
+    {
+      "id": "edge-ab3f39596d536178ddde5266",
+      "predicate": "depends-on",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-backend",
+      "declaredTarget": "embedded:fbc5d6629621f7d7ace89a34",
+      "displaySource": "domains/iroco2/knowledge/iroco2-backend",
+      "displayTarget": "embedded:fbc5d6629621f7d7ace89a34",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "backend-kms-signing"
+      ]
+    },
+    {
+      "id": "edge-ac44b024a043303ebd9ca8e6",
+      "predicate": "embedded-in",
+      "declaredSource": "embedded:81c9f1c1e3f44db8eea9bdfc",
+      "declaredTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "displaySource": "embedded:81c9f1c1e3f44db8eea9bdfc",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "embedded",
+      "evidence": [
+        "backend-failover-subscription",
+        "backend-failover-topic"
+      ]
+    },
+    {
+      "id": "edge-b5a996b2c4316ab589aa4665",
       "predicate": "part-of",
-      "declaredSource": "domains/iroco2/components/iroco2-cur-analyzer-lambda",
-      "declaredTarget": "domains/iroco2/domain",
-      "displaySource": "domains/iroco2/components/iroco2-cur-analyzer-lambda",
-      "displayTarget": "domains/iroco2/domain",
+      "declaredSource": "domains/iroco2/repositories/iroco2-terraform-modules",
+      "declaredTarget": "domains/iroco2",
+      "displaySource": "domains/iroco2/repositories/iroco2-terraform-modules",
+      "displayTarget": "domains/iroco2",
       "directed": false,
       "displayClass": "structural",
       "representation": "accepted",
@@ -409,12 +854,12 @@
       ]
     },
     {
-      "id": "edge-f3262fd5586c7f70d16ff783",
+      "id": "edge-c16dff3eb4b23bd084ee0652",
       "predicate": "part-of",
-      "declaredSource": "domains/iroco2/systems/iroco2-aws-platform",
-      "declaredTarget": "domains/iroco2/domain",
-      "displaySource": "domains/iroco2/systems/iroco2-aws-platform",
-      "displayTarget": "domains/iroco2/domain",
+      "declaredSource": "domains/iroco2/repositories/iroco2-frontend",
+      "declaredTarget": "domains/iroco2",
+      "displaySource": "domains/iroco2/repositories/iroco2-frontend",
+      "displayTarget": "domains/iroco2",
       "directed": false,
       "displayClass": "structural",
       "representation": "accepted",
@@ -423,113 +868,147 @@
       ]
     },
     {
-      "id": "edge-fb4a93892bec6ce7ade46cd1",
+      "id": "edge-c20c41ebefc458911bfad6c5",
+      "predicate": "publishes-to",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-cur-analyzer",
+      "declaredTarget": "domains/iroco2/knowledge/iroco2-analyzer-queue",
+      "displaySource": "domains/iroco2/knowledge/iroco2-cur-analyzer",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-analyzer-queue",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "accepted",
+      "evidence": [
+        "cur-analyzer-queue-binding",
+        "cur-handler"
+      ]
+    },
+    {
+      "id": "edge-c947650c007295834fb9d62c",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-aws-infrastructure",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-terraform-modules",
+      "displaySource": "domains/iroco2/knowledge/iroco2-aws-infrastructure",
+      "displayTarget": "domains/iroco2/repositories/iroco2-terraform-modules",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "infra-core-composition"
+      ]
+    },
+    {
+      "id": "edge-d0c3dad07e9a3426b970ba69",
       "predicate": "part-of",
-      "declaredSource": "domains/iroco2/components/iroco2-authorizer-lambda",
-      "declaredTarget": "domains/iroco2/domain",
-      "displaySource": "domains/iroco2/components/iroco2-authorizer-lambda",
-      "displayTarget": "domains/iroco2/domain",
+      "declaredSource": "domains/iroco2/repositories/iroco2-backend",
+      "declaredTarget": "domains/iroco2",
+      "displaySource": "domains/iroco2/repositories/iroco2-backend",
+      "displayTarget": "domains/iroco2",
       "directed": false,
       "displayClass": "structural",
       "representation": "accepted",
       "evidence": [
         "owner-domain-iroco2"
+      ]
+    },
+    {
+      "id": "edge-d8b622a28bdf0b9404fe24b7",
+      "predicate": "consumes",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-backend",
+      "declaredTarget": "embedded:99668a3aadf871aa32ec78be",
+      "displaySource": "domains/iroco2/knowledge/iroco2-backend",
+      "displayTarget": "embedded:99668a3aadf871aa32ec78be",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "backend-scanner-sqs"
+      ]
+    },
+    {
+      "id": "edge-dd639cf1d9330eace7db773c",
+      "predicate": "embedded-in",
+      "declaredSource": "embedded:95606e32a6ae15b5ee323cd7",
+      "declaredTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "displaySource": "embedded:95606e32a6ae15b5ee323cd7",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "embedded",
+      "evidence": [
+        "backend-runtime-config",
+        "backend-s3-upload"
+      ]
+    },
+    {
+      "id": "edge-ded4691f7fc9b948ab5e5bf7",
+      "predicate": "embedded-in",
+      "declaredSource": "embedded:99668a3aadf871aa32ec78be",
+      "declaredTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "displaySource": "embedded:99668a3aadf871aa32ec78be",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "embedded",
+      "evidence": [
+        "backend-runtime-config",
+        "backend-scanner-sqs"
+      ]
+    },
+    {
+      "id": "edge-e8df02fb7f22fbb518da4cc9",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-frontend",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-frontend",
+      "displaySource": "domains/iroco2/knowledge/iroco2-frontend",
+      "displayTarget": "domains/iroco2/repositories/iroco2-frontend",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "frontend-purpose"
+      ]
+    },
+    {
+      "id": "edge-eb617dbc4e818a77307b8e72",
+      "predicate": "triggered-by",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-backend",
+      "declaredTarget": "embedded:4495e8a8b71ef2162ded5091",
+      "displaySource": "embedded:4495e8a8b71ef2162ded5091",
+      "displayTarget": "domains/iroco2/knowledge/iroco2-backend",
+      "directed": true,
+      "displayClass": "runtime",
+      "representation": "embedded",
+      "evidence": [
+        "backend-office-hours-scaling"
+      ]
+    },
+    {
+      "id": "edge-fa84dc17ef0d2963c69d7d29",
+      "predicate": "implemented-in",
+      "declaredSource": "domains/iroco2/knowledge/iroco2-scanner-ingest-api",
+      "declaredTarget": "domains/iroco2/repositories/iroco2-terraform-modules",
+      "displaySource": "domains/iroco2/knowledge/iroco2-scanner-ingest-api",
+      "displayTarget": "domains/iroco2/repositories/iroco2-terraform-modules",
+      "directed": false,
+      "displayClass": "structural",
+      "representation": "accepted",
+      "evidence": [
+        "scanner-api-contract"
       ]
     }
   ],
   "flows": [],
-  "questions": [
+  "questions": [],
+  "omissions": [
     {
-      "id": "question-014b7dc643d505a0b1c43ad6",
-      "subject": "domains/iroco2/systems/iroco2-aws-platform",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "interface-trigger"
+      "code": "embedded-resource-warning",
+      "subject": "domains/iroco2/knowledge/iroco2-cur-analyzer",
+      "detail": "self triggered-by CUR object-created trigger has an unresolved or ambiguous endpoint"
     },
     {
-      "id": "question-287aea254c5af55c743ebb7f",
-      "subject": "domains/iroco2/repositories/iroco2-lambdas",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "cross-boundary-flow"
-    },
-    {
-      "id": "question-32fd7d2264559535ea8b308c",
-      "subject": "domains/iroco2/systems/iroco2-aws-platform",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "cross-boundary-flow"
-    },
-    {
-      "id": "question-383e93c46a29d7a9255f91cd",
-      "subject": "domains/iroco2/components/iroco2-backend-runtime",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "cross-boundary-flow"
-    },
-    {
-      "id": "question-48f4027ae7fd6777a641276a",
-      "subject": "domains/iroco2/components/iroco2-cur-analyzer-lambda",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "interface-trigger"
-    },
-    {
-      "id": "question-49d95c90ec819305f9a348c6",
-      "subject": "domains/iroco2/components/iroco2-frontend-runtime",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "cross-boundary-flow"
-    },
-    {
-      "id": "question-658b9d338e01e59957b05e25",
-      "subject": "domains/iroco2/repositories/iroco2",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "cross-boundary-flow"
-    },
-    {
-      "id": "question-7bee83a8efd08b8c6bf61d4c",
-      "subject": "domains/iroco2/repositories/iroco2-lambdas",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "outbound-integration"
-    },
-    {
-      "id": "question-85be7089d757c924816bf113",
-      "subject": "domains/iroco2/components/iroco2-backend-runtime",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "interface-trigger"
-    },
-    {
-      "id": "question-9ae35a1b28a82dcca66a7e7c",
-      "subject": "domains/iroco2/components/iroco2-backend-runtime",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "outbound-integration"
-    },
-    {
-      "id": "question-d86afe8167ccd3430678855c",
-      "subject": "domains/iroco2/components/iroco2-frontend-runtime",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "outbound-integration"
-    },
-    {
-      "id": "question-efadc0c289711babc29fbac8",
-      "subject": "domains/iroco2/systems/iroco2-aws-platform",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "outbound-integration"
-    },
-    {
-      "id": "question-f496ae662f20536a0b89b5f1",
-      "subject": "domains/iroco2/repositories/iroco2",
-      "state": "open",
-      "kind": "missing-evidence",
-      "property": "outbound-integration"
+      "code": "embedded-resource-warning",
+      "subject": "domains/iroco2/knowledge/iroco2-frontend",
+      "detail": "self depends-on Backend API client has an unresolved or ambiguous endpoint"
     }
-  ],
-  "omissions": []
+  ]
 }
